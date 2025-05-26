@@ -28,7 +28,7 @@
     {% endif %}
 {% endfor %}
 
-{% assign product = section.settings.product %}
+{% assign product = section.settings.product | default: all_products['default-product-handle'] %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign quick_variant_type = settings.variant_type %}
 
@@ -476,7 +476,7 @@
         {
           "type": "inline_richtext",
           "id": "return_text",
-          "default": "Free return within <b>30 days</b> of purchase.",
+          "default": "Free return within <b>30 days</b> of purchase.",
           "label": "t:sections.product.blocks.return_text.label"
         }
       ]

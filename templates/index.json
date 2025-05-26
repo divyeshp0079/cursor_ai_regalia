@@ -443,27 +443,6 @@
         "padding_bottom": 0
       }
     },
-    "video_mAwphP": {
-      "type": "video",
-      "settings": {
-        "enable_full_width": true,
-        "thumbnail": "shopify://shop_images/young-indian-woman-wearing-sari_2.png",
-        "thumbnail_heading": "Sustainability Report",
-        "thumbnail_subheading": "We are deeply committed to sustainability and responsible sourcing. We ensure that all our diamonds, gemstones, and metals are conflict-free, working only with suppliers who adhere to strict ethical and environmental standards.",
-        "heading_size": "h2",
-        "heading_alignment": "left",
-        "heading_color": "#ffffff",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0,
-        "video_type": "video",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "video": "shopify://files/videos/regalia-video.mp4",
-        "video_autoplay": false,
-        "video_mute": false,
-        "padding_top": 20,
-        "padding_bottom": 20
-      }
-    },
     "instagram_aBkRYt": {
       "type": "instagram",
       "blocks": {
@@ -631,78 +610,6 @@
         "description_color": "#797979",
         "proudct_card_bg": "#ffe5c8",
         "padding_top": 20,
-        "padding_bottom": 50
-      }
-    },
-    "video_carousel_hWgFJK": {
-      "type": "video-carousel",
-      "blocks": {
-        "video_d9PjHn": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/regalia-video.mp4"
-          }
-        },
-        "video_dXejHP": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/regalia-video2.mp4"
-          }
-        }
-      },
-      "block_order": [
-        "video_d9PjHn",
-        "video_dXejHP"
-      ],
-      "settings": {
-        "enable_full_width": true,
-        "slide_height": "adapt",
-        "slide_transition": "fade",
-        "speed_delay": 1000,
-        "padding_top": 50,
-        "padding_bottom": 30,
-        "enable_arrow": true
-      }
-    },
-    "video_product_LqPwy3": {
-      "type": "video-product",
-      "blocks": {
-        "video_product_8z6rtT": {
-          "type": "video-product",
-          "settings": {
-            "video": "shopify://files/videos/video-product4.mp4",
-            "video_product": "circle-charm-layered-necklace"
-          }
-        },
-        "video_product_LVmtYF": {
-          "type": "video-product",
-          "settings": {
-            "video": "shopify://files/videos/video-product3_6413eec9-a6ca-409a-b7c2-f7c28c96f243.mp4",
-            "video_product": "circle-charm-layered-necklace"
-          }
-        },
-        "video_product_NqDJXw": {
-          "type": "video-product",
-          "settings": {
-            "video": "shopify://files/videos/video-product2_2e8c6117-6cbb-42ca-a428-1b7c4e518f3d.mp4",
-            "video_product": "circle-charm-layered-necklace"
-          }
-        }
-      },
-      "block_order": [
-        "video_product_8z6rtT",
-        "video_product_LVmtYF",
-        "video_product_NqDJXw"
-      ],
-      "settings": {
-        "video_per_row": 3,
-        "spacing": 26,
-        "bg_color": "#fff7ee",
-        "title": "Shop the Style You Admire!",
-        "heading_size": "h3",
-        "heading_alignment": "center",
-        "heading_color": "#082a32",
-        "padding_top": 50,
         "padding_bottom": 50
       }
     },
@@ -906,13 +813,10 @@
     "featured_product_7UjbBN",
     "text_image_slider_AfGwGD",
     "quotes_pRfYbi",
-    "video_mAwphP",
     "instagram_aBkRYt",
     "countdown_t7ccyR",
     "faq_section_zNKj4F",
     "testimonial_k6yU9V",
-    "video_carousel_hWgFJK",
-    "video_product_LqPwy3",
     "gallery_iRcK68",
     "featured_blog_xzjfBN",
     "store_locator_LdRbdL"
