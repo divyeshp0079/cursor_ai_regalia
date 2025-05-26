@@ -17,49 +17,45 @@
           "settings": {
             "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
             "mobile_image": "shopify://shop_images/d4b48f7215310496e98225d855fba018.jpg",
-            "content_alignment": "center",
-            "overlay_bg": true,
+            "content_alignment": "right",
             "maintitle": "Timeless Elegance Redefined",
             "sub_title": "<p>Find timeless jewelry that defines sophistication and style.</p>",
             "button_label": "DISCOVER NOW",
             "btn_link": "#",
             "btn_alignment": "center",
             "heading_size": "h1",
-            "whole_overlay_bg": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),\nlinear-gradient(0deg, rgba(255, 240, 245, 0.2), rgba(255, 240, 245, 0.2))",
             "new_tab": true
           }
         },
         "slide_AHEUTH": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/pexels-ari-roberts-101154701-9393224_1.png",
             "mobile_image": "shopify://shop_images/young-indian-woman-wearing-sari_1.png",
-            "content_alignment": "left",
-            "overlay_bg": false,
+            "content_alignment": "center",
             "maintitle": "Luxury in Every Detail",
             "sub_title": "<p>Handcrafted pieces designed to make every moment shine.</p>",
             "button_label": "EXPLORE COLLECTION",
             "btn_link": "#",
-            "btn_alignment": "left",
+            "btn_alignment": "center",
             "heading_size": "h2",
-            "whole_overlay_bg": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1) 100%)",
             "new_tab": false
           }
         },
         "slide_wi3VxG": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
             "mobile_image": "shopify://shop_images/image_14.png",
             "content_alignment": "right",
-            "overlay_bg": false,
             "maintitle": "Beauty Meets Brilliance",
             "sub_title": "<p>Elevate your style with jewelry that tells your story.</p>",
             "button_label": "SHOP NOW",
             "btn_link": "shopify://collections/all",
-            "btn_alignment": "end",
+            "btn_alignment": "center",
             "heading_size": "h2",
-            "whole_overlay_bg": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1) 100%)",
             "new_tab": false
           }
         }
@@ -278,7 +274,7 @@
         "price_VUnqBt": {
           "type": "price",
           "settings": {
-            "show_percentage": true
+            "show_percentage": false
           }
         },
         "info_text_GLxAKd": {
@@ -374,7 +370,7 @@
       ],
       "settings": {
         "enable_full_width": true,
-        "enable_autoscroll": true,
+        "enable_autoscroll": false,
         "speed_delay": 3000,
         "autoscroll_speed": 3000,
         "slider_enable": true,
