@@ -1,0 +1,134 @@
+{{ 'section-main-page.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .default-page h1,
+  .default-page h2,
+  .default-page h3,
+  .default-page h4,
+  .default-page h5,
+  .default-page h6 {
+    color: {{ section.settings.heading_color }};
+  }
+  .default-page{
+    color: {{ section.settings.content_color }};
+  }
+{%- endstyle -%}
+
+<div class="default-page section-{{ section.id }}-padding"> 
+  <div class="{% if section.settings.full_width %}container full-width{% else %}container-narrow{% endif %}">
+    {%- if section.settings.default_bg_img_1 != blank -%}
+      <div class="background-image vector-top">
+        <lazy-image>
+       <img src="{{ section.settings.default_bg_img_1 | image_url: width: section.settings.default_bg_img_1.width }}"
+            width="{{ section.settings.default_bg_img_1.width }}"
+            height="{{ section.settings.default_bg_img_1.height }}"
+            loading="lazy"
+            alt="Vector top">               
+        </lazy-image>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.default_bg_img_2 != blank -%}
+      <div class="background-image vector-left mobile-hide tablet-hide">
+        <lazy-image>
+         <img src="{{ section.settings.default_bg_img_2 | image_url: width: section.settings.default_bg_img_2.width }}"
+            width="{{ section.settings.default_bg_img_2.width }}"
+            height="{{ section.settings.default_bg_img_2.height }}"
+            loading="lazy"
+            alt="Vector right"> 
+
+        </lazy-image>
+      </div>
+    {%- endif -%}
+
+    <div class="page-width section-{{ section.id }}-padding">
+      {%- render 'breadcrumbs' -%}
+      {%  if section.settings.show_title == true %}
+        <h1 class="main-page-title page-title h0 section-heading" ms-aos data-ms-delay="100">
+          {{ page.title | escape }}
+        </h1>
+      {% endif %}
+      <div class="rte" ms-aos data-ms-delay="200">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main_page.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+      {
+      "type": "image_picker",
+      "id": "default_bg_img_1",
+      "label": "t:settings_schema.page_background_images.settings.bg_image_top_right.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "default_bg_img_2",
+      "label": "t:settings_schema.page_background_images.settings.bg_image_middle_left.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.general.show_page_title.label"
+    },  
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label",
+      "default": "#153D47"
+    },  
+    { 
+      "type": "color",
+      "id": "content_color",
+      "label": "t:sections.general.color.text_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,522 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    --heading-color: {{ section.settings.heading_color | default: settings.heading_color }};
+    --bg-color: {{ section.settings.bg_color }};
+    --location-title-color: {{ section.settings.location_title_color }};
+    --location-address-color: {{ section.settings.location_address_color }};
+    --active_location_color: {{ section.settings.active_location_color }};
+    --btn_text: {{ section.settings.btn_color }};
+  }
+
+  @media (max-width:768px){
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | times: 0 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-store-locator.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="store-locator-section">
+  <div class="mobile-full-width {% if section.settings.enable_full_width %}full-width{% else %}container{% endif %}">
+    <div class="header-wrapper main-title container-narrow">
+      {%- if section.settings.heading -%}
+        <{{ section.settings.heading_size }} class="heading-title text-{{ section.settings.heading_alignment }}">
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_size }}>
+      {%- endif -%}
+    </div>
+    <div class="locator-wrapper position--{{ section.settings.map_position }}">
+      <div class="store-address-container">
+        {%- for block in section.blocks -%}
+          <div class="store-address" data-address="map-{{ forloop.index }}" id="address-{{ forloop.index }}">
+            {%- if block.settings.address_title -%}
+              <div class="address-title">
+                {{ block.settings.address_title }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.address -%}
+              <div class="address">
+                {{ block.settings.address }}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.btn_text -%}
+              <div class="address-button">
+                <a href="{{ block.settings.btn_link }}" class="btn-link-effect" target="_blank">
+                  {{- block.settings.btn_text -}}
+                </a>
+                <span class="right-arrow">{% render 'map-right-arrow' %}</span>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="map-container">
+        {%- for block in section.blocks -%}
+          <div class="store-map" id="map-{{ forloop.index }}" style="display: none;">
+            <div class="map-section__map">
+              {%- if block.settings.address != blank -%}
+                <div
+                  id="googleMap-{{ block.id }}"
+                  data-map="google-Map-{{ block.id }}"
+                  class="map-section__map-container"
+                  data-map-style="{{ section.settings.map_style }}"
+                  data-address-setting="{{ block.settings.address | escape }}"
+                ></div>
+              {%- elsif block.settings.background_image != blank -%}
+                <lazy-image class="img-wrapper">
+                  <img
+                    src="{{ block.settings.background_image | image_url: width: block.settings.background_image.width, format: 'webp' }}"
+                    alt="{{ block.settings.background_image.alt }}"
+                    style="--object-position:{{ block.settings.background_image.presentation.focal_point }};"
+                    width="{{ block.settings.background_image.width }}"
+                    height="{{ block.settings.background_image.height }}"
+                    loading="lazy"
+                  >
+                </lazy-image>
+              {%- else -%}
+                <div class="map-section__placeholder placeholder-image">
+                  {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'store-locator.js' | asset_url }}" type="text/javascript" defer></script>
+
+<script type="text/javascript">
+  function initializeGoogleMaps() {
+    const mapElements = document.querySelectorAll('[data-map]');
+    mapElements.forEach((mapEle) => {
+      const geocoder = new google.maps.Geocoder();
+      const address = mapEle.dataset.addressSetting;
+
+      // Check if the element and its address are valid
+      if (mapEle && address) {
+        geocoder.geocode({ address: address }, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            // Set map options
+            const mapOptions = {
+              zoom: 15,
+              center: results[0].geometry.location,
+              styles: getMapStyles(mapEle.dataset.mapStyle || 'default'),
+            };
+
+            const map = new google.maps.Map(mapEle, mapOptions);
+
+            // Add a marker to the map
+            new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+            });
+          } else {
+            console.error('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+    });
+  }
+  function getMapStyles(styleName) {
+    const mapStyles = {
+      default: [],
+      silver: [
+        { elementType: 'geometry', stylers: [{ color: '#f5f5f5' }] },
+        { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#616161' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f5f5' }] },
+        { featureType: 'administrative.land_parcel', elementType: 'labels.text.fill', stylers: [{ color: '#bdbdbd' }] },
+        { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#eeeeee' }] },
+        { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
+        { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#e5e5e5' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#9e9e9e' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+        { featureType: 'road.arterial', elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#dadada' }] },
+        { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#616161' }] },
+        { featureType: 'road.local', elementType: 'labels.text.fill', stylers: [{ color: '#9e9e9e' }] },
+        { featureType: 'transit.line', elementType: 'geometry', stylers: [{ color: '#e5e5e5' }] },
+        { featureType: 'transit.station', elementType: 'geometry', stylers: [{ color: '#eeeeee' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#c9c9c9' }] },
+        { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#9e9e9e' }] },
+      ],
+      retro: [
+        { elementType: 'geometry', stylers: [{ color: '#ebe3cd' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#523735' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#f5f1e6' }] },
+        { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#c9b2a6' }] },
+        { featureType: 'administrative.land_parcel', elementType: 'geometry.stroke', stylers: [{ color: '#dcd2be' }] },
+        { featureType: 'administrative.land_parcel', elementType: 'labels.text.fill', stylers: [{ color: '#ae9e90' }] },
+        { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{ color: '#dfd2ae' }] },
+        { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#dfd2ae' }] },
+        { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#93817c' }] },
+        { featureType: 'poi.park', elementType: 'geometry.fill', stylers: [{ color: '#a5b076' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#447530' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#f5f1e6' }] },
+        { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#fdfcf8' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#f8c967' }] },
+        { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#e9bc62' }] },
+        { featureType: 'road.highway.controlled_access', elementType: 'geometry', stylers: [{ color: '#e98d58' }] },
+        {
+          featureType: 'road.highway.controlled_access',
+          elementType: 'geometry.stroke',
+          stylers: [{ color: '#db8555' }],
+        },
+        { featureType: 'road.local', elementType: 'labels.text.fill', stylers: [{ color: '#806b63' }] },
+        { featureType: 'transit.line', elementType: 'geometry', stylers: [{ color: '#dfd2ae' }] },
+        { featureType: 'transit.line', elementType: 'labels.text.fill', stylers: [{ color: '#8f7d77' }] },
+        { featureType: 'transit.line', elementType: 'labels.text.stroke', stylers: [{ color: '#ebe3cd' }] },
+        { featureType: 'transit.station', elementType: 'geometry', stylers: [{ color: '#dfd2ae' }] },
+        { featureType: 'water', elementType: 'geometry.fill', stylers: [{ color: '#b9d3c2' }] },
+        { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#92998d' }] },
+      ],
+      dark: [
+        { elementType: 'geometry', stylers: [{ color: '#212121' }] },
+        { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#212121' }] },
+        { featureType: 'administrative', elementType: 'geometry', stylers: [{ color: '#757575' }] },
+        { featureType: 'administrative.country', elementType: 'labels.text.fill', stylers: [{ color: '#9e9e9e' }] },
+        { featureType: 'administrative.land_parcel', stylers: [{ visibility: 'off' }] },
+        { featureType: 'administrative.locality', elementType: 'labels.text.fill', stylers: [{ color: '#bdbdbd' }] },
+        { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
+        { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#181818' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#616161' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.stroke', stylers: [{ color: '#1b1b1b' }] },
+        { featureType: 'road', elementType: 'geometry.fill', stylers: [{ color: '#2c2c2c' }] },
+        { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#8a8a8a' }] },
+        { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#373737' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#3c3c3c' }] },
+        { featureType: 'road.highway.controlled_access', elementType: 'geometry', stylers: [{ color: '#4e4e4e' }] },
+        { featureType: 'road.local', elementType: 'labels.text.fill', stylers: [{ color: '#616161' }] },
+        { featureType: 'transit', elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#000000' }] },
+        { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#3d3d3d' }] },
+      ],
+      night: [
+        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+        { featureType: 'administrative.locality', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
+        { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
+        { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#263c3f' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#6b9a76' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#38414e' }] },
+        { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#212a37' }] },
+        { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#9ca5b3' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#746855' }] },
+        { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#1f2835' }] },
+        { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#f3d19c' }] },
+        { featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#2f3948' }] },
+        { featureType: 'transit.station', elementType: 'labels.text.fill', stylers: [{ color: '#d59563' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] },
+        { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#515c6d' }] },
+        { featureType: 'water', elementType: 'labels.text.stroke', stylers: [{ color: '#17263c' }] },
+      ],
+      aubergine: [
+        { elementType: 'geometry', stylers: [{ color: '#1d2c4d' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#8ec3b9' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#1a3646' }] },
+        { featureType: 'administrative.country', elementType: 'geometry.stroke', stylers: [{ color: '#4b6878' }] },
+        { featureType: 'administrative.land_parcel', elementType: 'labels.text.fill', stylers: [{ color: '#64779e' }] },
+        { featureType: 'administrative.province', elementType: 'geometry.stroke', stylers: [{ color: '#4b6878' }] },
+        { featureType: 'landscape.man_made', elementType: 'geometry.stroke', stylers: [{ color: '#334e87' }] },
+        { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{ color: '#023e58' }] },
+        { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#283d6a' }] },
+        { featureType: 'poi', elementType: 'labels.text.fill', stylers: [{ color: '#6f9ba5' }] },
+        { featureType: 'poi', elementType: 'labels.text.stroke', stylers: [{ color: '#1d2c4d' }] },
+        { featureType: 'poi.park', elementType: 'geometry.fill', stylers: [{ color: '#023e58' }] },
+        { featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{ color: '#3C7680' }] },
+        { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#304a7d' }] },
+        { featureType: 'road', elementType: 'labels.text.fill', stylers: [{ color: '#98a5be' }] },
+        { featureType: 'road', elementType: 'labels.text.stroke', stylers: [{ color: '#1d2c4d' }] },
+        { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#2c6675' }] },
+        { featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{ color: '#255763' }] },
+        { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#b0d5ce' }] },
+        { featureType: 'road.highway', elementType: 'labels.text.stroke', stylers: [{ color: '#023e58' }] },
+        { featureType: 'transit', elementType: 'labels.text.fill', stylers: [{ color: '#98a5be' }] },
+        { featureType: 'transit', elementType: 'labels.text.stroke', stylers: [{ color: '#1d2c4d' }] },
+        { featureType: 'transit.line', elementType: 'geometry.fill', stylers: [{ color: '#283d6a' }] },
+        { featureType: 'transit.station', elementType: 'geometry', stylers: [{ color: '#3a4762' }] },
+        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#0e1626' }] },
+        { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#4e6d70' }] },
+      ],
+    };
+    return mapStyles[styleName] || mapStyles.default;
+  }
+</script>
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key={{ section.settings.api_key }}&callback=initializeGoogleMaps"
+  type="text/javascript"
+  async
+></script>
+
+{% schema %}
+{
+  "name": "t:sections.store_locator.name",
+  "class": "section-store-locator",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.store_locator.settings.layout.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.heading.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.general.text.label",
+      "default": "Visit Us"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.general.font_size.content",
+      "options": [
+        {
+          "label": "t:sections.general.font_size.extra_large.label",
+          "value": "h1"
+        },
+        {
+          "label": "t:sections.general.font_size.large_size.label",
+          "value": "h2"
+        },
+        {
+          "label": "t:sections.general.font_size.medium_size.label",
+          "value": "h3"
+        },
+        {
+          "label": "t:sections.general.font_size.small_size.label",
+          "value": "h4"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.general.alignment.content",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.map.settings.map.content"
+    },
+    {
+      "type": "text",
+      "id": "api_key",
+      "label": "t:sections.map.settings.map_api.label",
+      "info": "t:sections.map.settings.map_api.info"
+    },
+    {
+      "type": "select",
+      "id": "map_style",
+      "label": "t:sections.map.settings.map_style.label",
+      "default": "default",
+      "options": [
+        {
+          "label": "t:sections.map.settings.map_style.options.default_style",
+          "value": "default"
+        },
+        {
+          "label": "t:sections.map.settings.map_style.options.silver_style",
+          "value": "silver"
+        },
+        {
+          "label": "t:sections.map.settings.map_style.options.retro_style",
+          "value": "retro"
+        },
+        {
+          "label": "t:sections.map.settings.map_style.options.dark_style",
+          "value": "dark"
+        },
+        {
+          "label": "t:sections.map.settings.map_style.options.night_style",
+          "value": "night"
+        },
+        {
+          "label": "t:sections.map.settings.map_style.options.aubergine_style",
+          "value": "aubergine"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "map_position",
+      "label": "t:sections.store_locator.settings.map_position.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.color.content"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label",
+      "default": "#FBF5F0"
+    },
+    {
+      "type": "color",
+      "id": "location_title_color",
+      "label": "t:sections.store_locator.settings.location_title_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "color",
+      "id": "location_address_color",
+      "label": "t:sections.store_locator.settings.location_address_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "color",
+      "id": "active_location_color",
+      "label": "t:sections.store_locator.settings.active_location_color.label",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "t:sections.general.button.button_text_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "t:sections.store_locator.blocks.name",
+      "settings": [
+        {
+          "type": "header",
+          "content": "t:sections.store_locator.blocks.settings.address.content"
+        },
+        {
+          "type": "text",
+          "id": "address_title",
+          "label": "t:sections.store_locator.blocks.settings.address.label",
+          "default": "Briefly on earth"
+        },
+        {
+          "type": "richtext",
+          "id": "address",
+          "label": "t:sections.store_locator.blocks.settings.address.address.label",
+          "info": "t:sections.store_locator.blocks.settings.address.address.info",
+          "default": "<p>75 9th Ave, New York, NY 10011-7006</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "t:sections.store_locator.blocks.settings.address.placeholder_image.label",
+          "info": "To display if there is no map key"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.general.button.content"
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "t:sections.general.button.button_text.label",
+          "default": "View details"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "t:sections.general.button.button_link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.store_locator.presets.name",
+      "blocks": [
+        {
+          "type": "location"
+        },
+        {
+          "type": "location"
+        },
+        {
+          "type": "location"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

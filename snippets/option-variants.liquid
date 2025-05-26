@@ -1,0 +1,27 @@
+<div class="product-options">
+  {{ product.options_with_values }}--
+  {% for option in product.options_with_values %}
+    <h3>{{ option.name }}---ff</h3>
+    <!-- Check if the option is "Color" -->
+    {% if option.name == 'Color' %}
+      <div class="product-option product-option--color">
+        <h3>{{ option.name }}</h3>
+        <div class="color-swatches">
+          {% for value in option.values %}
+            <div class="swatch" style="background-color: {{ value | downcase }};" title="{{ value }}"></div>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <!-- Design for other options -->
+      <div class="product-option product-option--default">
+        <h3>{{ option.name }}</h3>
+        <select name="options[{{ option.name }}]">
+          {% for value in option.values %}
+            <option value="{{ value }}">{{ value }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

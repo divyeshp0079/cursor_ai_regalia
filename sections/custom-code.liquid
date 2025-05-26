@@ -1,0 +1,28 @@
+{%- if section.settings.liquid != blank -%}
+  <div class="container">
+    <div class="custom-liquid-wrapper" ms-aos data-ms-delay="200">
+      {{ section.settings.liquid }}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.custom_liquid.name",
+  "class": "section--custom-liquid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "liquid",
+      "label": "t:sections.custom_liquid.settings.header.label",
+      "info": "t:sections.custom_liquid.settings.header.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.custom_liquid.presets.name"
+    }
+  ]
+}
+{% endschema %}

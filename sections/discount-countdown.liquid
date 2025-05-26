@@ -1,0 +1,149 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media(max-width: 767px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+  :root{
+    --countdown-sec-bg:{{ section.settings.bg_color }};
+    --countdown-sec-color:{{ section.settings.text_color }};
+    --countdown-time-col:{{ section.settings.link_color }};
+    --countdown-content-align:{{ section.settings.content-align }};
+  }
+{%- endstyle -%}
+
+{{ 'component-discount-countdown.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="discount-contdown">
+  <div class="discount-countdown-data">
+    <div classs="container-narrow content-data">
+
+    <div class="discount-countdown-content">
+      <div class="discount-content mobile-full-width" ms-aos data-ms-delay="100">
+         <span class="h6" class="discount-inner-text ff-secondary">{{ section.settings.main_title }}</span>
+        <span class="discount-sitewide">
+          <h3 class="sitewide-offer ff-secondary">{{ section.settings.sitewide_text }}</h3>
+          <span id="copy" class="copy-to-clipboard" tabindex="0">
+            <p id="to-copy" class="discount-code dotted-border d-flex justify-center">{{ section.settings.disc_code }}</p>
+          </span>
+        </span>
+      </div>
+      <div class="countdown-content mobile-full-width" ms-aos data-ms-delay="100">
+        <div class="count-timer-content">
+        <div class="count-timer" data-end-time="{{ section.settings.end_date }}">
+            <div class="countdown-item">
+              <span class="count-number days">{{ 'general.countdown.default' | t }}</span>
+              <span class="count-label">{{ 'general.countdown.days' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="count-number hours">{{ 'general.countdown.default' | t }}</span>
+              <span class="count-label">{{ 'general.countdown.hours' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="count-number minutes">{{ 'general.countdown.default' | t }}</span>
+              <span class="count-label">{{ 'general.countdown.minutes' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="count-number seconds">{{ 'general.countdown.default' | t }}</span>
+              <span class="count-label">{{ 'general.countdown.seconds' | t }}</span>
+            </div>
+          </div>
+          </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'component-discount-countdown.js' | asset_url }}" type="text/javascript" defer></script>
+
+  
+{% schema %}
+{
+  "name": "t:sections.discount_countdown.name",
+  "class": "section section-discount-countdown",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "t:sections.discount_countdown.settings.content.main_title.label"
+    },
+    {
+      "type": "text",
+      "id": "sitewide_text",
+      "label": "t:sections.discount_countdown.settings.content.sub_title.label"
+    },
+    {
+      "type": "text",
+      "id": "disc_code",
+      "label": "t:sections.discount_countdown.settings.content.discount_code.label"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "t:sections.discount_countdown.settings.content.end_date.label",
+      "default": "2022-12-31"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.general.color.text_color.label",
+      "default": "#FFF"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "t:sections.general.color.link_color.label",
+      "default": "#FFF"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.discount_countdown.settings.mobile_layout.content"
+    },
+    {
+      "type": "select",
+      "id": "content-align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "end",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "label": "t:sections.discount_countdown.settings.mobile_content_alignment.label",
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.discount_countdown.presets.name"
+    }
+  ]
+}
+{% endschema %}

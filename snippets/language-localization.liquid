@@ -1,0 +1,39 @@
+{{ 'component-language-localization.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="languagecontent">
+  <div class="defaultlanguage" tabindex="0">
+    <span>{{ localization.language.iso_code | upcase }}</span>
+    {{ 'icon-caret.svg' | inline_asset_content }}
+  </div>
+  
+  <div class="language-selector">
+    <ul id="{{ localPosition }}List" role="list" class="mainlangcontent list-unstyled">
+      {%- for language in localization.available_languages -%}
+        <li class="language_item" tabindex="-1">
+          <a
+            class="link link--text disclosure__link caption-large focus-inset"
+            href="#"
+            hreflang="{{ language.iso_code }}"
+            lang="{{ language.iso_code }}"
+            {% if language.iso_code == localization.language.iso_code %}
+              aria-current="true"
+            {% endif %}
+            data-value="{{ language.iso_code }}"
+          >
+            <span
+              {% if language.iso_code != localization.language.iso_code %}
+                class="visibility-hidden"
+              {% endif %}
+            >
+              {{- 'icon-checkmark.svg' | inline_asset_content -}}
+            </span>
+            <span>
+              {{ language.endonym_name | upcase }}
+            </span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+<input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">

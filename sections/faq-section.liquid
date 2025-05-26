@@ -1,0 +1,261 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .faq-content .faq-heading{
+    color: {{ section.settings.heading_color }};
+  }
+  @media(max-width: 768px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-faq.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="faq-section">
+  <div class="faq-wrapper">
+    <div class="faq-container {% if section.settings.image_position == 'right' %} reverse{% endif %}">
+      <lazy-image class="faq-image" ms-aos data-ms-delay="100">
+        {%- if section.settings.image -%}
+          <img src="{{ section.settings.image | image_url: width: section.settings.image.width, format: 'webp' }}"
+            alt="{{ section.settings.image.alt | default: 'FAQ Image' }}" 
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            style="--object-position: {{ section.settings.image.presentation.focal_point }}"
+            loading="eager">
+        {%- else -%}
+          <lazy-image>
+            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </lazy-image>
+        {%- endif -%}
+      </lazy-image>
+      <div class="faq-content">
+        {%- if section.settings.title -%}
+          <{{ section.settings.heading_size }} tabindex="0" class="faq-heading text-{{ section.settings.heading_alignment }}" ms-aos data-ms-delay="100">{{ section.settings.title }}</{{ section.settings.heading_size }}>
+        {%- endif -%}
+        <div class="faq-items">
+          {% for faq in section.blocks %}
+            {%- if faq.settings.question != blank and faq.settings.answer != blank -%}
+              <div  tabindex="0" class="faq-item-wrapper" ms-aos data-ms-delay={{ forloop.index0 | times: 150 }}>
+                <div tabindex="-1" class="faq-question">
+                  <div class="faq-icon-wrapper">
+                    <span class="faq-icon">
+                      {%- if faq.settings.faq_icon -%}
+                        <img src="{{ faq.settings.faq_icon | image_url: width: faq.settings.faq_icon.width }}" 
+                          alt="FAQ Icon"
+                          loading="lazy"
+                          width="{{ faq.settings.faq_icon.width }}"
+                          height="{{ faq.settings.faq_icon.height }}"
+                        >
+                      {%- endif -%}
+                    </span>
+                    {%- if faq.settings.question -%}
+                      <span tabindex="0" class="faq-qa">{{ faq.settings.question }}</span>
+                    {%- endif -%}
+                  </div>
+                  <span class="faq-toggle">
+                    {% render 'down-arrow' %}
+                  </span>
+                </div>
+                <div class="faq-answer">
+                     <div aria-label="{{ faq.settings.answer }}" tabindex="0">
+                  {%- if faq.settings.answer -%}
+                    {{ faq.settings.answer }}
+                  {%- endif -%}
+                     </div>
+                </div>
+              </div>
+            {%- endif -%}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'component-faq.js' | asset_url }}" type="text/javascript" defer></script>
+
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "class": "section section-faq",
+  "tag": "section",
+  "max_blocks": 5,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.faq.settings.media.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.faq.settings.media.image.label"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:sections.faq.settings.media.image.position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.faq.settings.header.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.general.heading.label",
+      "default": "FAQ"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.general.font_size.content",
+      "options": [
+        {
+          "value": "h1",
+          "label": "t:sections.general.font_size.extra_large.label"
+        },
+        {
+          "value": "h2",
+          "label": "t:sections.general.font_size.large_size.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.general.font_size.medium_size.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.general.font_size.small_size.label"
+        },
+        {
+          "value": "h5",
+          "label": "t:sections.general.font_size.extra_small.label"
+        },
+        {
+          "value": "h6",
+          "label": "t:sections.general.font_size.tiny.label"
+        }
+      ],
+      "default": "h3"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.general.alignment.content",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.color.content"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "t:sections.faq.blocks.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "faq_icon",
+          "label": "t:sections.faq.blocks.settings.faqs.icon.label"
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.settings.faqs.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.settings.faqs.answer.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq.presets.name",
+      "settings": {
+        "title": "FAQ",
+        "heading_size": "h3"
+      },
+      "blocks": [
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq"
+        },
+        {
+          "type": "faq"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

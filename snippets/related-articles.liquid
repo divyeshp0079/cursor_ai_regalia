@@ -1,0 +1,48 @@
+<style>
+  .related-articles {
+    display: grid;
+    grid-template-columns: repeat({{section.settings.columns_desktop | default: 3}}, minmax(200px, 1fr));
+    gap: 26px;
+  }
+</style>
+
+{{ 'related-articles.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="related-article-wrapper">
+  {% if section.settings.related_article_title != blank %}
+    <h2 class="related-article-heading">{{ section.settings.related_article_title }}</h2>
+  {% endif %}
+
+  {% assign related_articles = blog.articles %}
+  {% assign articles_per_page = section.settings.related_articles_per_page | default: 3 | plus: 1 %}
+
+  <div class="related-articles">
+    {% for related_article in related_articles limit: articles_per_page %}
+      {% if related_article.id != article.id %}
+        <div class="related-article-item">
+          {% if related_article.image %}
+            <a href="{{ related_article.url }}">
+              <lazy-image class="media-wrapper">
+                <img
+                  src="{{ related_article.image | image_url: width: 500 }}"
+                  width="{{ related_article.image.width | default: 500 }}"
+                  height="{{ related_article.image.height | default: 416 }}"
+                  alt="{{ related_article.image.alt | default: related_article.title }}"
+                  loading="lazy"
+                >
+              </lazy-image>
+            </a>
+          {% endif %}
+          <div class="item-detail">
+            <h3>
+              <a href="{{ related_article.url }}">{{ related_article.title | truncate: 25 }}</a>
+            </h3>
+            <div class="blog-date">
+              <span class="h6">{{ related_article.published_at | date: '%B %d, %Y' }}</span>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

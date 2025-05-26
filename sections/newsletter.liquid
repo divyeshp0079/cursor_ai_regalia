@@ -1,0 +1,267 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .newsletter {
+    background-color: {{ section.settings.bg_color }};
+  }
+  .newsletter .newsletter-heading{
+    color:{{ section.settings.text_color }};
+  }
+  .newsletter .newsletter__subheading{
+    color: {{ section.settings.subheading_color }};
+  }
+  @media(max-width:767px){
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-newsletter.css' | asset_url | stylesheet_tag:preload: true }}
+
+<div class="newsletter {% if section.settings.full_width %}full-width{% else %}container{% endif %}">
+  <div class="newsletter-inner {% if section.settings.full_width %}container{% endif %}">
+    <div class="newsletter-content section-{{ section.id }}-padding">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+          {%- when 'heading' -%}
+            {%- if block.settings.heading != blank -%}
+              <span
+                class="{{ block.settings.heading_size }} newsletter-heading"
+                {{ block.shopify_attributes }}
+                ms-aos
+                data-ms-delay="{{ forloop.index | times: 150 }}"
+              >
+                {{ block.settings.heading | newline_to_br }}
+              </span>
+            {%- endif -%}
+          {%- when 'paragraph' -%}
+            <div
+              class="newsletter__subheading rte"
+              {{ block.shopify_attributes }}
+              ms-aos
+              data-ms-delay="{{ forloop.index | times: 150 }}"
+            >
+              {{ block.settings.text }}
+            </div>
+          {%- when 'email_form' -%}
+            <div {{ block.shopify_attributes }}>
+              {% form 'customer', class: 'newsletter-form' %}
+                {% if form.posted_successfully? %}
+                  <p class="submit_success h5">
+                    {%- render 'icons', icon: 'success' -%}
+                    {{ 'newsletter.success_msg' | t }}
+                  </p>
+                {% else %}
+                  <input
+                    type="hidden"
+                    name="contact[tags]"
+                    value="newsletter"
+                  >
+                  <div
+                    class="newsletter-form__field-wrapper"
+                    ms-aos
+                    data-ms-delay="{{ forloop.index | times: 150 }}"
+                  >
+                    {%- if form.errors -%}
+                      <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
+                        {%- render 'icons', icon: 'error' -%}
+                        {{ form.errors.translated_fields.email | capitalize }}
+                        {{ form.errors.messages.email -}}
+                      </small>
+                    {%- endif -%}
+                    <div class="field">
+                      <label class="visuallyhidden" for="NewsletterForm--{{ section.id }}">
+                        {{- 'newsletter.label' | t -}}
+                      </label>
+                      <input
+                        id="NewsletterForm--{{ section.id }}"
+                        type="email"
+                        name="contact[email]"
+                        class="field__input"
+                        value="{{ form.email }}"
+                        aria-required="true"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        {% if form.errors %}
+                          autofocusaria-invalid="true"aria-describedby="Newsletter-error--{{ section.id }}"
+                        {% elsif form.posted_successfully? %}
+                          aria-describedby="Newsletter-success--{{ section.id }}"
+                        {% endif -%}
+                        placeholder="{{ 'newsletter.email_placeholder' | t }}"
+                        required
+                      >
+                      {%- if block.settings.btn_type == 'text' -%}
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                          name="commit"
+                          aria-label="{{ 'newsletter.submit_btn' | t }}"
+                        >
+                          {{ 'newsletter.submit_btn' | t }}
+                        </button>
+                      {%- else-%}
+                        <button
+                          type="submit"
+                          class="btn btn-icon"
+                          name="commit"
+                          aria-label="{{ 'newsletter.submit_btn' | t }}"
+                        >
+                          {%- render 'icons' , icon: 'email' -%}
+                        </button>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endform %}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.newsletter.name",
+  "tag": "section",
+  "class": "section-newsletter",
+  "enabled_on": {
+    "groups": [
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "t:sections.general.full_width"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.newsletter.settings.paragraph.info"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.general.color.text_color.label",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "t:sections.general.color.subheading_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label",
+      "default": "#F6F1EF"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.newsletter.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "t:sections.general.text.label",
+          "default": "Sign up to the newsletter."
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "t:sections.general.font_size.content",
+          "options": [
+            {
+              "value": "h4",
+              "label": "t:sections.general.font_size.small_size.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.general.font_size.medium_size.label"
+            },
+            {
+              "value": "h2",
+              "label": "t:sections.general.font_size.large_size.label"
+            }
+          ],
+          "default": "h3"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "t:sections.newsletter.blocks.paragraph.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.newsletter.blocks.paragraph.settings.description.label",
+          "default": "<p>Be the first to know about new collections and exclusive offers.</p>"
+        }
+      ]
+    },
+    {
+      "type": "email_form",
+      "name": "t:sections.newsletter.blocks.form.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.newsletter.presets.name",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "paragraph"
+        },
+        {
+          "type": "email_form"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

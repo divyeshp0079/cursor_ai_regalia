@@ -1,0 +1,224 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75| round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'customer.css' | asset_url | stylesheet_tag:preload: true}}
+
+<div class="main-register-wrapper">
+  {%- render 'breadcrumbs' -%}
+  <div class="customer register">
+    {%- if settings.bg_img_1 -%}
+      <div class="bg-image top-right">
+        <lazy-image>
+          <img src="{{ settings.bg_img_1 | image_url: width: settings.bg_img_1.width }}"
+            alt="{{ settings.bg_img_1.alt }}"
+            width="{{ settings.bg_img_1.width }}"
+            height="{{ settings.bg_img_1.height }}"
+            loading="lazy"
+            style="--object-postion:{{ settings.bg_img_1.presentation.focal_point }}">
+        </lazy-image>
+      </div>
+    {%- endif -%}
+    {%- if settings.bg_img_2 -%}
+      <div class="bg-image top-left">
+        <lazy-image>
+          <img src="{{ settings.bg_img_2 | image_url: width: settings.bg_img_2.width }}"
+            alt="{{ settings.bg_img_2.alt }}"
+            width="{{ settings.bg_img_2.width }}"
+            height="{{ settings.bg_img_2.height }}"
+            loading="lazy"
+            style="--object-postion:{{ settings.bg_img_2.presentation.focal_point }}">
+        </lazy-image>
+      </div>
+    {%- endif -%}
+    {%- if settings.bg_img_3 -%}
+      <div class="bg-image middle-right">
+        <lazy-image>
+          <img src="{{ settings.bg_img_3 | image_url: width: settings.bg_img_3.width }}"
+            alt="{{ settings.bg_img_3.alt }}"
+            width="{{ settings.bg_img_3.width }}"
+            height="{{ settings.bg_img_3.height }}"
+            loading="lazy"
+            style="--object-postion:{{ settings.bg_img_3.presentation.focal_point }}">
+        </lazy-image>
+      </div>
+    {%- endif -%}
+    <svg style="display: none">
+      <symbol id="icon-error" viewBox="0 0 13 13">
+        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+      </symbol>
+    </svg>
+    <h2 ms-aos data-ms-delay="100" class="heading-title">
+      {{ 'customer.register.title' | t }}
+    </h2>
+    <div class="login-btn" ms-aos data-ms-delay="200">
+      {{ 'customer.login_page.login_title' | t }}
+      <a href="{{ routes.account_login_url }}">
+        {{ 'customer.login_page.title' | t }}
+      </a>
+    </div>
+    {%- form 'create_customer', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <div class="form-errors">
+          <h2 class="form__message" tabindex="-1">
+            <svg aria-hidden="true" focusable="false" role="presentation">
+              <use href="#icon-error" />
+            </svg>
+            {{ 'templates.contact.form.error_heading' | t }}
+          </h2>
+          <ul> 
+            {%- for field in form.errors -%}
+              <li>
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  <a href="#RegisterForm-{{ field }}">
+                    {{ form.errors.translated_fields[field] | capitalize }}
+                    {{ form.errors.messages[field] }}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+      <div class="field" ms-aos data-ms-delay="300">
+        <label class="visuallyhidden" for="RegisterForm-FirstName">{{ 'customer.register.first_name' | t }}</label>
+        <input
+          type="text"
+          name="customer[first_name]"
+          id="RegisterForm-FirstName"
+          {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+          autocomplete="given-name"
+          onkeydown="return /[a-z]/i.test(event.key)"
+          placeholder="{{ 'customer.register.first_name' | t }}"
+          aria-required="true">
+      </div>
+      <div class="field" ms-aos data-ms-delay="400">
+        <label class="visuallyhidden" for="RegisterForm-LastName">{{ 'customer.register.last_name' | t }}</label>
+        <input
+          type="text"
+          name="customer[last_name]"
+          id="RegisterForm-LastName"
+          {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+          autocomplete="family-name"
+          placeholder="{{ 'customer.register.last_name' | t }}"
+          aria-required="true"
+          onkeydown="return /[a-z]/i.test(event.key)"
+          {% if form.errors contains 'last_name' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-lastname-error"
+          {% endif %}>
+      </div>
+      {%- if form.errors contains 'last_name' -%}
+        <span id="RegisterForm-lastname-error" class="form__message">
+          <svg aria-hidden="true" focusable="false" role="presentation">
+            <use href="#icon-error" />
+          </svg>
+          {{ form.errors.translated_fields['last_name'] | capitalize }} {{ form.errors.messages['last_name'] }}.
+        </span>
+      {%- endif -%}
+      <div class="field" ms-aos data-ms-delay="500">     
+        <label class="visuallyhidden" for="RegisterForm-email">{{ 'customer.register.email' | t }}</label>    
+          <input
+            type="email"
+            name="customer[email]"
+            id="RegisterForm-email"
+            {% if form.email %} value="{{ form.email }}"{% endif %}
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="email"
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="RegisterForm-email-error"
+            {% endif %}
+            placeholder="{{ 'customer.register.email' | t }}*"
+          >
+      </div>
+        
+        {%- if form.errors contains 'email' -%}
+          <span id="RegisterForm-email-error" class="form__message">
+            <svg aria-hidden="true" focusable="false" role="presentation">
+              <use href="#icon-error" />
+            </svg>
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.
+          </span>
+        {%- endif -%}
+
+      <div class="field password" ms-aos data-ms-delay="600">
+        <label class="visuallyhidden" for="RegisterForm-password">{{ 'customer.register.password' | t }}</label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="RegisterForm-password"
+          class="password-input"
+          aria-required="true"
+          {% if form.errors contains 'password' %}
+            aria-invalid="true"
+            aria-describedby="RegisterForm-password-error"
+          {% endif %}
+          placeholder="{{ 'customer.register.password' | t }}*"
+        >
+        <span class="passowrd-show-hide eye-hide">{%- render 'icons', icon: 'eye-hide' -%}</span>
+        <span class="passowrd-show-hide eye-show" style="display: none;">{%- render 'icons', icon: 'eye-show' -%}</span>
+      </div>
+      {%- if form.errors contains 'password' -%}
+        <span id="RegisterForm-password-error" class="form__message">
+          <svg aria-hidden="true" focusable="false" role="presentation">
+            <use href="#icon-error" />
+          </svg>
+          {{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}.
+        </span>
+      {%- endif -%}
+      <button class="btn btn-primary btn-large" ms-aos data-ms-delay="700">
+        {{ 'customer.register.submit' | t | upcase }}
+      </button>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.customer.register.name",
+  "class": "register-page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

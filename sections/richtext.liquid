@@ -1,0 +1,338 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    --bg_color: {{ section.settings.bg_color }};
+    --txt_color: {{ section.settings.text_color }};
+    --heading_color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  {%- for block in section.blocks -%}
+    #shopify-section-{{ section.id }} .block-{{ block.id }}.gradient-text-wrapper h2 {
+      background-image: {{ block.settings.background_gradient }};
+    }
+  {%- endfor -%}
+  @media(max-width: 767px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-richtext.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="container {% if section.settings.full_width %}full-width{% endif %} align--{{ section.settings.alignment }}">
+  <div class="rich-text-wrap">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'gradient' -%}
+          {%- if block.settings.gradient_text != blank -%}
+            <div class="gradient-text-wrapper block-{{ block.id }}" >
+              <h2 class="{{ block.settings.gradient_text_size }} gradient-text" ms-aos data-ms-delay="100">
+                {{ block.settings.gradient_text | escape }}
+              </h2>
+            </div>
+          {%- else -%}
+            <div class="gradient-text-wrapper block-{{ block.id }}" >
+              <h2 class="{{ block.settings.gradient_text_size }} gradient-text" ms-aos data-ms-delay="100">
+              {{ shop.name }}
+              </h2>
+            </div>
+          {%- endif -%}
+        {%- endcase -%}
+        <div class="rich-text-wrapper">
+          {%- case block.type -%}
+          {%- when 'heading' -%}
+            {%- if block.settings.heading_text != blank -%}
+              <div class="rich-heading">
+                <h2 class="{{ block.settings.heading_size }}" ms-aos data-ms-delay="200">{{ block.settings.heading_text }}</h2>
+              </div>
+            {%- endif -%}
+
+          {%- when 'subheading' -%}
+            {%- if block.settings.subheading_text != blank -%}
+              <div class="rich-subheading" ms-aos data-ms-delay="300">
+                <p class="h5">{{ block.settings.subheading_text }}</p>
+              </div>
+            {%- endif -%}
+
+          {%- when 'description' -%}
+            {%- if block.settings.content_text != blank -%}
+              <div class="rich-description {{ block.settings.text_size }}" ms-aos data-ms-delay="400">
+                {{ block.settings.content_text }}
+              </div>
+            {%- endif -%}
+          
+          {%- when 'button' -%}
+            {%- if block.settings.btn != blank -%}
+              <div class="rich-btn" ms-aos data-ms-delay="500">
+                <a href="{{ block.settings.btn_link }}" class="btn {{ block.settings.btn_style }}" {% if block.settings.is_newpage %}target="_blank"{% endif %}> {{ block.settings.btn }} </a>
+              </div>
+            {%- endif -%}
+          {%- endcase -%}
+        </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.richtext.name",
+  "class": "section-richtext",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.richtext.settings.customization.label"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:sections.general.alignment.content",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.general.color.text_color.label"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gradient",
+      "name": "t:sections.richtext.blocks.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "gradient_text",
+          "label": "t:sections.richtext.blocks.settings.gradient_text.label",
+          "info": "t:sections.richtext.blocks.settings.gradient_text.info"
+        },
+        {
+          "type": "select",
+          "id": "gradient_text_size",
+          "label": "t:sections.general.font_size.content",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.general.font_size.large_size.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.general.font_size.medium_size.label"
+            },
+            {
+              "value": "h4",
+              "label": "t:sections.general.font_size.small_size.label"
+            }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.richtext.blocks.settings.colors.label",
+          "info": "t:sections.richtext.blocks.settings.colors.info"
+        },
+        {
+          "type": "color_background",
+          "id": "background_gradient",
+          "label": "t:sections.richtext.blocks.settings.bg_gradient.label"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "t:sections.general.heading.label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading_text",
+          "label": "t:sections.general.text.label",
+          "default": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "t:sections.general.font_size.content",
+          "options": [
+            {
+              "value": "h2",
+              "label": "t:sections.general.font_size.large_size.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.general.font_size.medium_size.label"
+            },
+            {
+              "value": "h4",
+              "label": "t:sections.general.font_size.small_size.label"
+            }
+          ],
+          "default": "h3"
+        }
+      ]
+    },
+    {
+      "type": "subheading",
+      "name": "t:sections.general.subheading.label",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "subheading_text",
+          "label": "t:sections.general.subheading.label"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "t:sections.general.description.label",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content_text",
+          "label": "t:sections.general.content.label",
+          "default": "<p>Add content here</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_size",
+          "label": "t:sections.general.font_size.content",
+          "options": [
+            {
+              "value": "h4",
+              "label": "t:sections.general.font_size.large_size.label"
+            },
+            {
+              "value": "h5",
+              "label": "t:sections.general.font_size.medium_size.label"
+            },
+            {
+              "value": "h6",
+              "label": "t:sections.general.font_size.small_size.label"
+            }
+          ],
+          "default": "h6"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "t:sections.general.button.content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "btn",
+          "label": "t:sections.general.button.button_text.label"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "t:sections.general.button.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "btn_style",
+          "label": "t:sections.general.button.button_type.label",
+          "options": [
+            {
+              "value": "btn-primary",
+              "label": "t:sections.general.button.button_type.options.btn_primary.label"
+            },
+            {
+              "value": "btn-secondary",
+              "label": "t:sections.general.button.button_type.options.btn_secondary.label"
+            }
+          ],
+          "default": "btn-primary"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_newpage",
+          "label": "t:sections.general.button.open_in_new_tab.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.richtext.presets.name",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "gradient"
+        },
+        {
+          "type": "heading"
+        },
+        {
+          "type": "description"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

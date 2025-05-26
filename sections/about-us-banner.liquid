@@ -1,0 +1,279 @@
+{{ 'about-us.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- style -%}
+  #section-{{ section.id }} {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  #section-{{ section.id }} .banner-container.custom-width {
+    width: 100%;
+    margin: 0 auto;
+    max-width: {{ section.settings.container_max_width }}px;
+  }
+  #section-{{ section.id }} .banner-main-heading{
+      color: {{ section.settings.main_heading_color }};
+  }
+  #section-{{ section.id }} .banner-text{
+      max-width: {{ section.settings.inner_max_width }}px;
+  }
+  #section-{{ section.id }} .banner-text .subheading{
+      color: {{ section.settings.sub_heading_color }};
+  }
+  #section-{{ section.id }} .banner-text .description{
+      color: {{ section.settings.description_color }}
+  }
+
+  @media screen and (max-width: 767px) {
+    #section-{{ section.id }} .banner-main-heading {
+      text-align: {{ section.settings.heading_align_mob }};
+    }
+  }
+    @media screen and (min-width: 768px) {
+    #section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    #section-{{ section.id }} .banner-main-heading {
+      text-align: {{ section.settings.heading_align_desk }};
+    }
+    #section-{{ section.id }} .banner-content img {
+      height: {{ section.settings.background_height }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="section-{{ section.id }}" class="about-us-banner">
+  <div class="banner-container {% if section.settings.full_width %}full-width{% else %}custom-width{% endif %}">
+    <h2 class="banner-main-heading">
+      {{ section.settings.main_heading }}
+    </h2>
+
+    <div class="banner-content">
+      <picture>
+        {% if section.settings.background_image_mob != blank %}
+          <source
+            media="(max-width: 767px)"
+            srcset="{{ section.settings.background_image_mob | image_url: width: 768 }}"
+          >
+        {% endif %}
+
+        <source
+          media="(min-width: 768px)"
+          srcset="{{ section.settings.background_image | image_url: width: section.settings.background_image.width }}"
+        >
+
+        <img
+          src="{{ section.settings.background_image | image_url: width: section.settings.background_image.width }}"
+          alt="{{ section.settings.background_image.alt | default: 'Banner image' }}"
+          width="{{ section.settings.background_image.width }}"
+          height="{{ section.settings.background_height }}"
+          fetchpriority="high"
+          style="width: 100%; object-fit: cover;"
+        >
+      </picture>
+
+      <div class="banner-overlay"></div>
+      <div class="banner-text d-{{ section.settings.text_position_desk | replace: ' ', '-' }} m-{{ section.settings.text_position_mob | replace: ' ', '-' }}">
+        <{{ section.settings.subheading_size }} class="subheading">
+          {{- section.settings.sub_heading -}}
+        </{{ section.settings.subheading_size }}>
+        <span class="description {{ section.settings.desc_size }}">{{ section.settings.description }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.about_us_banner.name",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "t:sections.general.container_max_width.label",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "default": 1180
+    },
+    {
+      "type": "range",
+      "id": "inner_max_width",
+      "label": "t:sections.general.inner_max_width.label",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "default": 1180
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "t:sections.about_us_banner.settings.main_heading.label",
+      "default": "The World of Regalia"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_desk",
+      "label": "t:sections.about_us_banner.settings.heading_alignment_desktop.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mob",
+      "label": "t:sections.about_us_banner.settings.heading_alignment_mobile.label",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "main_heading_color",
+      "label": "t:sections.about_us_banner.settings.main_heading_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:sections.about_us_banner.settings.background_image.desktop.label"
+    },
+    {
+      "type": "range",
+      "id": "background_height",
+      "label": "t:sections.about_us_banner.settings.background_image_height.label",
+      "min": 300,
+      "max": 1100,
+      "step": 10,
+      "default": 570
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mob",
+      "label": "t:sections.about_us_banner.settings.background_image.mobile.label"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "t:sections.about_us_banner.settings.sub_heading.label",
+      "default": "A Legacy of Elegance"
+    },
+    {
+      "type": "color",
+      "id": "sub_heading_color",
+      "label": "t:sections.about_us_banner.settings.sub_heading_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "t:sections.about_us_banner.settings.description.label",
+      "default": "At Regalia, we believe jewelry is more than a beautiful accessory - it’s a symbol of personal power, timeless elegance, and unforgettable moments. Each piece in our collection is designed to reflect sophistication, confidence, and grace."
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "t:sections.about_us_banner.settings.description_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "select",
+      "id": "text_position_desk",
+      "label": "t:sections.about_us_banner.settings.text_alignment_desktop.label",
+      "default": "bottom left",
+      "options": [
+        { "value": "top left", "label": "t:sections.general.alignment.alignment_top_left.label" },
+        { "value": "top center", "label": "t:sections.general.alignment.alignment_top_center.label" },
+        { "value": "top right", "label": "t:sections.general.alignment.alignment_top_right.label" },
+        { "value": "middle left", "label": "t:sections.general.alignment.alignment_middle_left.label" },
+        { "value": "middle center", "label": "t:sections.general.alignment.alignment_middle_center.label" },
+        { "value": "middle right", "label": "t:sections.general.alignment.alignment_middle_right.label" },
+        { "value": "bottom left", "label": "t:sections.general.alignment.alignment_bottom_left.label" },
+        { "value": "bottom center", "label": "t:sections.general.alignment.alignment_bottom_center.label" },
+        { "value": "bottom right", "label": "t:sections.general.alignment.alignment_bottom_right.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_position_mob",
+      "label": "t:sections.about_us_banner.settings.text_alignment_mobile.label",
+      "default": "bottom left",
+      "options": [
+        { "value": "top left", "label": "t:sections.general.alignment.alignment_top_left.label" },
+        { "value": "top center", "label": "t:sections.general.alignment.alignment_top_center.label" },
+        { "value": "top right", "label": "t:sections.general.alignment.alignment_top_right.label" },
+        { "value": "middle left", "label": "t:sections.general.alignment.alignment_middle_left.label" },
+        { "value": "middle center", "label": "t:sections.general.alignment.alignment_middle_center.label" },
+        { "value": "middle right", "label": "t:sections.general.alignment.alignment_middle_right.label" },
+        { "value": "bottom left", "label": "t:sections.general.alignment.alignment_bottom_left.label" },
+        { "value": "bottom center", "label": "t:sections.general.alignment.alignment_bottom_center.label" },
+        { "value": "bottom right", "label": "t:sections.general.alignment.alignment_bottom_right.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "subheading_size",
+      "label": "t:sections.about_us_banner.settings.subheading_size.label",
+      "default": "h3",
+      "options": [
+        { "value": "h4", "label": "t:sections.general.font_size.small_size.label" },
+        { "value": "h3", "label": "t:sections.general.font_size.medium_size.label" },
+        { "value": "h2", "label": "t:sections.general.font_size.large_size.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desc_size",
+      "label": "t:sections.about_us_banner.settings.description_size.label",
+      "default": "h4",
+      "options": [
+        { "value": "h4", "label": "t:sections.general.font_size.small_size.label" },
+        { "value": "h3", "label": "t:sections.general.font_size.medium_size.label" },
+        { "value": "h2", "label": "t:sections.general.font_size.large_size.label" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

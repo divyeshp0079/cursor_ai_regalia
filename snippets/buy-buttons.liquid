@@ -1,0 +1,128 @@
+<div {{ block.shopify_attributes }}>
+  {%- if product != blank -%}
+    {%- liquid
+      assign gift_card_recipient_feature_active = false
+      if block.settings.show_gift_card_recipient and product.gift_card?
+        assign gift_card_recipient_feature_active = true
+      endif
+
+      assign show_dynamic_checkout = false
+      if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
+        assign show_dynamic_checkout = true
+      endif
+    -%}
+    <div class="checkout-btn"
+      data-hide-errors="{{ gift_card_recipient_feature_active }}"
+      data-section-id="{{ section.id }}"
+    >
+      <svg style="display: none">
+        <symbol id="icon-error" viewBox="0 0 13 13">
+          <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+          <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+          <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+          <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+        </symbol>
+      </svg>
+      {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'form shopify-product-form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}"
+          {% if product.selected_or_first_available_variant.available == false
+            or quantity_rule_soldout
+            or product.selected_or_first_available_variant == null
+          %}
+            disabled
+          {% endif %}
+          class="product-variant-id"
+        >
+        {%- if gift_card_recipient_feature_active -%}
+          {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
+        {%- endif -%}
+          {%  if block.settings.show_qnt_picker %} 
+        <label for="pdpQnt" class="qtylabeltitle">{{ 'product.quantity_picker' | t }}</label>
+         {% endif %}
+        <div class="qua-atc-btn">
+          {%  if block.settings.show_qnt_picker %} 
+          <div class="quantity-picker-wrapper cart-qnt">
+            <div class="error" style="display:none;">
+              {%- render 'icons', icon: 'cross' -%}
+              <span data-error-text></span>
+            </div>
+            <label for="pdpQnt" class="visuallyhidden">{{ 'product.quantity_picker' | t }}</label>
+              <quantity-picker class="qnt-input-wrapper global-qty-picker">
+              <button
+                type="button"
+                class="btn qnt-input qnt-dec"
+                {%- if product.quantity == 1 %}
+                  disabled
+                {%- endif -%}
+              >
+                <span class="visually-hidden">{{ 'products.product.quantity_decrease' | t }}</span>
+                {%- render 'icons', icon: 'minus' -%}
+              </button>
+              <label for="quantity-{{ product.id }}" class="sr-only">Quantity</label>
+                <input
+                  class="featured-pro-btn"
+                  id="quantity-{{ product.id }}"
+                  type="number"
+                  name="quantity"
+                  min="1"
+                  pattern="[0-9]*"
+                  data-id="{{ product.id }}"
+                  value="1"
+                />  
+              <button type="button" class="btn qnt-input qnt-inc">
+                <span class="visually-hidden">{{ 'products.product.quantity_increase' | t }}</span>
+                {%- render 'icons', icon: 'plus' -%}
+              </button>
+            </quantity-picker>
+          </div>
+        {% endif %}
+          <div tabindex="-1" class="product-form__buttons">
+            <button
+               tabindex="0"
+              id="ProductSubmitButton-{{ section_id }}"
+              type="submit"
+              name="add"
+              class="product-form__submit atc-btn btn btn-primary"
+              {% if product.selected_or_first_available_variant.available == false
+                or quantity_rule_soldout
+                or product.selected_or_first_available_variant == null
+              %}
+                disabled
+              {% endif %}
+            >
+              <span class="atcbtn-content">
+                {%- if product.selected_or_first_available_variant == null -%}
+                  <p class="atcbtn-text">{{ 'product.unavailable_product' | t }}</p>
+                {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                  <span class="addtocart-icon"> {% render 'addtocart-icon' %}</span>
+                  <p class="atcbtn-text">{{ 'product.sold_out' | t }}</p>
+                {%- else -%}
+                  <span class="addtocart-icon"> {% render 'addtocart-icon' %}</span>
+                  <span class="atcbtn-text">{{ 'product.add_to_cart' | t }}</span>
+                {%- endif -%}
+              </span>
+            </button>
+          </div>
+        </div>
+        {% unless product.variants.first.inventory_quantity == 0 %}
+          {% if block.settings.buy_btn_hide %}
+          <div class="checkoutbtn-text">
+            <div class="buy-now-btn checkout-button" data-buynow>
+              {{ form | payment_button }}
+            </div>
+          </div>
+        {% endif %}
+        {% endunless %}
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,111 @@
+{%- style -%}
+  .article-card {
+    background: {{ article_card_bg }};
+    color: {{ article_text_color }};
+  }
+  .article-card .article-excerpt{
+    color: {{ excerpt_color }};
+  }
+  .article-card .meta-wrapper{
+    color: {{ date_comment_color }};
+    background: {{ date_comment_bg }};
+  }
+  .article-date svg path,
+  .article-comments svg path {
+    fill: {{ date_comment_color }};
+  }
+  .article-card .article-tags .article-tag{
+    color: {{ tag_color }};
+    background: {{ tag_bg }};
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign ratio = blank
+  case media_ratio
+    when 'portrait'
+      assign ratio = '150%'
+    when 'square'
+      assign ratio = '100%'
+    when 'landscape'
+      assign ratio =  '66.66%'
+    when 'full-screen'
+      assign ratio = '75%'
+    when 'wide-screen'
+      assign ratio = '56.25%'
+  endcase
+-%}
+
+{%- if article and article != empty -%}
+  <div class="article-card">
+    {%- if show_image -%}
+      {%- if article.image != blank -%}
+      <a href="{{ article.url }}" class="image-wrapper">
+        <lazy-image class="media-wrapper" style="--ratio-percent: {% if ratio != blank  %}{{ ratio }}{% else %}{{ 1 | divided_by: article.image.aspect_ratio | times: 100 | append: '%' }}{% endif %};">
+          <img src="{{ article.image | image_url: width: 500 }}"
+            width="{{ article.image.width }}"
+            height="{{ article.image.height }}"
+            alt="{{ article.image.alt }}"
+            style="--object-position:{{ article.image.presentation.focal_point }};"
+            loading="lazy">
+        </lazy-image>
+      </a>
+      {%- else-%}
+        <lazy-image
+          class="media-wrapper"
+          style="--ratio-percent: {%- if ratio != blank -%}{{ ratio }}{%- else -%}100%{%- endif -%};"
+        >
+          {{ 'collection-1' | placeholder_svg_tag: 'img-wrapper placeholder-svg' }}
+        </lazy-image>
+      {%- endif -%}
+    {%- endif -%}
+    <div class="content-wrapper">
+      {%- if show_author or show_date or blog_comment- %}
+        <div class="meta-wrapper">
+          {%- if show_date -%}
+            <span class="article-date">
+              {%- render 'icons', icon: 'calendar' -%}
+              <span class="date">{{ article.published_at | date: date_patterns -}}</span>
+            </span>
+          {%- endif -%}
+          {%- if blog_comment -%}
+            <span class="article-comments">
+              {%- render 'icons', icon: 'comment' -%}
+              <span class="comments">{{ 'blogs.article.comments' | t: count: article.comments_count -}}</span>
+            </span>
+          {%- endif -%}
+          {%- if show_author -%}
+            <span class="article-author">
+              {% render 'icons', icon: 'avatar' %}
+              <span class="author">{{ article.author }}</span>
+            </span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      <span class="article-title h4">
+        <a href="{{ article.url }}" class="">{{ article.title | escape }}</a>
+      </span>
+      <div class="article-excerpt">
+        {%- if show_excerpt and article.excerpt.size > 0 -%}
+          {{ article.excerpt | strip_html | truncate: 200, '...' }}
+        {%- elsif show_excerpt and article.content.size > 0 -%}
+            {{ article.content | strip_html | truncate: 200, '...' }}         
+        {%- endif -%}
+      </div>
+      {%- if show_tags -%}
+        <div class="article-tags-wrapper">
+          <div class="article-tags">
+            {% for tag in article.tags %}
+              <div class="article-tag">
+                #{{ tag | downcase }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {%- endif -%}
+      <div class="article-button-wrapper">
+        <a href="{{ article.url }}" class="article-button btn-link-effect">{{ 'blogs.article.learn_more' | t }}</a>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

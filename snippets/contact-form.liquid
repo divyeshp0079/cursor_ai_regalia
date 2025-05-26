@@ -1,0 +1,129 @@
+<div class="contact-form">
+  <div class="contact-wrapper" style="background-color: {{ section.settings.form_bg_color }};">
+    <div class="{% if section.settings.form_layout == 'container' %}container {% elsif section.settings.form_layout == 'container-narrow' %} container-narrow {% endif %}contact-form-wrap">
+      <div class="image-wrap">
+        {%- if section.settings.form_image != blank -%}
+          <div class="form-img">
+            <picture>
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ section.settings.form_image | image_url: width: 450, height: 412 }}"
+              >
+              <img
+                src="{{ section.settings.form_image | image_url: width: section.settings.form_image.width }}"
+                alt="{{ section.settings.form_image.alt }}"
+                width="{{ section.settings.form_image.width }}"
+                height="{{ section.settings.form_image.height }}"
+                loading="lazy"
+                style="--object-position:{{ section.settings.form_image.presentation.focal_point }}"
+              >
+            </picture>
+          </div>
+          {%- if section.settings.vector_top_right != blank -%}
+            <div class="vector-top-right">
+              <lazy-image>
+                <img
+                  src="{{ section.settings.vector_top_right | image_url: width: section.settings.vector_top_right.width }}"
+                  alt="{{ section.settings.vector_top_right.alt }}"
+                  width="{{ section.settings.vector_top_right.width }}"
+                  height="{{ section.settings.vector_top_right.height }}"
+                  loading="lazy"
+                >
+              </lazy-image>
+            </div>
+          {% endif %}
+
+          {%- if section.settings.vector_bottom_left != blank -%}
+            <div class="vector-bottom-left">
+              <lazy-image>
+                <img
+                  src="{{ section.settings.vector_bottom_left | image_url: width: section.settings.vector_bottom_left.width }}"
+                  alt="{{ section.settings.vector_bottom_left.alt }}"
+                  width="{{ section.settings.vector_bottom_left.width }}"
+                  height="{{ section.settings.vector_bottom_left.height }}"
+                  loading="lazy"
+                >
+              </lazy-image>
+            </div>
+          {% endif %}
+
+        {% else %}
+          <lazy-image>
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </lazy-image>
+        {%- endif -%}
+      </div>
+      <div class="form-wrap">
+        {% if section.settings.form_heading != blank %}
+          <div class="form-heading" style="color:{{ section.settings.form_heading_color }}">
+            <h2>{{ section.settings.form_heading }}</h2>
+          </div>
+        {% endif %}
+
+        {% form 'contact', class: 'contact-us-form' %}
+          {% if form.posted_successfully? %}
+            <div class="form-success-message success">Thanks for contacting us! We’ll get back to you soon.</div>
+          {% elsif form.errors %}
+            <div class="form-error-message fail">
+              <ul>
+                {% for field in form.errors %}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <div class="form-group">
+            <input type="text" id="name" name="contact[name]" placeholder="What’s your good name" required>
+            {% render 'icons', icon: 'user' %}
+          </div>
+
+          <div class="form-group">
+            <input 
+              type="email" 
+              id="email" 
+              name="contact[email]" 
+              placeholder="Enter your email" 
+              required 
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              title="Please enter a valid email address">
+            {% render 'icons', icon: 'mail' %}
+          </div>
+
+          <div class="form-group">
+            <input 
+              type="tel" 
+              id="phone" 
+              name="contact[phone]" 
+              placeholder="Enter your phone number" 
+              required 
+              pattern="^\+?\d{10,15}$"
+              title="Please enter a valid phone number with 10 to 15 digits">
+            {% render 'icons', icon: 'contact-phone' %}
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="contact[body]" placeholder="Enter your message" required></textarea>
+            {% render 'icons', icon: 'message' %}
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">
+              <span class="h6">I agree with the <a href="/pages/terms-conditions" target="_blank">terms & conditions</a>.</span>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="submit-button"
+            style="color:{{ section.settings.btn_text_color }}; border:1px solid {{ section.settings.btn_border_color }}; background:{{ section.settings.btn_bg_color }};">
+            {{ section.settings.button_text }}
+          </button>
+        {% endform %}
+
+      </div>
+    </div>
+  </div>
+</div>
+

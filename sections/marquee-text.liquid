@@ -1,0 +1,140 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  :root{
+    --marqueen-txt-speed:{{ section.settings.speed }}s;
+  }
+  @media(max-width: 768px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.25 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.25 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-marquee.css' | asset_url | stylesheet_tag:preload: true }}
+{% assign marqueeicon = section.settings.icon_img %}
+<div class="marquee-wrapper">
+  <div class="marquee">
+    <div class="marquee-content {% if section.settings.reverse %}reverse{% endif %}">
+      {%- for block in section.blocks -%}
+        <div class="marquee-item">
+          {%- if block.settings.content -%}
+            <span class="marquee-text h2">{{ block.settings.content }}</span>
+          {%- endif -%}
+        </div>
+            <span class="marquee-separator">
+          {% if marqueeicon !=blank %}
+              <img src="{{ marqueeicon | image_url: width: marqueeicon.width }}"
+                alt="{{ marqueeicon.alt | default: 'collection-image' }}"
+                width="{{ marqueeicon.width }}"
+                height="{{ marqueeicon.height }}"
+                loading="lazy"
+                style="--object-position:{{ marqueeicon.presentation.focal_point }}">
+         {% endif %}   
+        </span>
+      {%- endfor -%}
+      <!-- Duplicate content for seamless scrolling -->
+      {%- for block in section.blocks -%}
+        <div class="marquee-item">
+          {%- if block.settings.content -%}
+            <span class="marquee-text">{{ block.settings.content }}</span>
+          {%- endif -%}
+        </div>
+           <span class="marquee-separator">
+          {% if marqueeicon !=blank %}
+              <img src="{{ marqueeicon | image_url: width: marqueeicon.width }}"
+                alt="{{ marqueeicon.alt | default: 'collection-image' }}"
+                width="{{ marqueeicon.width }}"
+                height="{{ marqueeicon.height }}"
+                loading="lazy"
+                style="--object-position:{{ marqueeicon.presentation.focal_point }}">
+         {% endif %}   
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "t:sections.marquee_text.name",
+  "class": "section section-marquee-text",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "t:sections.marquee_text.settings.marquee_speed.label",
+      "default": 50,
+      "min": 10,
+      "max": 300,
+      "step": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "label": "t:sections.marquee_text.settings.reverse_direction.label",
+      "default": false
+    },
+    {
+      "type":"image_picker",
+        "id":"icon_img",
+      "label":"t:sections.marquee_text.settings.icon_img.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.marquee_text.blocks.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "content",
+          "label": "t:sections.marquee_text.blocks.settings.text.label",
+          "default": "Your marquee text here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.marquee_text.presets.name"
+    }
+  ]
+}
+{% endschema %}

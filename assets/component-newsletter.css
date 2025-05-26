@@ -1,0 +1,131 @@
+.newsletter {
+  padding: 85px 20px;
+  text-align: center;
+}
+
+.newsletter h2 {
+  font-weight: var(--weight-regular);
+  margin-bottom: 14px;
+}
+
+.newsletter .newsletter__subheading {
+  font-size: 16px;
+  font-weight: var(--weight-regular);
+  line-height: 19.52px;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  max-width: 400px;
+  margin: 40px auto 0;
+  position: relative;
+  border-radius: 50px;
+  background: linear-gradient(to bottom, #fff, #f6f1ef);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form .field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  width: 350px;
+}
+
+.newsletter-form .field__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px 15px;
+  color: #666;
+}
+
+.newsletter-form .field__input::placeholder {
+  color: #797979;
+}
+
+.newsletter-form .btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-left: 1px solid #ddd;
+  /* Divider line */
+  padding: 0;
+  border-radius: 0;
+}
+
+.newsletter-form .btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.newsletter-form .btn svg path {
+  fill: #797979;
+}
+
+.newsletter-form:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.newsletter .submit_success {
+  padding: 10px;
+  justify-content: center;
+  align-content: center;
+  vertical-align: middle;
+  display: inherit;
+  gap: 10px;
+  align-items: center;
+}
+
+.newsletter .submit_success svg {
+  width: 20px;
+  height: 20px;
+}
+
+.newsletter-content span {
+  display: block;
+  font-family: var(--heading-font-family);
+  font-style: var(--heading-font-style);
+  font-weight: var(--weight-semibold);
+  margin-bottom: 1.8rem;
+}
+@media (max-width: 768px) {
+  .newsletter-form {
+    margin-top: 22px;
+  }
+  .newsletter{
+    padding-left:0px;
+    padding-right:0px;
+  }
+}
+
+@media (max-width: 425px) {
+  .newsletter-form {
+    max-width: 300px;
+  }
+
+  .newsletter-form .field {
+    width: 275px;
+  }
+}
+
+@media (max-width: 375px) {
+  .newsletter-form {
+    max-width: 265px;
+  }
+
+  .newsletter-form .field {
+    width: 250px;
+  }
+}

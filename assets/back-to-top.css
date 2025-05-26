@@ -1,0 +1,62 @@
+.btn.btn-primary.back-to-top-btn {
+  border-color: var(--p-btn-txt);
+}
+
+.back-to-top-btn {
+  line-height: 0;
+  box-shadow: 0 0 3px var(--input_border);
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 25;
+  min-height: unset;
+}
+
+/* Common rounded styles */
+.back-to-top-btn.btn-icon,
+.back-to-top-btn.btn-text,
+.back-to-top-btn.btn-text-icon {
+  border-radius: 50px;
+}
+
+.back-to-top-btn.btn-icon {
+  border-radius: 50%;
+  padding: 0.7rem;
+}
+
+.back-to-top-btn.btn-text {
+  padding: 1.3rem;
+}
+
+.back-to-top-btn.btn-text-icon {
+  padding: 0.7rem 0.7rem 0.7rem 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn.btn-icon {
+    padding: 0.5rem;
+  }
+
+  .back-to-top-btn.btn-text {
+    padding: 1rem;
+  }
+
+  .back-to-top-btn.btn-text-icon {
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    gap: 3px;
+  }
+
+  .back-to-top-btn.btn-icon,
+  .back-to-top-btn.btn-text,
+  .back-to-top-btn.btn-text-icon {
+    right: 1.2rem;
+    bottom: 1.2rem;
+  }
+
+  .back-to-top-btn svg {
+    scale: 0.8;
+  }
+}

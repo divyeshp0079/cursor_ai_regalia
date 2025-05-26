@@ -1,0 +1,19 @@
+{% render 'cart-drawer' %}
+
+{% schema %}
+{
+  "name": "t:sections.cart_drawer.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.cart_drawer.settings.title.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.cart_drawer.settings.collection.label"
+    }
+  ]
+}
+{% endschema %}

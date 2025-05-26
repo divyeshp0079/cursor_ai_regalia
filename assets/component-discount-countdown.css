@@ -1,0 +1,133 @@
+.discount-countdown-data {
+  max-width: 910px;
+  margin: 0 auto;
+}
+
+.discount-countdown-content {
+  background-color: #153d47;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 45px 38px;
+  width: 100%;
+  background-color:var(--countdown-sec-bg);
+  color:var(--countdown-sec-color);
+  border-bottom-left-radius: var(--btn-radius);
+  border-bottom-right-radius: var(--btn-radius);
+}
+
+.discount-content {
+  width: 60%;
+}
+
+.countdown-content {
+  width: 40%;
+  display: flex;
+  gap: 20px;
+  text-align: center;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.count-timer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.count-number {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 28.6px;
+  color: #fff;
+  display: block;
+  overflow: hidden;
+  height: 30px;
+  position: relative;
+}
+
+.count-label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  color:var(--countdown-time-col);
+}
+
+.count-number span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sitewide-offer p {
+  font-size: 28px;
+  line-height: 48px;
+  font-weight: 500;
+}
+
+.discount-sitewide {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.discount-code {
+  padding: 10px;
+  border: 2px dashed var(--countdown-time-col);
+  border-radius: 20px;
+  color: var(--countdown-time-col);
+  cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+  max-width: 100px;
+}
+
+.discount-inner-text {
+  padding-bottom: 10px;
+}
+
+.copy-to-clipboard.copid .discount-code {
+  background-color: var(--countdown-time-col);
+  border: 0;
+  color: #153d47;
+  transition: background-color 0.5s ease-in-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+  .countdown-content {
+    justify-content: var(--countdown-content-align);
+    padding-top:20px;
+  }
+  .discount-sitewide{
+    flex-direction:column;
+    width:100%;
+    align-items:var(--countdown-content-align);
+  }
+  .discount-code{
+    max-width:110px;
+    font-size: calc(var(--bs-size) - 2px); 
+    padding:10px 30px;
+  }
+  .discount-content{
+    display: flex;
+    flex-direction: column;
+    align-items: var(--countdown-content-align);
+  }
+  .discount-countdown-content{
+    flex-direction:column;
+    padding:18px 15px;
+    border-radius:0px;
+  }
+  .discount-content .h6{
+    margin-bottom:8px;
+  }
+}
+
+@media (max-width: 440px) {
+  .discount-countdown-content {
+    padding: 20px 15px;
+  }
+}

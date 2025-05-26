@@ -1,0 +1,93 @@
+{{ 'breadcrumbs.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="breadcrumb" aria-label="Breadcrumb">
+  <div class="breadcrumb-wrap">
+    <div class="container breadcrumb-container">
+      <ul class="breadcrumb-list">
+        <li>
+          <a href="{{ routes.root_url }}" title="Home">
+            {% render 'icons', icon: 'icon-home' %}
+          </a>
+        </li>
+
+        {% if template == 'collection' %}
+          <li>
+             <span class="breadcrumb-heading">{{ collection.title }}</span>
+          </li>
+
+        {% elsif template == 'list-collections' %}
+          <li>
+            <span class="breadcrumb-heading">{{ 'breadcrumbs.general.collection_list' | t }}</span>
+          </li>
+
+        {% elsif template == 'product' %}
+          <li>
+             <span class="breadcrumb-heading">{{ product.title }}</span>
+          </li>
+
+        {% elsif template == 'blog' %}
+          <li>
+             <span class="breadcrumb-heading">{{ blog.title }}</span>
+          </li>
+
+        {% elsif template == 'article' %}
+          <li>
+             <span class="breadcrumb-heading">{{ article.title }}</span>
+          </li>
+
+        {% elsif template == 'search' %}
+          <li>
+             <span class="breadcrumb-heading">{{ 'general.search.results_for' | t: count: search.results.size, terms: search.terms }}</span>
+          </li>
+
+        {% elsif template == 'cart' %}
+          <li>
+             <span class="breadcrumb-heading">{{ 'breadcrumbs.general.cart' | t }}</span>
+          </li>
+        {% elsif template == 'page.contact' %}
+          <li>
+             <span class="breadcrumb-heading">{{ 'breadcrumbs.general.contact_us' | t }}</span>
+          </li>
+        {% elsif template.directory == 'customers' %}
+          {%- if template.name == 'login' -%}
+            <li>
+              <span class="breadcrumb-heading">{{ 'breadcrumbs.general.login_customer' | t }}</span>
+            </li>
+          {%- elsif template.name == 'register' -%}
+            <li>
+               <span class="breadcrumb-heading">{{ 'breadcrumbs.general.register_customer' | t }}</span>
+            </li>
+          {%- elsif template.name == 'account' -%}
+            <li>
+               <span class="breadcrumb-heading">{{ 'customer.account.title' | t }}</span>
+            </li>
+          {%- elsif template.name == 'reset_password' -%}
+            <li>
+               <span class="breadcrumb-heading">{{ 'customer.reset_password.submit' | t }}</span>
+            </li>
+          {%- elsif template.name == 'addresses' -%}
+            <li>
+               <span class="breadcrumb-heading">{{ 'customer.account.address' | t }}</span>
+            </li>
+          {%- elsif template.name == 'order' -%}
+            <li>
+               <span class="breadcrumb-heading">{{ 'customer.order.title' | t: name: order.name }}</span>
+            </li>
+          {%- endif -%}
+          <!-- Generic Pages -->
+        {% else %}
+          <li>
+             <span class="breadcrumb-heading">{{ page.title }}</span>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.breadcrumbs.name",
+  "settings": []
+}
+{% endschema %}

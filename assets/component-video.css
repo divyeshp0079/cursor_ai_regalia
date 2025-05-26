@@ -1,0 +1,230 @@
+video-hero {
+  display: block;
+  height: 100%;
+  width: 100%;
+  max-height: 530px;
+}
+
+.custom-video-wrapper {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  max-height: 530px;
+}
+
+.custom-video-wrapper video {
+  width: 100%;
+  cursor: pointer;
+  height: 100%;
+}
+
+.custom-video-wrapper .thumbnail-inner-box {
+  position: absolute;
+  top: 77%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  color: var(--heading-color);
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  text-align: left;
+}
+
+.custom-video-wrapper .thumbnail-heading {
+  line-height: 39px;
+  font-weight: var(--weight-regular);
+  font-family: var(--heading-font-family);
+  width: 50%;
+}
+
+.custom-video-wrapper .thumbnail-subheading {
+  width: 50%;
+  font-weight: var(--weight-regular);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.custom-video-wrapper.has-iframe {
+  width: 100%;
+  padding-top: 56.25%;
+  max-height: 530px;
+  height: 100%;
+}
+
+.custom-video-wrapper iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  max-height: 530px;
+}
+
+.custom-video-wrapper .img-wrapper img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 530px
+}
+
+.custom-video-wrapper button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  margin-top: 20px;
+}
+
+.custom-video-wrapper button svg {
+  width: 50px;
+  height: 50px;
+}
+
+.custom-video-wrapper button.play_btn.second_play-btn.show_btn span {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-video-wrapper .custom-video-btn::after,
+.custom-video-wrapper button.play_btn.second_play-btn.show_btn span::after {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  content: "";
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: var(--black);
+  animation: zoom-in-zoom-out 2.5s ease-in-out infinite;
+}
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1.3, 1.3);
+  }
+
+  50% {
+    transform: scale(0.9, 0.9);
+  }
+
+  100% {
+    transform: scale(1.3, 1.3);
+  }
+}
+
+.custom-video-wrapper .thumbnail-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-height: 530px;
+  left: 0;
+  top: 0;
+  background: var(--overlay_color);
+  z-index: 1;
+  opacity: var(--overlay_opacity);
+}
+
+button.play_btn.second_play-btn {
+  display: none;
+}
+
+.custom-video-wrapper button.play_btn.second_play-btn.show_btn {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+}
+
+.custom-video-wrapper.has-iframe button.play_btn.second_play-btn.show_btn {
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  max-height: 530px;
+}
+
+@media (max-width: 767px) {
+
+  .custom-video-wrapper .thumbnail-heading,
+  .custom-video-wrapper .thumbnail-subheading {
+    width: 90%;
+  }
+
+  .custom-video-wrapper .thumbnail-heading {
+    font-size: 2.1rem;
+    line-height: 2.5rem;
+  }
+
+  .custom-video-wrapper .thumbnail-inner-box {
+    top: 70%;
+  }
+}
+
+@media (max-width: 575px) {
+  .custom-video-wrapper .thumbnail-subheading {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-video-wrapper .thumbnail-heading {
+    font-size: 20px;
+    line-height: 23px;
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-video-wrapper button svg,
+  .custom-video-wrapper .custom-video-btn::after,
+  .custom-video-wrapper button.play_btn.second_play-btn.show_btn span::after {
+    width: 30px;
+    height: 30px;
+  }
+
+  .custom-video-wrapper button {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+  .custom-video-wrapper .thumbnail-inner-box {
+    top: 60%;
+  }
+
+  .custom-video-wrapper .thumbnail-subheading {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .custom-video-wrapper .thumbnail-heading {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .custom-video-wrapper .thumbnail-subheading {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .custom-video-wrapper .thumbnail-heading {
+    font-size: 16px;
+    line-height: 18px;
+  }
+}

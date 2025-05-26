@@ -1,0 +1,38 @@
+{{ 'component-country-localization.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="countryrelative">
+  <div class="selectcountry" tabindex="0">
+    {{-
+      localization.country
+      | image_url: width: 60, format: 'jpg'
+      | image_tag: loading: 'lazy', class: 'country-flag', alt: 'country'
+    -}}
+    <p>{{ localization.country.currency.iso_code }}</p>
+    {% render 'icons', icon: 'up-arrow' %}
+  </div>
+  <div class="country-cont-data">
+    {%- form 'localization', id: localization_form_id -%}
+      <countrylist class="countrydetails">
+        {%- for country in localization.available_countries -%}
+          {%- assign is_selected = false -%}
+
+          {%- if country.iso_code == localization.country.iso_code -%}
+            {%- assign is_selected = true -%}
+          {%- endif -%}
+
+          <button
+            type="submit"
+            name="country_code"
+            class="h-stack country-content gap-2.5 {% if country.iso_code == localization.country.iso_code %}country-active{% endif %}"
+            role="option"
+            value="{{ country.iso_code }}"
+            aria-selected="{% if is_selected %}true{% else %}false{% endif %}"
+          >
+            {{- country | image_url: width: 60, format: 'jpg' | image_tag: loading: 'lazy', class: 'country-flag', alt: 'country' -}}
+            <span> {{ country.currency.iso_code }} </span>
+          </button>
+        {%- endfor -%}
+      </countrylist>
+    {%- endform -%}
+  </div>
+</div>

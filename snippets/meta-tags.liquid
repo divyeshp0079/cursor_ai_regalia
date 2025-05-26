@@ -1,0 +1,85 @@
+<script type="text/javascript">
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('body').classList.remove('no-js');
+    document.querySelector('body').classList.add('js-enabled');
+  });
+</script>
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{%- liquid
+  assign favicon_type = blank
+  assign favicon_icon = settings.favicon
+  if favicon_icon contains '.png'
+    assign favicon_type = 'type="image/png"'
+  elsif favicon_icon contains '.ico'
+    assign favicon_type = 'type="image/x-icon"'
+  endif
+-%}
+
+{%- if favicon_icon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32 }}" {{ favicon_type }}>
+{%- endif -%}
+
+{%- if canonical_url != blank -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+{%- endif -%}
+
+{%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+{%- endif -%}
+
+<meta name="theme-color" content="{{ settings.p_btn_border }}">
+
+<title>
+  {{ page_title }}
+  {%- if current_tags -%}
+    {%- assign meta_tags = current_tags | join: ', ' -%}
+    &nbsp; &ndash; {{ 'store.meta.tags' | t: tags: meta_tags }}
+  {%- endif -%}
+  {%- if current_page != 1 -%}
+    &nbsp; &ndash; {{ 'store.meta.page' | t: page: current_page }}
+  {%- endif -%}
+  {%- unless page_title contains shop.name -%}
+    &nbsp; &ndash; {{ shop.name }}
+  {%- endunless -%}
+</title>
+
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
+<link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
+
+{%- unless settings.heading_family.system? -%}
+  <link rel="preload" href="{{ settings.heading_family | font_url }}" as="font" crossorigin>
+{%- endunless -%}
+{%- unless settings.base_family.system? -%}
+  <link rel="preload" href="{{ settings.base_family | font_url }}" as="font" crossorigin>
+{%- endunless -%}
+
+{{ 'global.js' | asset_url | preload_tag: as: 'script' }}
+
+{%- render 'seo-tags' -%}
+
+{%- liquid
+  assign shop_currency = shop.money_format
+  if settings.currency_code_enabled
+    assign shop_currency = shop.money_format | append: ' ' | append: cart.currency.iso_code
+  endif
+-%}
+<script>
+  window.theme = window.theme || {};
+  theme.money_format = '{{ shop_currency }}';
+  theme.add_to_cart = "{{ 'product.add_to_cart' | t }}";
+  theme.sold_out = "{{ 'product.sold_out' | t }}";
+  (theme.cart_qnt_error = "{{ 'cart.cart_quantity_error_html' | t }}"),
+    (theme.unit_price_separator = "{{ 'accessibility.unit_price_separator' | t }}"),
+    (theme.routes = {
+      search_url: '{{ routes.search_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      cart_update_url: '{{ routes.cart_update_url }}',
+    });
+</script>

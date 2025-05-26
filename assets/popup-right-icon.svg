@@ -1,0 +1,16 @@
+  <svg
+    fill="currentColor"
+    width="25"
+    height="25"
+    version="1.1"
+    id="Layer_1"
+    focusable="false"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0px"
+    y="0px"
+    viewBox="0 0 24 24"
+    xml:space="preserve"
+  >
+    <path class="st0" d="M19.5,11.9c0,0.3-0.1,0.6-0.4,0.8l-13,11c-0.4,0.4-1.1,0.3-1.4-0.1c-0.4-0.4-0.3-1.1,0.1-1.4L17,11.9L4.9,1.8c-0.4-0.4-0.5-1-0.1-1.4s1-0.5,1.4-0.1l13,11C19.4,11.3,19.5,11.6,19.5,11.9z"/>
+  </svg>

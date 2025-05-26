@@ -1,0 +1,197 @@
+{%- style -%}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media(max-width: 767px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-video-carousel.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="video-carousel-section">
+  <div class="{% if section.settings.enable_full_width %}full-width {% else %}container{% endif %}">
+    <div class="video-carousel-wrapper swiper"
+      data-slider-options='{
+       "slidesPerView": "1",
+        "effect": "{{ section.settings.slide_transition }}",
+         "breakpoints": { 
+          "320": { "autoHeight": false },
+           "768": { "autoHeight": true} 
+          }, 
+           "grabCursor": true, 
+           "speed": {{ section.settings.speed_delay }},
+            "loop": true,
+             "navigation": {"nextEl": "#shopify-section-{{ section.id }} .swiper-button-next","prevEl": "#shopify-section-{{ section.id }} .swiper-button-prev"}
+            }' ms-aos data-ms-delay="100">
+      <div class="video-carousel__slider swiper-wrapper">
+        {% for block in section.blocks %}
+          {%- if block.settings.video -%}
+            <div class="video-carousel swiper-slide" {{ block.shopify_attributes }} id="shopify-block-{{ block.id }}">
+              <div class="video-carousel__video video-carousel__video--{{ section.settings.slide_height }}">
+                {{ block.settings.video | media_tag: muted: true, controls: false, autoplay: true, loop: true, class: 'video-carousel__video__element' | replace: '<img src', '<img loading="lazy" alt="video-img" src' }}
+              </div>
+            </div>
+          {%- endif -%}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.enable_arrow %}
+      <div class="swiper-navigation">
+        <button type="button" class="swiper-button-next"></button>
+        <button type="button" class="swiper-button-prev"></button>
+      </div>
+    {% endif %}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'component-video-carousel.js' | asset_url }}" type="text/javascript" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.video_carousel.name",
+  "class": "section section-video-carousel",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.video_carousel.settings.layout.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_full_width",
+      "label": "t:sections.general.full_width",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.video_carousel.settings.slider_settings.content"
+    },
+    {
+      "type": "select",
+      "id": "slide_height",
+      "label": "t:sections.video_carousel.settings.slider_settings.slide_height.label",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.video_carousel.settings.slider_settings.slide_height.options.adapt.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.general.font_size.small_size.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.general.font_size.medium_size.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.general.font_size.large_size.label"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "slide_transition",
+      "label": "t:sections.video_carousel.settings.slider_settings.slide_transition.label",
+      "options": [
+        {
+          "value": "fade",
+          "label": "t:sections.video_carousel.settings.slider_settings.slide_transition.options.fade.label"
+        },
+        {
+          "value": "flip",
+          "label": "t:sections.video_carousel.settings.slider_settings.slide_transition.options.flip.label"
+        },
+        {
+          "value": "coverflow",
+          "label": "t:sections.video_carousel.settings.slider_settings.slide_transition.options.coverflow.label"
+        },
+        {
+          "value": "cube",
+          "label": "t:sections.video_carousel.settings.slider_settings.slide_transition.options.cube.label"
+        }
+      ],
+      "default": "fade"
+    },
+    {
+      "type": "range",
+      "id": "speed_delay",
+      "label": "t:sections.video_carousel.settings.slider_settings.speed_delay.label",
+      "min": 1000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "s",
+      "default": 9000
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_arrow",
+      "label": "t:sections.video_carousel.settings.slider_settings.enable_arrow.label",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "t:sections.video_carousel.blocks.name",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:sections.video_carousel.blocks.settings.video.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video_carousel.presets.name",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

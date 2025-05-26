@@ -1,0 +1,156 @@
+{{ 'component-filters.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- if enable_filtering -%}
+  <div
+    class="facets-container col-filter-side {% if section.settings.default_open %} active{% endif %}"
+    id="FacetFiltersForm"
+  >
+    <div class="collection-navigation filter-heading">
+      {% if section.settings.col_title %}
+         <span class="h5">{{ section.settings.col_title }}</span>
+      {% endif %}
+      <ul class="top-item" data-default-open="{{ section.settings.default_open }}">
+        {% for top_item in section.settings.filter_link.links %}
+          <li class="level-1-item">
+           <a class="{% if top_item.url == request.path %}active{% endif %}" href="{{ top_item.url }}"> 
+              {{- top_item.title -}}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="mobile-header desk-hide">
+      <span class="mobile-filter-label">{{ 'collection.facets.filter_by_label' | t }}</span>
+      <span class="button-icon">{% render 'close-small' %}</span>
+    </div>
+
+     {% assign filter_order_list = filter_order | downcase | strip | replace: ', ', ','  | split:',' %}
+    <facet-filters class="facets">
+      <form class="collection-filter-form">
+        {%- if results.terms -%}
+          <input type="hidden" name="q" value="{{ results.terms | escape }}">
+          <input name="options[prefix]" type="hidden" value="last">
+        {%- endif -%}
+        <div class="active-filters-wrapper filter-list-content">
+          <script src="{{ 'component-show-more.js' | asset_url }}" defer="defer"></script>
+          {%- for filter in results.filters -%}
+              {% assign filter_name = filter.label| downcase %}
+
+          {% assign getfilterindex = forloop.index %}
+            
+              {% if filter_order_list contains filter_name %}
+                {% for filter_order_name in filter_order_list %}
+                    {%  if filter_name == filter_order_name %}
+                      {% assign getfilterindex = forloop.index %}
+                      {% break %}
+                    {% endif %}  
+                {% endfor %}
+              {% endif %}
+            {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
+            {%- case filter.type -%}
+              {%- when 'boolean', 'list' -%}
+               <details
+                  {% if filter_order_list.size > 0 %}{% if pricerange_order == 1 %}{% assign order_value = getfilterindex | plus:1 %}style="order:{{ order_value }}"{% else %}style="order:{{ getfilterindex }}"{% endif %}{% endif %}
+                  id="Details-{{ forloop.index }}-{{ section.id }}"
+                  class="facets__disclosure-vertical js-filter"
+                  data-index="{{ forloop.index }}"
+                  {% if filter.label == 'Availability' or filter.label == 'Size' %}
+                    open
+                  {% endif %}
+                >
+                  <summary
+                    class="facets__summary caption-large focus-offset"
+                    aria-label="{{ filter.label }} ({{ 'collection.facets.filters_selected.one' | t: count: filter.active_values.size }})"
+                  >
+                    <div class="plus-minus-arrow">
+                      <span>
+                        {{- filter.label | escape -}}
+                        <span class="facets__selected no-js-hidden{% if filter.active_values.size == 0 %} hidden{% endif %}">
+                          ({{ filter.active_values.size }})</span
+                        ></span
+                      >
+                    </div>
+                  </summary>
+                  <div id="Facet-{{ forloop.index }}-{{ section.id }}" class="parent-display facets__display-vertical">
+                    <div class="facets__header">
+                      <span class="facets__selected no-js-hidden">
+                        {{- 'collection.facets.filters_selected' | t: count: filter.active_values.size -}}
+                      </span>
+                      <facet-remove>
+                        <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+                          {{ 'collection.facets.reset' | t }}
+                        </a>
+                      </facet-remove>
+                    </div>
+
+                    <fieldset class="facets-wrap parent-wrap">
+                      <legend class="visually-hidden">{{ filter.label | escape }}</legend>
+                      <ul class="list-unstyled no-js-hidden" role="list">
+                        {%- for value in filter.values -%}
+                          <li class="list-menu__item facets__item{% if forloop.index > 10 %} show-more-item hidden{% endif %}">
+                            <label
+                              for="Filter-{{ filter.param_name | escape }}-{{ forloop.index }}"
+                              class="facet-checkbox{% if value.count == 0 and value.active == false %} facet-checkbox--disabled{% endif %}"
+                            >
+                              <input
+                                type="checkbox"
+                                name="{{ value.param_name }}"
+                                value="{{ value.value }}"
+                                id="Filter-{{ filter.param_name | escape }}-{{ forloop.index }}"
+                                {% if value.active %}
+                                  checked
+                                {% endif %}
+                                {% if value.count == 0 and value.active == false %}
+                                  disabled
+                                {% endif %}
+                              >
+                              <span class="variant-value {% if value.count == 0 %}hide-variant{% endif %}">
+                                {{- value.label | escape -}}
+                              </span>
+                              <span class="vendor-product-count">
+                                {%- if value.count == 1 %} {{ value.count }}{% else %}{{ value.count }}{% endif -%}
+                              </span>
+                            </label>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </fieldset>
+                    {%- if filter.values.size > 10 -%}
+                      <show-more-button>
+                        <button
+                          class="button-show-more link underlined-link no-js-hidden"
+                          id="Show-More-{{ forloop.index }}-{{ section.id }}"
+                          type="button"
+                        >
+                          <span class="label-show-more label-text"
+                            ><span aria-hidden="true">+ </span>{{ 'collection.facets.show_more' | t -}}
+                          </span>
+                          <span class="label-show-less label-text hidden"
+                            ><span aria-hidden="true">- </span>{{ 'collection.facets.show_less' | t -}}
+                          </span>
+                        </button>
+                      </show-more-button>
+                    {%- endif -%}
+                  </div>
+                </details>
+              {%- when 'price_range' -%}
+                {% render 'price-range', filter: filter,pricerange_order:pricerange_order %}
+            {%- endcase -%}
+          {%- endfor -%}
+          <noscript>
+            <button type="submit" class="filter-submit btn btn-primary">
+              {{ 'collection.facets.filter_by_label' | t }}
+            </button>
+          </noscript>
+        </div>
+
+        {% if results.current_vendor or results.current_type %}
+          <input type="hidden" name="q" value="{{ results.current_vendor }}{{ results.current_type }}">
+        {% endif %}
+      </form>
+    </facet-filters>
+  </div>
+{%- endif -%}
+<div class="filter-modal-overlay"></div>
+
+<script src="{{ 'component-filters.js' | asset_url }}" defer="defer"></script>

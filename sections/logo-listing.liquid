@@ -1,0 +1,278 @@
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    background: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} .logo-list-slider img{
+    width: {{ section.settings.image_width }}px;
+    margin: 0 auto;
+  }
+  {% for block in section.blocks %}
+    .logo-list-item.block-{{ block.id }} .logo-title{
+      color: {{ section.settings.list_text_color }};
+    }  
+    .logo-list-item.block-{{ block.id }} .logo-subheading{
+      color: {{ section.settings.list_subheading_color }};
+    }  
+  {% endfor %}
+  @media (max-width: 768px){
+    #shopify-section-{{ section.id }} {
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-logo-listing.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="section--padding logo-listing-section">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <div
+        class="logo-list-title title-wrapper {{ section.settings.heading_alignment }}"
+        ms-aos
+        data-ms-delay="100"
+      >
+        <h2 class="underline underline-{{ section.settings.heading_alignment }} heading-color title {{ section.settings.heading_size }}">{{ section.settings.heading | newline_to_br }}</h2>
+      </div>
+    {% endif %}
+    <div
+      class="logo-list-slider {% if section.settings.list_style == 'slider' %}swiper{% else %}list-grid{% endif %}"
+      {%- if section.settings.list_style == 'slider' -%}data-slider-options='{ "spaceBetween": 16, "speed": 1000, "slidesPerView": 1, "breakpoints": { "320": { "slidesPerView": 2 }, "768": { "slidesPerView": 4 },  "1280": { "slidesPerView": {{ section.settings.desktop_row }} } },
+      {%- if section.blocks.size > 1 -%} "loop": true, {%- endif -%} "autoplay": { "delay": 2500, "disableOnInteraction": true } }'{%- endif -%}>
+      <div class="logo-list-collage-wrapper {% if section.settings.list_style == 'slider' %}swiper-wrapper{% endif %}">
+        {% for block in section.blocks %}
+          <div
+            class="logo-list-item {% if section.settings.list_style == 'slider' %}swiper-slide{% endif %} block-{{ block.id }}"
+            ms-aos
+            data-ms-delay="{{ forloop.index | times: 100 }}">
+            
+            {%- if block.settings.image != blank -%}
+              <lazy-image class="image-animate media img-wrapper">
+                <img
+                  src="{{ block.settings.image | image_url: width: block.settings.image.width }}"
+                  alt="{{ block.settings.image.alt | default: shop.name }}"
+                  style="--object-position:{{ block.settings.image.presentation.focal_point }};"
+                  loading="eager"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                >
+              </lazy-image>
+            {%- else -%}
+              <div class="index-highlights-img index-highlights-placeholder-img">
+                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+            <div class="content-logo-wrapper">
+              {%- if block.settings.title != blank -%}
+                <div class="logo-title">
+                {{ block.settings.title | escape }}            
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.subheading != blank -%}
+                <span class="logo-subheading">
+                  {{ block.settings.subheading }}
+                </span>
+              {%- endif -%}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'component-logo-listing.js' | asset_url }}" type="text/javascript" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.logo_list.name",
+  "tag": "section",
+  "class": "section-logo-list",
+  "disabled_on": {
+    "groups": [
+      "header"
+    ]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.logo_list.settings.header.content"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "t:sections.logo_list.settings.header.label",
+      "default": "Official partners"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.general.font_size.content",
+      "options": [
+        {
+          "value": "h2",
+         "label": "t:sections.general.font_size.large_size.label"
+        },
+        {
+          "value": "h3",
+          "label": "t:sections.general.font_size.medium_size.label"
+        },
+        {
+          "value": "h4",
+          "label": "t:sections.general.font_size.small_size.label"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.general.alignment.content",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "list_style",
+      "label": "t:sections.logo_list.settings.header.list_type.label",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:sections.logo_list.settings.header.list_type.options.grid.label"
+        },
+        {
+          "value": "slider",
+          "label": "t:sections.logo_list.settings.header.list_type.options.slider.label"
+        }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "range",
+      "id": "desktop_row",
+      "label": "t:sections.logo_list.settings.desktop_row.label",
+      "unit": "img",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "info": "t:sections.logo_list.settings.desktop_row.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.color.content"
+    },
+    {
+      "type": "color",
+      "id": "list_text_color",
+      "label": "t:sections.logo_list.settings.list_color.title.label"
+    },
+    {
+      "type": "color",
+      "id": "list_subheading_color",
+      "label": "t:sections.logo_list.settings.list_color.subheading.label"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.logo_list.settings.section_bg_color.label"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "t:sections.logo_list.settings.image_size.label",
+      "unit": "px",
+      "min": 10,
+      "max": 150,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "t:sections.logo_list.blocks.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.logo_list.blocks.settings.image.label",
+          "info": "t:sections.logo_list.blocks.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.logo_list.blocks.settings.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "t:sections.logo_list.blocks.settings.description.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.logo_list.presets.name",
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

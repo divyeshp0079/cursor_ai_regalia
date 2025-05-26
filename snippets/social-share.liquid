@@ -1,0 +1,10 @@
+{{ 'social-share.css' | asset_url | stylesheet_tag: preload: true }}
+
+{% if social_icons %}         
+    <div class="social-media-icon" ms-aos data-ms-delay="200">
+      <div class="social-share">
+        <div class="icon-text h5">{{ 'blogs.article.social_share' | t }}</div>
+        <div class="icon-wrap">{% render 'social-icons' %}</div>
+      </div>
+    </div>          
+  {% endif %}   

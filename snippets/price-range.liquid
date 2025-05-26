@@ -1,0 +1,81 @@
+{% liquid
+  assign currencies_using_comma_decimals = 'ANG,ARS,AUD,BRL,BYN,BYR,CAD,CLF,CLP,COP,CRC,CZK,DKK,EUR,GBP,HRK,HUF,IDR,INR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+%}
+
+<details
+   style="order:{{ pricerange_order }}"
+  id="Details-{{ forloop.index }}-{{ section.id }}"
+  class="facets__disclosure-vertical js-filter"
+  data-index="{{ forloop.index }}"
+  open
+>
+  <summary
+    class="facets__summary caption-large focus-offset"
+    aria-label="{{ filter.label }} {{ filter.active_values.size }}"
+  >
+    <div class="plus-minus-arrow">
+      <span>{{ filter.label | escape }}</span>
+    </div>
+  </summary>
+  <div class="filter-list-wrapper">
+    <price-range class="facets__price">
+      <div class="field">
+        <label class="field__label" for="Filter-{{ filter.label | escape }}-GTE">
+          {{- 'collection.facets.from' | t -}}
+        </label>
+        <span class="field-currency">{{ cart.currency.symbol }}</span>
+        <input
+          class="field__input"
+          name="{{ filter.min_value.param_name }}"
+          id="Filter-{{ filter.label | escape }}-GTE"
+          {%- if filter.min_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          placeholder="0"
+          min="0"
+          {%- if uses_comma_decimals -%}
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+      </div>
+      <div class="field">
+        <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">
+          {{- 'collection.facets.to' | t -}}
+        </label>
+        <span class="field-currency">{{ cart.currency.symbol }}</span>
+        <input
+          class="field__input"
+          name="{{ filter.max_value.param_name }}"
+          id="Filter-{{ filter.label | escape }}-LTE"
+          {%- if filter.max_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          min="0"
+          {%- if uses_comma_decimals -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+      </div>
+    </price-range>
+  </div>
+</details>

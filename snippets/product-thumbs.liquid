@@ -1,0 +1,46 @@
+<div class="product-thumbs swiper-wrapper">
+  {% for media in product.media %}
+    <div class="thumb-item swiper-slide {% if forloop.first %}active{% endif %}" data-thumb-id="{{ media.id }}">
+      {% if media.media_type == 'image' %}
+        <img
+          src="{{ media | image_url:width: media.width }}"
+          alt="{{ media.alt | default:'product-thumbnail' }}"
+          loading="lazy"
+          width="{{ media.width }}"
+          height="{{ media.height }}"
+        >
+      {% else %}
+        <div class="thumb-icon">
+          {% case media.media_type %}
+            {% when 'video', 'external_video' %}
+              <div class="product-video thumb-video">
+                <img
+                  src="{{ media | image_url:width: media.width }}"
+                  alt="{{ media.alt | default:'product-thumbnail' }}"
+                  loading="lazy"
+                  width="{{ media.width }}"
+                  height="{{ media.height }}"
+                >
+                <div class="video-icon">
+                  {% render 'icons', icon: 'play' %}
+                </div>
+              </div>
+            {% when 'model' %}
+              <div class="product-model">
+                <img
+                  src="{{ media | image_url:width: media.width }}"
+                  alt="{{ media.alt | default:'product-thumbnail' }}"
+                  loading="lazy"
+                  width="{{ media.width }}"
+                  height="{{ media.height }}"
+                >
+                <div class="model-3d-icon">
+                  {% render 'icons', icon: '3d-model' %}
+                </div>
+              </div>
+          {% endcase %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

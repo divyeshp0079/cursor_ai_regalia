@@ -1,0 +1,45 @@
+.shopify-model-viewer-ui__controls-overlay {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.shopify-model-viewer-ui__button--control {
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.shopify-model-viewer-ui__controls-area {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.shopify-model-viewer-ui__button--control svg {
+  width: 44px;
+  height: 44px;
+  background-color: #fff;
+}
+
+.shopify-model-viewer-ui__sr-only {
+  display: none;
+}
+
+.shopify-model-viewer-ui .shopify-model-viewer-ui__control-icon--enter-fullscreen {
+  display: block;
+}
+
+.shopify-model-viewer-ui .shopify-model-viewer-ui__control-icon--exit-fullscreen {
+  display: none;
+}
+
+.shopify-model-viewer-ui.shopify-model-viewer-ui--fullscreen .shopify-model-viewer-ui__control-icon--exit-fullscreen {
+  display: block;
+}
+
+.shopify-model-viewer-ui.shopify-model-viewer-ui--fullscreen .shopify-model-viewer-ui__control-icon--enter-fullscreen {
+  display: none;
+}

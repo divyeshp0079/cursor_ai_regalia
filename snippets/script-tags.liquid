@@ -1,0 +1,26 @@
+{%- comment -%}Libs{%- endcomment -%}
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" type="text/javascript" defer></script>
+
+
+<script src="{{ 'quick-view.js' | asset_url }}" type="text/javascript" defer></script>  
+
+<script src="{{ 'cart-drawer.js' | asset_url }}" type="text/javascript" defer></script> 
+
+{%- comment -%}global{%- endcomment -%}
+<script src="{{ 'global.js' | asset_url }}" type="text/javascript" defer></script>
+<script>
+  requestIdleCallback(() => {
+    const script1 = document.createElement('script');
+    script1.src = '{{ "photoswipe.min.js" | asset_url }}';
+    script1.defer = true;
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.src = '{{ "photoswipe-ui-default.js" | asset_url }}';
+    script2.defer = true;
+    document.head.appendChild(script2);
+  });
+</script>
+
+
+

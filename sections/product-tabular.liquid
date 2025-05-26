@@ -1,0 +1,208 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  {% for block in section.blocks %}
+  .tab-page-data{
+    width:calc(50% - {{ block.settings.page_spacing }}px / 2);
+  }
+  .tab-page-content{
+    display:flex;
+    column-gap:{{ block.settings.page_spacing }}px;
+  }
+  {% endfor %}
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-tabular.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section
+  class="product-tabs section-{{ section.id }}-padding"
+  style="background-color: {{ section.settings.section_bg_color }};"
+>
+  <div class="container">
+    <div class="tabs-content mobile-hide">
+      <ul class="tabs-list">
+        {% for block in section.blocks %}
+          {% if block.settings.tab_title != blank %}
+            <li class="tab-item {% if forloop.first %}active{% endif %}" data-tab="tab-{{ forloop.index }}">
+              <span class="tab-title">{{ block.settings.tab_title }}</span>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      <div class="tabs-content">
+        {% for block in section.blocks %}
+          <div id="tab-{{ forloop.index }}" class="tab-content {% if forloop.first %}active{% endif %}">
+            {% case block.type %}
+              {% when 'product_description' %}
+                <div class="tab-data">{{ product.description }}</div>
+              {% when 'page_content' %}
+                <div class="tab-page-content">
+                  {% if block.settings.page_one %}
+                    <div class="tab-page-data">
+                      {% assign page_obj = pages[block.settings.page_one] %}
+                      <h2>{{ page_obj.title }}</h2>
+                      <div class="tab-page-description">
+                        {{ page_obj.content }}
+                      </div>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.page_two %}
+                    <div class="tab-page-data">
+                      {% assign page_obj_two = pages[block.settings.page_two] %}
+                      <h2>{{ page_obj_two.title }}</h2>
+                      <div class="tab-page-description">
+                        {{ page_obj_two.content }}
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              {% when 'rich_text' %}
+                {% if block.settings.rich_text %}
+                  <div class="tab-data">{{ block.settings.rich_text }}</div>
+                {% endif %}
+            {% endcase %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="pro-accordin-content desk-hide">
+      <div class="accordion">
+        {% for block in section.blocks %}
+          <div class="accordion-item">
+            {% if block.settings.tab_title %}
+              <div class="accordion-header">
+                <div class="accordion-title">
+                  {{ block.settings.tab_title }}
+                </div>
+                <div class="accordin-icon">{% render 'icons', icon: 'up-arrow' %}</div>
+              </div>
+            {% endif %}
+            <div class="accordion-content">
+              {% case block.type %}
+                {% when 'product_description' %}
+                  <div class="tab-data">{{ product.description }}</div>
+                {% when 'page_content' %}
+                  <div class="tab-page-content">
+                    {% if block.settings.page_one %}
+                      <div class="tab-page-data">
+                        <h2>{{ pages[block.settings.page_one].title }}</h2>
+                        <div class="tab-page-description">
+                          {{ pages[block.settings.page_one].content }}
+                        </div>
+                      </div>
+                    {% endif %}
+                    {% if block.settings.page_two %}
+                      <div class="tab-page-data">
+                        <h2>{{ pages[block.settings.page_two].title }}</h2>
+                        <div class="tab-page-description">
+                          {{ pages[block.settings.page_two].content }}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% when 'rich_text' %}
+                  {% if block.settings.rich_text %}
+                    <div class="tab-data">{{ block.settings.rich_text }}</div>
+                  {% endif %}
+              {% endcase %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'component-tabular.js' | asset_url }}" type="text/javascript" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.product_tabular.name",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "t:sections.product_tabular.settings.section_bg_color.label",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_description",
+      "name": "t:sections.product_tabular.blocks.product_description.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.product_tabular.blocks.product_description.settings.tab_title.label",
+          "default": "Description"
+        }
+      ]
+    },
+    {
+      "type": "page_content",
+      "name": "t:sections.product_tabular.blocks.page_content.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.product_tabular.blocks.page_content.settings.tab_title.label",
+          "default": "Page Content"
+        },
+        {
+          "type": "range",
+          "id": "page_spacing",
+          "label": "t:sections.product_tabular.blocks.page_content.settings.page_spacing.label",
+          "min": 0,
+          "max": 36,
+          "default": 30
+        },
+        {
+          "type": "page",
+          "id": "page_one",
+          "label": "t:sections.product_tabular.blocks.page_content.settings.page_one.label"
+        },
+        {
+          "type": "page",
+          "id": "page_two",
+          "label": "t:sections.product_tabular.blocks.page_content.settings.page_two.label"
+        }
+      ]
+    },
+    {
+      "type": "rich_text",
+      "name": "t:sections.product_tabular.blocks.rich_text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "t:sections.product_tabular.blocks.rich_text.settings.title.label",
+          "default": "Rich Text"
+        },
+        {
+          "type": "richtext",
+          "id": "rich_text",
+          "label": "t:sections.product_tabular.blocks.rich_text.settings.content.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_tabular.presets.name"
+    }
+  ]
+}
+{% endschema %}

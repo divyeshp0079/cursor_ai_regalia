@@ -1,0 +1,14 @@
+{%- comment -%}variables{%- endcomment -%}
+{%- render 'css-variables' -%}
+
+{%- comment -%}Libs{%- endcomment -%}
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- comment -%}Global{%- endcomment -%}
+{{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'component-product-card.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'component-pagination.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'photoswipe.css' | asset_url | stylesheet_tag: preload: true }}
+{{ 'default-skin.css' | asset_url | stylesheet_tag: preload: true }}
+
+  

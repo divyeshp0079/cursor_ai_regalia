@@ -1,0 +1,24 @@
+.featured-blog-section .article-card .meta-wrapper {
+  width: fit-content;
+}
+
+.blog-articles {
+  margin-bottom: 15px;
+}
+
+.featured-blog-section .article-card {
+  height: 100%;
+}
+
+@media (max-width:767px){
+  .blog-articles{
+    margin-bottom:0px;
+  }
+}
+
+@media (max-width: 425px) {
+  .featured-blog-section .article-card {
+    display: flex;
+    padding: 1rem 0px;
+  }
+}

@@ -1,0 +1,76 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign main_image = section.settings.image
+  assign image = collection.image
+  assign collection_all = canonical_url | remove: shop.url
+
+  if request.path == routes.all_products_collection_url
+    assign cannonical_url = request.path | remove: request.locale.root_url
+  endif
+
+  if main_image != blank and collection.image == blank
+    assign image = main_image
+  elsif main_image != blank
+    assign image = collection.image
+  elsif main_image == blank and cannonical_url contains '/collections/all'
+    assign image = main_image
+  elsif main_image == blank and collection_all contains '/collections/all'
+    assign image = main_image
+  endif
+-%}
+
+{{ 'component-collection-banner.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="collection-image-banner section-{{ section.id }}-padding">
+  <div class="isolate">
+    {%- if image != blank -%}
+      <div class="banner-image">
+        <lazy-image class="img-wrapper banner-bg">
+          <img
+            src="{{ image | image_url: width: 800 }}"
+            alt="{{ image.alt | default: shop.name }}"
+            style="object-position:{{ image.presentation.focal_point }};"
+            loading="lazy"
+            width="{{ image.width }}"
+            height="{{ image.height }}"
+          >
+        </lazy-image>
+        <div class="banner-overlay"></div>
+      </div>
+
+    {% else %}
+      <div class="banner-image" style="opacity:0.05;">
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {% endif %}
+
+    <div class="collection-banner collection-banner-wrapper--{{ section.settings.desk_content_position }}">
+      <div class="collection-banner-wrapper text-center">
+        <div class="collection-banner-blocks banner--content-align-{{ section.settings.desk_content_align }} container-narrow">
+          <h2 class="collection-banner__heading {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+            {{ collection.title | escape }}
+          </h2>
+          <div
+            class="collection-banner__text desc-align-{{ section.settings.desk_content_align }} mob-align-{{ section.settings.mob_content_align }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ collection.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

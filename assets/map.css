@@ -1,0 +1,19 @@
+.map h2.heading-title {
+  padding: 2% 0;
+  margin-bottom: 0;
+}
+
+.map .heading-title {
+  color: var(--heading-color);
+  line-height: 21px;
+  font-weight: var(--weight-regular);
+}
+
+.map .map-container {
+  overflow: hidden;
+}
+
+.map .map-section__map .map-section__map-container {
+  height: 650px;
+  border: none;
+}

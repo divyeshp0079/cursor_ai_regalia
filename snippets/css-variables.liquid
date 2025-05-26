@@ -1,0 +1,118 @@
+{%- comment -%}Font faces {%- endcomment -%}
+{%- liquid
+  assign heading_font = settings.heading_family
+  assign heading_font_semibold = settings.heading_family | font_modify: 'weight', '600'
+  assign heading_font_bold = settings.heading_family | font_modify: 'weight', '700'
+  assign base_font = settings.base_family
+  assign base_font_semibold = settings.base_family | font_modify: 'weight', '600'
+  assign base_font_bold = settings.base_family | font_modify: 'weight', '700'
+
+  assign nav_font = blank
+  if settings.navigation_font == 'headings_font'
+    assign nav_font = settings.heading_family
+  else
+    assign nav_font = settings.base_family
+  endif
+-%}
+
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font_semibold | font_face: font_display: 'swap' }}
+  {{ heading_font_bold | font_face: font_display: 'swap' }}
+  {{ base_font | font_face: font_display: 'swap' }}
+  {{ base_font_semibold | font_face: font_display: 'swap' }}
+  {{ base_font_bold | font_face: font_display: 'swap' }}
+
+  :root {
+
+    --container: {{ settings.container | append: 'px' }};
+    --narrow-container: {{ settings.narow_container | append: 'px' }};
+    --gutter-width: 15px;
+
+    --bs-font-family: {{ settings.base_family.family }}, sans-serif;
+    --bs-font-style: {{ settings.base_family.style }};
+    --bs-font-weight: {{ settings.base_family.weight }};
+
+    --heading-font-family: {{ settings.heading_family.family }},sans-serif;
+    --heading-font-style: {{ settings.heading_family.style }};
+    --heading-font-weight: {{ settings.heading_family.weight }};
+
+    --nav-font-family: {{ nav_font.family }},sans-serif;
+    --nav-font-style: {{ nav_font.style }};
+    --nav-font-weight: {{ nav_font.weight }};
+
+    --button-font-family: {{ settings.button_family.family }}, sans-serif;
+    --button-font-style: {{ settings.button_family.style }};
+    --button-font-weight: {{ settings.button_family.weight }};
+
+    --heading-size: {{ settings.heading_size | append: 'px' }};
+    --bs-size: {{ settings.base_size | append: 'px' }};
+    --btn-size: {{ settings.button_size | append: 'px' }};
+    --nav-size: {{ settings.nav_size | append: 'px' }};
+
+    --weight-extrabold: 800;
+    --weight-bold: 700;
+    --weight-semibold: 600;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-regular: 400;
+
+    --style-normal: normal;
+    --style-italic: italic;
+    --style-oblique: oblique;
+
+    --text-white: #fff;
+    --compare-price-color: {{ settings.compare_color }};
+    --color-text: {{ settings.bs_color }};
+    --color-bg: {{ settings.bg_color }};
+    --color-base:{{ settings.base_color }};
+    --color-link: {{ settings.link_color }};
+    --color-heading: {{ settings.heading_color }};
+    --color-store-name: {{ settings.store_name_color }};
+
+    --color-alt-bg: {{ settings.alt_bg_color }};
+    --color-alt-heading: {{ settings.alt_heading_color }};
+    --color-alt-txt: {{ settings.alt_txt_color }};
+    --color-alt-link: {{ settings.alt_link_color }};
+
+    --color-sale-price-txt: {{ settings.sale_price_color }};
+    --color-sale-badge-bg: {{ settings.sale_badge_bg_color }};
+    --color-sale-badge-text: {{ settings.sale_badge_text_color }};
+
+    --color_danger: {{ settings.color_danger }};
+    --color_warning: {{ settings.color_warning }};
+    --color_success: {{ settings.color_success }};
+
+    --input_bg: {{ settings.input_bg }};
+    --input_txt: {{ settings.input_txt }};
+    --input_placeholder: {{ settings.input_placeholder }};
+    --input_border: {{ settings.input_border }};
+
+    --btn-radius: {{ settings.button_raidus | append: 'px' }};
+    --p-btn-hover-primary:{{ settings.P_btn_hover_primary }};
+    --p-btn-hover-secondary:{{ settings.P_btn_hover_secondary }};
+    {%- if settings.button_raidus > 3 -%}
+      --layout-radius: 8px;
+    {%- elsif settings.button_raidus > 10 -%}
+      --layout-radius: 14px;
+    {%- else -%}
+      --layout-radius: 0;
+    {%- endif -%}
+    --p-btn-bg: {{ settings.p_btn_bg }};
+    --p-btn-border: {{ settings.p_btn_border }};
+    --p-btn-txt: {{ settings.p_btn_text }};
+
+    --s-btn-bg: {{ settings.s_btn_bg }};
+    --s-btn-txt: {{ settings.s_btn_text }};
+
+    --breadcrumbs-bg-color:{{ settings.breadcrumbs_bg_color }};
+    --breadcrumbs-text-color:{{ settings.breadcrumbs_text_color }};
+
+    --disabled-btn-bg: {{ settings.disabled_btn_bg }};
+    --disabled-btn-txt: {{ settings.disabled_btn_text }};
+    --placeholder_bg_color: {{ settings.placeholder_bg_color }};
+
+    --white: #fff;
+    --black: #000;
+  }
+</style>

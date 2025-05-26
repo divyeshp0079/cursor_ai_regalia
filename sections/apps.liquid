@@ -1,0 +1,41 @@
+{% style %}
+    #section-{{ section.id }} .text-container.custom-width{
+    width: 100%;
+    margin: 0 auto;
+    max-width: {{ section.settings.container_max_width }}px;
+  }
+{% endstyle %}
+
+<div class="text-container apps {% if section.settings.full_width %}full-width{% else %}custom-width{% endif %}" 
+  data-section-id="{{ section.id }}"
+  data-section-type="apps">
+  {%- for block in section.blocks -%}
+    {% render block %}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.apps.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.apps.presets.name"
+    }
+  ]
+}
+{% endschema %}

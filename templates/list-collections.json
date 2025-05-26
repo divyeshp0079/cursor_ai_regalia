@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "enable_full_width": false,
+        "gap_spc": 100,
+        "page_heading": "Collections",
+        "page_description": "<p>Discover curated collections <br/>designed to inspire your style.</p>",
+        "text_alignment": "center",
+        "collection_row": 3,
+        "show_per_page": 9,
+        "bg_img_1": "shopify://shop_images/Vector_5.png",
+        "bg_img_2": "shopify://shop_images/Vector_6.png",
+        "bg_img_3": "shopify://shop_images/Vector_7.png",
+        "bg_img_4": "shopify://shop_images/Vector_8.png",
+        "enable_overlay": false,
+        "title_alignment": "center",
+        "media_ratio": "square",
+        "fill_media_zoom": true,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

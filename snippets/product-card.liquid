@@ -1,0 +1,262 @@
+{%- liquid
+  assign show_second_img = false
+  if show_img_onhover == true and product.images.size > 1
+    assign show_second_img = true
+  endif
+  assign ratio = blank
+  case settings.tiles_media_ratio
+    when 'portrait'
+      assign ratio = '150%'
+    when 'square'
+      assign ratio = '100%'
+    when 'landscape'
+      assign ratio = '66.66%'
+    when 'full-screen'
+      assign ratio = '75%'
+    when 'wide-screen'
+      assign ratio = '56.25%'
+  endcase
+-%}
+
+<div class="product-item flex-items grid-item {% if show_swatches %} show_swatches {% endif %}">
+  <div class="product-image">
+    <div
+      class="img-wrapper{% if settings.tiles_fill_media_zoom %} media-fill{% endif %} "
+      tabindex="-1"
+      style="--media-ratio: {%- if ratio != blank -%}{{ ratio }}{%- else -%}{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100 | append: '%' }}{%- endif -%}"
+    >
+      {%- if product.featured_image != blank -%}
+        <lazy-image>
+          <img
+            src="{{ product.featured_image | image_url: width: 300 }}"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            loading="lazy"
+            class="p-img{%- if show_second_img %} img--primary{%- endif -%}"
+            style="--object-position: {{ product.featured_image.presentation.focal_point }}"
+          >
+        </lazy-image>
+        {%- if show_second_img == true %}
+          <lazy-image>
+            <img
+              src="{{ product.images[1] | image_url: width: 300 }}"
+              alt="{{ product.images[1].alt | default: product.title | escape }}"
+              width="{{ product.images[1].width }}"
+              height="{{ product.images[1].height }}"
+              loading="lazy"
+              class="p-img{%- if show_second_img %} img--secondary{%- endif -%}"
+              style="--object-position: {{ product.images[1].presentation.focal_point }}"
+            >
+          </lazy-image>
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+    {% unless predictive_search.performed %}
+      <quick-view data-product-handle="{{ product.handle }}">
+        <button class="quick-view-btn">
+          <span class="qv-icon">
+            <span class="visuallyhidden">{{ 'products.product.quickview' | t }}</span>
+            {%- render 'quickview-icon' -%}
+          </span>
+        </button>
+        <script type="application/json">
+          {{ product | json }}
+        </script>
+      </quick-view>
+    {%- endunless -%}
+    <div class="product-card add-to-cart">
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <input class="visuallyhidden" min="1" type="number" id="quantity" name="quantity" value="1" aria-label="Quantity">
+
+        {% assign selected_variant = product.selected_or_first_available_variant %}
+
+        <button
+          type="submit"
+          class="btn product-card-atc product-form__submit atc-btn"
+          {% if product.selected_or_first_available_variant.available == false
+            or quantity_rule_soldout
+            or product.selected_or_first_available_variant == null
+          %}
+            disabled
+          {% endif %}
+        >
+          {%- render 'cart-icon' -%}
+          <span>
+            {% if quantity_rule_soldout or selected_variant.available == false %}
+              {{ 'products.product.sold_out' | t }}
+            {% else %}
+              {{ 'product.add_to_cart' | t }}
+            {% endif %}
+          </span>
+        </button>
+      </form>
+    </div>
+    {%- if show_countdown and countdown_time != blank -%}
+      {%- if product.selected_or_first_available_variant.compare_at_price != blank -%}
+        <div class="countdown-wrapper">
+          <div class="product-countdown" data-count-time="{{ countdown_time }}">
+            <div class="countdown-item">
+              <span class="countdown-number" id="card-days">0</span>
+              <span class="countdown-label">{{ 'general.countdown.card-days' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="countdown-number" id="card-hours">0</span>
+              <span class="countdown-label">{{ 'general.countdown.card-hrs' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="countdown-number" id="card-minutes">0</span>
+              <span class="countdown-label">{{ 'general.countdown.card-mins' | t }}</span>
+            </div>
+            <span class="countdown-colon">:</span>
+            <div class="countdown-item">
+              <span class="countdown-number" id="card-seconds">0</span>
+              <span class="countdown-label">{{ 'general.countdown.card-sec' | t }}</span>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      <script src="{{ 'product-countdown.js' | asset_url }}" type="text/javascript" defer></script>
+    {%- endif -%}
+  </div>
+  <div class="product-content">
+    <div class="product-inner-content">
+      <div class="product-container {{ section.settings.alignment }}">
+        <a href="{{ product.url }}" class="h6 btn-link-effect">{{ product.title | escape }}</a>
+        {% comment %}
+          <div class="cart-drawer-details">
+            {% assign first_variant = product.variants | first %}
+                  {{ first_variant.title }}
+                  {{ first_variant.price | money }}
+          </div>
+        {% endcomment %}
+        {%- render 'price', product: product, show_percentage: show_percentage -%}
+        {%- if settings.tiles_swatches -%}
+          {%- assign color_count = 0 -%}
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              assign option_name = option.name | downcase
+              assign is_color = false
+              if option_name contains 'color' or option_name contains 'color'
+                assign is_color = true
+              endif
+            -%}
+            {%- if is_color -%}
+              {%- assign option_index = forloop.index0 -%}
+              {%- assign values = '' -%}
+              <div class="product-card-swatches card-swatches--{{ product.id }}">
+                {%- for variant in product.variants -%}
+                  {%- assign value = variant.options[option_index] %}
+                  {%- unless values contains value -%}
+                    {%- liquid
+                      assign values = values | join: ',' | append: ',' | append: value | split: ','
+                      assign color_file_name = value | handle | prepend: 'swatch-' | append: '.jpg'
+                      assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                      assign color_swatch_fallback = value | split: ' ' | last | handle
+                      assign color_count = color_count | plus: 1
+                    -%}
+                    <a
+                      href="{{ variant.url }}"
+                      class="color-swatch color-swatch--{{ value | handle }}"
+                      {% if variant.image %}
+                        data-variant-id="{{ variant.id }}"
+                        data-variant-image="{{ variant.image | image_url: '400x' }}"
+                      {% endif %}
+                      aria-label="{{ product.title }} - {{ value }}"
+                      style="background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }}){% endif %},"
+                    >
+                      <span class="swatch-tooltip">{{ value }}</span>
+                    </a>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if color_count < 2 -%}
+            {%- style -%}
+              .card-swatches--{{ product.id }} {
+                display: none;
+              }
+            {%- endstyle -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        <div class="d-none list-view-content">
+          <div class="view-content">
+            <div class="prod-desc">
+              {{ product.description }}
+            </div>
+            <div class="prod-add-content">
+              <form method="post" action="/cart/add">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <input class="visuallyhidden" min="1" type="number" id="quantity" name="quantity" value="1" aria-label="Quantity">
+                <button
+                  type="submit"
+                  class="btn product-card-atc product-form__submit atc-btn"
+                  {% if product.selected_or_first_available_variant.available == false
+                    or quantity_rule_soldout
+                    or product.selected_or_first_available_variant == null
+                  %}
+                    disabled
+                  {% endif %}
+                >
+                  {%- if product.selected_or_first_available_variant == null -%}
+                    <p class="atcbtn-text">{{ 'product.unavailable_product' | t }}</p>
+                  {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                    <span class="addtocart-icon"> {% render 'addtocart-icon' %}</span>
+                    <p class="atcbtn-text">Sold out</p>
+                  {%- else -%}
+                    <span class="addtocart-icon"> {% render 'addtocart-icon' %}</span>
+                    <span class="atcbtn-text">{{ 'product.add_to_cart' | t }}</span>
+                  {%- endif -%}
+                  {% comment %}
+                    {%- render 'cart-icon' -%}
+                    <span>{{ 'product.add_to_cart' | t }}</span>
+                  {% endcomment %}
+                </button>
+              </form>
+              <quick-view data-product-handle="{{ product.handle }}">
+                <button class="list-quick-view">
+                  <span class="qv-icon">
+                    <span class="quickview btn-link-effect">{{ 'products.product.quickview' | t }}</span>
+                  </span>
+                </button>
+                <script type="application/json">
+                  {{ product | json }}
+                </script>
+              </quick-view>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="atc-cart-drawer">
+        <form method="post" action="/cart/add">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <input class="visuallyhidden cart-drawer-col" min="1" type="number" id="quantity" name="quantity" value="1" aria-label="Quantity">
+
+          {% assign selected_variant = product.selected_or_first_available_variant %}
+
+          <button
+            type="submit"
+            id="productCard"
+            class="productadd-drawer"
+            aria-label="Add to cart"
+            {% if product.selected_or_first_available_variant.available == false
+              or quantity_rule_soldout
+              or product.selected_or_first_available_variant == null
+            %}
+              disabled
+            {% endif %}
+          >
+            {% render 'icons', icon: 'atc-drawer' %}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

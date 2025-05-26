@@ -1,0 +1,920 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_iqVJTN": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_hrPMgQ": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
+            "mobile_image": "shopify://shop_images/d4b48f7215310496e98225d855fba018.jpg",
+            "content_alignment": "center",
+            "overlay_bg": true,
+            "maintitle": "Timeless Elegance Redefined",
+            "sub_title": "<p>Find timeless jewelry that defines sophistication and style.</p>",
+            "button_label": "DISCOVER NOW",
+            "btn_link": "#",
+            "btn_alignment": "center",
+            "heading_size": "h1",
+            "whole_overlay_bg": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),\nlinear-gradient(0deg, rgba(255, 240, 245, 0.2), rgba(255, 240, 245, 0.2))",
+            "new_tab": true
+          }
+        },
+        "slide_AHEUTH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pexels-ari-roberts-101154701-9393224_1.png",
+            "mobile_image": "shopify://shop_images/young-indian-woman-wearing-sari_1.png",
+            "content_alignment": "left",
+            "overlay_bg": false,
+            "maintitle": "Luxury in Every Detail",
+            "sub_title": "<p>Handcrafted pieces designed to make every moment shine.</p>",
+            "button_label": "EXPLORE COLLECTION",
+            "btn_link": "#",
+            "btn_alignment": "left",
+            "heading_size": "h2",
+            "whole_overlay_bg": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1) 100%)",
+            "new_tab": false
+          }
+        },
+        "slide_wi3VxG": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
+            "mobile_image": "shopify://shop_images/image_14.png",
+            "content_alignment": "right",
+            "overlay_bg": false,
+            "maintitle": "Beauty Meets Brilliance",
+            "sub_title": "<p>Elevate your style with jewelry that tells your story.</p>",
+            "button_label": "SHOP NOW",
+            "btn_link": "shopify://collections/all",
+            "btn_alignment": "end",
+            "heading_size": "h2",
+            "whole_overlay_bg": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(0, 0, 0, 1) 100%)",
+            "new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_hrPMgQ",
+        "slide_AHEUTH",
+        "slide_wi3VxG"
+      ],
+      "settings": {
+        "hide_navigation": false,
+        "slide_transition": "fade",
+        "enable_autoplay": true,
+        "autoplay_speed": 3000,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "discount_countdown_CLxn3i": {
+      "type": "discount-countdown",
+      "settings": {
+        "main_title": "Hurry up! Sale ends soon",
+        "sitewide_text": "Sale 45% OFF Sitewide Now!",
+        "disc_code": "NEW27",
+        "end_date": "2026-03-06",
+        "bg_color": "#153d47",
+        "text_color": "#ffffff",
+        "link_color": "#e9cfb4",
+        "content-align": "start"
+      }
+    },
+    "featured_collection_list_M33eXU": {
+      "type": "featured-collection-list",
+      "blocks": {
+        "collection_qpU8qn": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-offer",
+            "collection_image": "shopify://shop_images/1587cb6711a149c26c1e8a162372cd65.png",
+            "col_title": "BEST OFFER"
+          }
+        },
+        "collection_MjxkC4": {
+          "type": "collection",
+          "settings": {
+            "collection": "14-karat-earrings",
+            "collection_image": "shopify://shop_images/fcl-1.png",
+            "col_title": "EAR  HOOKS"
+          }
+        },
+        "collection_qVrLCE": {
+          "type": "collection",
+          "settings": {
+            "collection": "womens-ring",
+            "collection_image": "shopify://shop_images/fcl-2.png",
+            "col_title": "Ring"
+          }
+        },
+        "collection_mdWAp7": {
+          "type": "collection",
+          "settings": {
+            "collection": "necklace",
+            "collection_image": "shopify://shop_images/fcl-3.png",
+            "col_title": "Necklace"
+          }
+        },
+        "collection_494jqw": {
+          "type": "collection",
+          "settings": {
+            "collection": "diamond-bracelet-for-women",
+            "collection_image": "shopify://shop_images/fcl-4.png",
+            "col_title": "Bracelets"
+          }
+        },
+        "collection_8UfrLF": {
+          "type": "collection",
+          "settings": {
+            "collection": "gold-tennis-bracelets",
+            "collection_image": "shopify://shop_images/1587cb6711a149c26c1e8a162372cd65.png",
+            "col_title": "Bangles"
+          }
+        }
+      },
+      "block_order": [
+        "collection_qpU8qn",
+        "collection_MjxkC4",
+        "collection_qVrLCE",
+        "collection_mdWAp7",
+        "collection_494jqw",
+        "collection_8UfrLF"
+      ],
+      "settings": {
+        "title": "Gorgeous Collections",
+        "preheading": "Attractive jewellery",
+        "bgimgcol": "shopify://shop_images/Isolation_Mode.png",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "heading_color": "#082a32",
+        "subtitle_col": "#797979",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "featured_collection_AfdBwM": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_U9LTqG": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-offer",
+            "coll_name": "Best offer",
+            "view_all_btn": "View all",
+            "btn_url": "shopify://collections/best-offer"
+          }
+        },
+        "collection_yUma8M": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-seller",
+            "coll_name": "Best seller",
+            "view_all_btn": "View all",
+            "btn_url": "shopify://collections/best-seller"
+          }
+        },
+        "collection_6BCaeb": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-arrivals",
+            "coll_name": "",
+            "view_all_btn": "New arrivals",
+            "btn_url": "shopify://collections/new-arrivals"
+          }
+        }
+      },
+      "block_order": [
+        "collection_U9LTqG",
+        "collection_yUma8M",
+        "collection_6BCaeb"
+      ],
+      "settings": {
+        "heading_show": true,
+        "heading": "Collections",
+        "enable_animation": true,
+        "heading_color": "#082a32",
+        "heading_opacity": 4,
+        "card_color": "",
+        "alignment": "center",
+        "coll_bg_1": "shopify://shop_images/Vector_4.png",
+        "coll_bg_1_mobile": "shopify://shop_images/Vector_9.png",
+        "coll_bg_2": "shopify://shop_images/Vector_3.png",
+        "coll_bg_2_mobile": "shopify://shop_images/Vector_10.png",
+        "bg_color": "#fbf5f0",
+        "tab_color": "#a69e8d",
+        "active_tab_color": "#082a32",
+        "products_to_show": 8,
+        "column_to_show": 4,
+        "view_all": true,
+        "btn_bg_color": "",
+        "btn_type": "primary",
+        "show_swatches": true,
+        "show_countdown": true,
+        "countdown_timer": "2025-05-27",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "marquee_text_9ACkkP": {
+      "type": "marquee-text",
+      "blocks": {
+        "text_edEXHM": {
+          "type": "text",
+          "settings": {
+            "content": "HURRY  UP  10%  OFF  FOR  ALL  ITEMS"
+          }
+        },
+        "text_9rKcAL": {
+          "type": "text",
+          "settings": {
+            "content": "FIRST  TIME  FREE  DELIVERY"
+          }
+        },
+        "text_fDPBNr": {
+          "type": "text",
+          "settings": {
+            "content": "20%  OFF  EVERYTHING  FOR  WOMEN"
+          }
+        }
+      },
+      "block_order": [
+        "text_edEXHM",
+        "text_9rKcAL",
+        "text_fDPBNr"
+      ],
+      "settings": {
+        "speed": 30,
+        "reverse": false,
+        "icon_img": "shopify://shop_images/Star_7.png",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "featured_product_7UjbBN": {
+      "type": "featured-product",
+      "blocks": {
+        "title_3rKcTt": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2",
+            "heading_color": "#153d47"
+          }
+        },
+        "sku_gGNwHT": {
+          "type": "sku",
+          "settings": {}
+        },
+        "price_VUnqBt": {
+          "type": "price",
+          "settings": {
+            "show_percentage": true
+          }
+        },
+        "info_text_GLxAKd": {
+          "type": "info_text",
+          "disabled": true,
+          "settings": {
+            "info_text": "At vero eos et accusamus et iusto dignissimos ducimus blanditiis praesentium voluptatum deleniti atque..."
+          }
+        },
+        "product_sold_6xXnH4": {
+          "type": "product_sold",
+          "settings": {}
+        },
+        "product_stock_8bMKTC": {
+          "type": "product_stock",
+          "settings": {}
+        },
+        "variants_pNgBwz": {
+          "type": "variants",
+          "settings": {}
+        },
+        "buy_button_9rEejn": {
+          "type": "buy_button",
+          "settings": {
+            "show_qnt_picker": true,
+            "show_gift_card_recipient": true,
+            "buy_btn_hide": true
+          }
+        }
+      },
+      "block_order": [
+        "title_3rKcTt",
+        "sku_gGNwHT",
+        "price_VUnqBt",
+        "info_text_GLxAKd",
+        "product_sold_6xXnH4",
+        "product_stock_8bMKTC",
+        "variants_pNgBwz",
+        "buy_button_9rEejn"
+      ],
+      "settings": {
+        "product": "sansa-oval-bangle",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "image_zoom": true,
+        "block_space": 20
+      }
+    },
+    "text_image_slider_AfGwGD": {
+      "type": "text-image-slider",
+      "blocks": {
+        "image_with_text_eYY7Tc": {
+          "type": "image-with-text",
+          "settings": {
+            "image": "shopify://shop_images/61d4dc25dbd1bd40d38e12c5c08ad66c.jpg",
+            "title_size": "h2",
+            "title": "Sustainability Report",
+            "description_size": "h5",
+            "description": "<p>We are deeply committed to sustainability and responsible sourcing. We ensure that all our diamonds, gemstones, and metals are conflict-free, working only with suppliers who adhere to strict ethical and environmental standards.<br/><br/>Our partnerships with fair-trade certified suppliers allow us to support communities while minimizing our environmental impact.<br/>Learn more<br/></p>",
+            "btn_text": "Learn More.",
+            "btn_link": "shopify://collections",
+            "btn_type": "secondary",
+            "bg_color": "#fbf5f0",
+            "text_color": "#082a32",
+            "description_color": "#797979",
+            "btn_text_color": "#000000",
+            "btn_bg_color": "#ffffff"
+          }
+        },
+        "image_overlay_text_EydJDC": {
+          "type": "image-overlay-text",
+          "settings": {
+            "bg_image": "shopify://shop_images/image_27.png",
+            "bg_blur": 4,
+            "image": "shopify://shop_images/image_18_1.png",
+            "title_size": "h2",
+            "layout": "image_first",
+            "title": "Responsibility Report",
+            "description": "<p>We worked with Mejuri to approach sustainability with social <br/>justice in mind including the health and wellbeing of their <br/>employees and communities.<br/><br/>By working with other brands, this work will help them to use their<br/> influence to support women’s access to safe healthcare.</p>",
+            "btn_text": "EXPLORE NOW",
+            "btn_link": "shopify://collections",
+            "btn_type": "primary",
+            "text_color": "#ffffff",
+            "description_color": "#ffffff",
+            "btn_text_color": "#ffffff",
+            "btn_bg_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_with_text_eYY7Tc",
+        "image_overlay_text_EydJDC"
+      ],
+      "settings": {
+        "enable_full_width": true,
+        "enable_autoscroll": true,
+        "speed_delay": 3000,
+        "autoscroll_speed": 3000,
+        "slider_enable": true,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "quotes_pRfYbi": {
+      "type": "quotes",
+      "blocks": {
+        "quote_HfjeLA": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/path815.svg",
+            "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
+            "quote_color": "#082a32"
+          }
+        },
+        "quote_xzLCVQ": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/g2414.svg",
+            "quote": "<p>The only carrots that interest me are the number you get in a diamond.</p>",
+            "quote_color": "#082a32"
+          }
+        },
+        "quote_J6zRbL": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Group_457.svg",
+            "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
+            "quote_color": ""
+          }
+        },
+        "quote_7cyHix": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Group_458.svg",
+            "quote": "<p> The only carrots that interest me are the number you get in a diamond.</p>",
+            "quote_color": "#082a32"
+          }
+        },
+        "quote_KNb3DT": {
+          "type": "quote",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_6.svg",
+            "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
+            "quote_color": "#082a32"
+          }
+        }
+      },
+      "block_order": [
+        "quote_HfjeLA",
+        "quote_xzLCVQ",
+        "quote_J6zRbL",
+        "quote_7cyHix",
+        "quote_KNb3DT"
+      ],
+      "settings": {
+        "quote_bg_1": "shopify://shop_images/Graphic_Elemnts.png",
+        "quote_bg_2": "shopify://shop_images/Graphic_Elements.png",
+        "title": "QUOTE OF THE WEEK",
+        "heading_alignment": "center",
+        "heading_color": "#797979",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "video_mAwphP": {
+      "type": "video",
+      "settings": {
+        "enable_full_width": true,
+        "thumbnail": "shopify://shop_images/young-indian-woman-wearing-sari_2.png",
+        "thumbnail_heading": "Sustainability Report",
+        "thumbnail_subheading": "We are deeply committed to sustainability and responsible sourcing. We ensure that all our diamonds, gemstones, and metals are conflict-free, working only with suppliers who adhere to strict ethical and environmental standards.",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "heading_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "video_type": "video",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video": "shopify://files/videos/regalia-video.mp4",
+        "video_autoplay": false,
+        "video_mute": false,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "instagram_aBkRYt": {
+      "type": "instagram",
+      "blocks": {
+        "instagram_ahLWyw": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify://shop_images/3da253439e718d4a63c5581067f6a14c.png"
+          }
+        },
+        "instagram_tjiVcY": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify://shop_images/56d1e9f1edf7f1d65c34de1e547fe4d2.png"
+          }
+        },
+        "instagram_9jU7Ah": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify://shop_images/a94ab351ddf62333fd94ffc3f689e6d4.png"
+          }
+        },
+        "instagram_GD8AGM": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify://shop_images/af9a6e4771070fe0ff117d00d287c699.png"
+          }
+        }
+      },
+      "block_order": [
+        "instagram_ahLWyw",
+        "instagram_tjiVcY",
+        "instagram_9jU7Ah",
+        "instagram_GD8AGM"
+      ],
+      "settings": {
+        "title": "Follow us on @instagram",
+        "description": "<p>Shop Your Favorite Styles on Instagram. <strong>jewellery@instagram</strong></p>",
+        "heading_size": "h3",
+        "heading_alignment": "center",
+        "heading_color": "#082a32",
+        "description_color": "#797979",
+        "background_color": "#efefef",
+        "insta_bg_1": "shopify://shop_images/Vector_1.png",
+        "insta_bg_2": "shopify://shop_images/Group.png",
+        "insta_bg_3": "shopify://shop_images/Group_514.png",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "countdown_t7ccyR": {
+      "type": "countdown",
+      "settings": {
+        "enable_full_width": true,
+        "background_image": "shopify://shop_images/d4b48f7215310496e98225d855fba018.jpg",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.4,
+        "title": "Deal of the Week",
+        "description": "<p>This week only, get 20% off all jewelry. Limited stock available! </p>",
+        "end_date": "2026-01-31",
+        "button_text": "Explore Now",
+        "button_link": "shopify://collections/lab-diamond-rings-for-women",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "faq_section_zNKj4F": {
+      "type": "faq-section",
+      "blocks": {
+        "faq_7iDt8V": {
+          "type": "faq",
+          "settings": {
+            "faq_icon": "shopify://shop_images/fi_9812568.svg",
+            "question": "How do I place an order with Regalia?",
+            "answer": "<p>You can easily place an order through our website. Browse our <br/>collections, select your favorite pieces, add them to your cart, and <br/>follow the checkout process. If you need assistance, don't hesitate to <br/>reach out to us.</p>"
+          }
+        },
+        "faq_CrkWmC": {
+          "type": "faq",
+          "settings": {
+            "faq_icon": "shopify://shop_images/fi_9812568.svg",
+            "question": "Do you ship internationally?",
+            "answer": "<p>Yes, we offer international shipping to many countries. Shipping fees and delivery times vary based on location. </p>"
+          }
+        },
+        "faq_FwLDnF": {
+          "type": "faq",
+          "settings": {
+            "faq_icon": "shopify://shop_images/fi_9812568.svg",
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 10-day return policy on most items. To initiate a return, please contact us with your order details. </p>"
+          }
+        },
+        "faq_Ux4rmY": {
+          "type": "faq",
+          "settings": {
+            "faq_icon": "shopify://shop_images/fi_9812568.svg",
+            "question": "What materials are your jewelry pieces made from?",
+            "answer": "<p>Our jewelry is crafted using high-quality materials, including sterling silver, gold, and gemstones. Each piece is designed to last.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_7iDt8V",
+        "faq_CrkWmC",
+        "faq_FwLDnF",
+        "faq_Ux4rmY"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/faq-image.png",
+        "image_position": "left",
+        "title": "FAQs",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "heading_color": "#000000",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "testimonial_k6yU9V": {
+      "type": "testimonial",
+      "blocks": {
+        "review_tURe6n": {
+          "type": "review",
+          "settings": {
+            "review_title": "Absolutely love it!",
+            "star_rating": 5,
+            "review_description": "<p>The jewelry is even more beautiful in person. Great customer experience and quick delivery. I’m so happy with my purchase! </p>",
+            "author": "Rachel",
+            "select_product": "womens-ring-daily-wear-6"
+          }
+        },
+        "review_nVDzYa": {
+          "type": "review",
+          "settings": {
+            "review_title": "Simply Perfect!",
+            "star_rating": 4.5,
+            "review_description": "<p>I’m so happy with my pieces. The quality is exceptional, and they arrived right on time. Great experience all around!</p>",
+            "author": "Adrian",
+            "select_product": "womens-ring-cocktail-1"
+          }
+        },
+        "review_kFRpfw": {
+          "type": "review",
+          "settings": {
+            "review_title": "Beyond Expectations!",
+            "star_rating": 5,
+            "review_description": "<p>The jewelry exceeded all my expectations! The craftsmanship is superb, and the designs are so unique. Each piece is a work of art, and I’ve received so many compliments. The delivery was fast, and everything arrived in perfect condition. I’ll definitely be back for more!</p>",
+            "author": "Sheldon",
+            "select_product": "adney-hoop-earrings"
+          }
+        }
+      },
+      "block_order": [
+        "review_tURe6n",
+        "review_nVDzYa",
+        "review_kFRpfw"
+      ],
+      "settings": {
+        "background_image": "shopify://shop_images/testimonial-bg.jpg",
+        "enable_autoplay": false,
+        "bg_color": "#fff7ee",
+        "box_shadow": "#e9c398",
+        "heading_size": "h2",
+        "text_color": "#153d47",
+        "description_color": "#797979",
+        "proudct_card_bg": "#ffe5c8",
+        "padding_top": 20,
+        "padding_bottom": 50
+      }
+    },
+    "video_carousel_hWgFJK": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_d9PjHn": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/regalia-video.mp4"
+          }
+        },
+        "video_dXejHP": {
+          "type": "video",
+          "settings": {
+            "video": "shopify://files/videos/regalia-video2.mp4"
+          }
+        }
+      },
+      "block_order": [
+        "video_d9PjHn",
+        "video_dXejHP"
+      ],
+      "settings": {
+        "enable_full_width": true,
+        "slide_height": "adapt",
+        "slide_transition": "fade",
+        "speed_delay": 1000,
+        "padding_top": 50,
+        "padding_bottom": 30,
+        "enable_arrow": true
+      }
+    },
+    "video_product_LqPwy3": {
+      "type": "video-product",
+      "blocks": {
+        "video_product_8z6rtT": {
+          "type": "video-product",
+          "settings": {
+            "video": "shopify://files/videos/video-product4.mp4",
+            "video_product": "circle-charm-layered-necklace"
+          }
+        },
+        "video_product_LVmtYF": {
+          "type": "video-product",
+          "settings": {
+            "video": "shopify://files/videos/video-product3_6413eec9-a6ca-409a-b7c2-f7c28c96f243.mp4",
+            "video_product": "circle-charm-layered-necklace"
+          }
+        },
+        "video_product_NqDJXw": {
+          "type": "video-product",
+          "settings": {
+            "video": "shopify://files/videos/video-product2_2e8c6117-6cbb-42ca-a428-1b7c4e518f3d.mp4",
+            "video_product": "circle-charm-layered-necklace"
+          }
+        }
+      },
+      "block_order": [
+        "video_product_8z6rtT",
+        "video_product_LVmtYF",
+        "video_product_NqDJXw"
+      ],
+      "settings": {
+        "video_per_row": 3,
+        "spacing": 26,
+        "bg_color": "#fff7ee",
+        "title": "Shop the Style You Admire!",
+        "heading_size": "h3",
+        "heading_alignment": "center",
+        "heading_color": "#082a32",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "gallery_iRcK68": {
+      "type": "gallery",
+      "blocks": {
+        "images_Ln8L7j": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-1.png",
+            "grid_position": "2/4",
+            "mobile_grid_position": "4/4",
+            "enable_overlay": false,
+            "img_overlay_color": "linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 100%)",
+            "title": "",
+            "description": "",
+            "button_text": "Shop now",
+            "button_link": "",
+            "btn_type": "btn-primary",
+            "button_text_color": "",
+            "button_bg_color": ""
+          }
+        },
+        "images_WMaaPN": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-2.png",
+            "grid_position": "1/4",
+            "mobile_grid_position": "2/4",
+            "enable_overlay": false,
+            "img_overlay_color": "",
+            "title": "",
+            "description": "",
+            "button_text": "Shop now",
+            "button_link": "",
+            "btn_type": "btn-primary",
+            "button_text_color": "",
+            "button_bg_color": ""
+          }
+        },
+        "images_KA4gEn": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-3.png",
+            "grid_position": "1/4",
+            "mobile_grid_position": "2/4",
+            "enable_overlay": true,
+            "img_overlay_color": "linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 100%)",
+            "title": "Pure Luxury",
+            "description": "<p>Indulge in jewelry that elevates every look and moment.</p>",
+            "button_text": "Shop now",
+            "button_link": "",
+            "btn_type": "btn-primary",
+            "button_text_color": "",
+            "button_bg_color": ""
+          }
+        },
+        "images_EWQYyL": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-4.png",
+            "grid_position": "1/4",
+            "mobile_grid_position": "4/4",
+            "enable_overlay": true,
+            "img_overlay_color": "linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 100%)",
+            "title": "For Every Occasion",
+            "description": "<p>Find jewelry that makes every moment special and memorable.</p>",
+            "button_text": "Explore Now",
+            "button_link": "shopify://collections",
+            "btn_type": "btn-primary",
+            "button_text_color": "#000000",
+            "button_bg_color": "#ffffff"
+          }
+        },
+        "images_NKYBPD": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-5.png",
+            "grid_position": "1/4",
+            "mobile_grid_position": "2/4",
+            "enable_overlay": false,
+            "img_overlay_color": "",
+            "title": "",
+            "description": "",
+            "button_text": "Shop now",
+            "button_link": "",
+            "btn_type": "btn-primary",
+            "button_text_color": "",
+            "button_bg_color": ""
+          }
+        },
+        "images_Lf7qUP": {
+          "type": "images",
+          "settings": {
+            "image": "shopify://shop_images/gallery-6.png",
+            "grid_position": "2/4",
+            "mobile_grid_position": "2/4",
+            "enable_overlay": false,
+            "img_overlay_color": "",
+            "title": "",
+            "description": "",
+            "button_text": "Shop now",
+            "button_link": "",
+            "btn_type": "btn-primary",
+            "button_text_color": "",
+            "button_bg_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "images_Ln8L7j",
+        "images_WMaaPN",
+        "images_KA4gEn",
+        "images_EWQYyL",
+        "images_NKYBPD",
+        "images_Lf7qUP"
+      ],
+      "settings": {
+        "enable_full_width": true,
+        "spacing_between_image": 20,
+        "border_radius": 6,
+        "title": "Elegance in Every Piece",
+        "heading_size": "h3",
+        "heading_color": "#082a32",
+        "background_color": "rgba(255, 255, 255, 0.45)",
+        "bg_blur": 34,
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
+    },
+    "featured_blog_xzjfBN": {
+      "type": "featured-blog",
+      "settings": {
+        "enable_full_width": false,
+        "title": "Latest in Blog",
+        "heading_size": "h2",
+        "text_alignment": "center",
+        "heading_color": "#082a32",
+        "blog": "regalia",
+        "article_limit": 4,
+        "show_image": true,
+        "show_author": true,
+        "show_date": true,
+        "show_tags": true,
+        "date_formats_patterns": "%b %d, %Y",
+        "show_excerpt": true,
+        "media_ratio": "landscape",
+        "article_background": "#ffffff",
+        "article_color": "#082a32",
+        "excerpt_color": "#797979",
+        "date_comment_bg": "#f0f0f0",
+        "date_comment_color": "#797979",
+        "tag_bg": "#f0f0f0",
+        "tag_color": "#797979",
+        "mobile_slider": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "store_locator_LdRbdL": {
+      "type": "store-locator",
+      "blocks": {
+        "location_83JdAL": {
+          "type": "location",
+          "settings": {
+            "address_title": "USA",
+            "address": "<p>1309 Coffeen Ave, Sheridan, WY 82801, USA</p>",
+            "btn_text": "View details",
+            "btn_link": "https://maps.app.goo.gl/HYuLUf4TFj17hS5UA"
+          }
+        }
+      },
+      "block_order": [
+        "location_83JdAL"
+      ],
+      "settings": {
+        "enable_full_width": false,
+        "heading": "Visit Us",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "api_key": "AIzaSyDUmjLxl_qEb35uInhGq4ncy_a5pz2YYxA",
+        "map_style": "default",
+        "map_position": "right",
+        "heading_color": "#082a32",
+        "bg_color": "#fbf5f0",
+        "location_title_color": "#082a32",
+        "location_address_color": "#797979",
+        "active_location_color": "#ffffff",
+        "btn_color": "#082a32",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "slideshow_iqVJTN",
+    "discount_countdown_CLxn3i",
+    "featured_collection_list_M33eXU",
+    "featured_collection_AfdBwM",
+    "marquee_text_9ACkkP",
+    "featured_product_7UjbBN",
+    "text_image_slider_AfGwGD",
+    "quotes_pRfYbi",
+    "video_mAwphP",
+    "instagram_aBkRYt",
+    "countdown_t7ccyR",
+    "faq_section_zNKj4F",
+    "testimonial_k6yU9V",
+    "video_carousel_hWgFJK",
+    "video_product_LqPwy3",
+    "gallery_iRcK68",
+    "featured_blog_xzjfBN",
+    "store_locator_LdRbdL"
+  ]
+}

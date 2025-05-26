@@ -1,0 +1,222 @@
+.section-popup .popup-index {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #0000003f;
+  backdrop-filter: blur(8px);
+  padding: var(--gutter-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: .25s ease all;
+}
+
+body.popup-active .section-popup .popup-index {
+  opacity: 1;
+  visibility: visible;
+}
+
+.section-popup .popup-body {
+  color: var(--text_color);
+  background-color: var(--bg_color);
+  max-width: var(--popup-width);
+  border-radius: var(--border-radius);
+  font-family: var(--bs-font-family);
+  margin: auto;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(-30%);
+  transition: .25s ease all .25s;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
+body.popup-active .section-popup .popup-body {
+  transform: translateY(0);
+}
+
+.section-popup .popup-body .popup-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  background: #0000004D;
+  border: 0;
+  padding: 14px 16px;
+  color: var(--text_color);
+  cursor: pointer;
+  border-radius: 50px;
+  margin: 15px;
+}
+
+.section-popup .popup-body .popup-close svg {
+  width: 10px;
+  height: 10px;
+}
+
+.section-popup .popup-body form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-popup .img-wrapper {
+  position: absolute;
+  bottom: 0px;
+  left: 57%;
+  transform: translate(-50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.section-popup .img-wrapper lazy-image {
+  display: block;
+  height: 100%;
+  width: 60%;
+}
+
+.section-popup .img-wrapper img {
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+}
+
+.section-popup .img-wrapper.media-fill img {
+  object-fit: cover;
+}
+
+.section-popup .content-wrapper {
+  padding: 60px;
+  text-align: var(--content_alignment);
+  padding-bottom: 25%;
+}
+
+.section-popup .content-wrapper .popup-heading {
+  font-family: var(--bs-font-family);
+  font-weight: var(--weight-medium);
+  line-height: 21px;
+  position: relative;
+  padding: 0 50px 22px 50px;
+  letter-spacing: 1px;
+}
+
+.section-popup .content-wrapper .popup-heading::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  border-bottom: 1px dashed #D86F6F;
+}
+
+.section-popup .content-wrapper .popup-heading.upcase {
+  text-transform: uppercase;
+}
+
+.section-popup .content-wrapper .content {
+  margin-bottom: 2.5rem;
+  padding: 0px 50px;
+}
+
+.section-popup .subscribe-container {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 25px;
+  box-shadow: 0px 7px 11.8px 0px #09242B;
+  overflow: hidden;
+  max-width: 490px;
+  margin: auto;
+}
+
+.section-popup .subscribe-input {
+  flex: 1;
+  border: none;
+  padding: 10px 25px;
+  font-weight: var(--weight-regular);
+  line-height: 17px;
+  font-size: 14px;
+  outline: none;
+  border-radius: 0;
+}
+
+.section-popup .subscribe-button {
+  border: none;
+  padding: 13px 25px;
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  line-height: 17px;
+  text-transform: uppercase;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.section-popup .submit_success {
+  color: var(--color_success);
+  font-size: 1.2rem;
+}
+
+.section-popup .submit_success svg {
+  vertical-align: middle;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+
+@media (max-width:767px) {
+
+  .section-popup .img-wrapper,
+  .section-popup .content-wrapper {
+    min-width: 0;
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width:500px) {
+  .section-popup .content-wrapper {
+    padding: 60px 15px 25%;
+  }
+
+  .section-popup .subscribe-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .section-popup .subscribe-container {
+    background-color: transparent;
+    border-radius: 0px;
+    flex-wrap: wrap;
+    box-shadow: none;
+  }
+
+  .section-popup .subscribe-input {
+    padding: 13px 25px;
+    border-radius: 25px;
+  }
+
+  .section-popup .content-wrapper .content {
+    padding: 0 15px;
+    margin-bottom: 1.786rem;
+  }
+
+  .section-popup .content-wrapper .popup-heading{
+    padding: 0 15px 22px 15px;
+  }
+
+  .section-popup .content-wrapper .popup-heading {
+    font-size: calc(var(--bs-size) + 4px);
+  }
+
+  .section-popup .content p {
+    font-size: calc(var(--bs-size) - 2px);
+  }
+
+  .section-popup .popup-body .popup-close {
+    padding: 10px 12px;
+  }
+}

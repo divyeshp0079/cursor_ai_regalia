@@ -1,0 +1,63 @@
+<div class="megamenuinner-data container">
+  <ul
+    id="HeaderMenu-MenuList-{{ forloop.index }}"
+    class="header__submenu leftsidemega-menu megamenu-submenu list-menu color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
+    role="list"
+    tabindex="-1"
+  >
+    {%- for childlink in link.links -%}
+      <li>
+        {%- if childlink.links == blank -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+            href="{{ childlink.url }}"
+            class="header__menu-item normalMeu list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
+            {% if childlink.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            {{ childlink.title | escape }}
+          </a>
+        {%- else -%}
+          <div id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}" open>
+            <div
+              id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+              class="header__menu-item dropdownMenu megamaintitle link link--text list-menu__item focus-inset caption-large"
+            >
+              <h2 class="megamenutitle">{{ childlink.title | escape }}</h2>
+            </div>
+            <ul
+              id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+              class="header__submenu mega-submenucontent list-menu motion-reduce"
+            >
+              {%- for grandchildlink in childlink.links -%}
+                <li>
+                  <a
+                    id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                    href="{{ grandchildlink.url }}"
+                    class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"
+                    {% if grandchildlink.current %}
+                      aria-current="page"
+                    {% endif %}
+                  >
+                    {{ grandchildlink.title | escape }}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+
+  {%- capture mega_menu_content -%}
+        {%- render 'megamenuimg', context: 'menu', block: block -%}
+      {%- endcapture -%}
+
+  {%- if mega_menu_content != blank -%}
+    <div class="mega-menu__promo megamenu-img">
+      {{- mega_menu_content -}}
+    </div>
+  {%- endif -%}
+</div>

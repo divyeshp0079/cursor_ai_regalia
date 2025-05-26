@@ -1,0 +1,120 @@
+.countdown-section {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  backdrop-filter: blur(5.9px);
+}
+
+.countdown-image img {
+  width: 100%;
+}
+
+.countdown-section .countdown-overlay {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  padding: 20px;
+  text-align: center;
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.countdown-section .countdown-description p {
+  font-size: var(--bs-size);
+  font-weight: var(--bs-font-weight);
+  line-height: 21px;
+  margin-bottom: 40px;
+}
+
+#countdown-timer div {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 1.5rem;
+}
+
+.countdown-section .countdown-timer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.countdown-section .countdown-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.countdown-section .countdown-number {
+  font-size: 32px;
+  font-weight: var(--weight-semibold);
+  line-height: 46px;
+  color: #fff;
+  position: relative;
+  height: 46px;
+  overflow: hidden;
+  width:100px;
+}
+
+.countdown-section .countdown-label {
+  font-size: 24px;
+  font-weight: var(--bs-font-weight);
+  line-height: 29px;
+  color: #E9CFB4;
+}
+
+.countdown-section .countdown-colon {
+  font-size: 36px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.countdown-section .countdown-button {
+  font-weight: 500;
+  font-size: calc(var(--bs-size) + 2px);
+  line-height: 24px;   
+  border: none;
+}
+
+@media(max-width: 768px) {
+  .countdown-section .countdown-label {
+    font-size: calc(var(--bs-size) + 1px);
+    max-width: 80px;
+  }
+  .countdown-section .countdown-number,
+  .countdown-section .countdown-colon {
+    font-size: 24px;
+  }
+  .countdown-section .countdown-timer {
+    padding: 10px;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  .countdown-section .countdown-number{
+    width:50px;
+  }
+}
+
+@media(max-width: 375px) {
+
+  .countdown-section .countdown-label {
+    font-size: 10px;
+  }
+
+  .countdown-section .countdown-number,
+  .countdown-section .countdown-colon {
+    font-size: calc(var(--bs-size) + 1px);
+    height: 30px;
+  }
+}

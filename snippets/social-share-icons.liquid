@@ -1,0 +1,31 @@
+<ul>
+    {% if settings.social_twitter_link  %}
+    <li>
+        <a href="https://twitter.com/intent/tweet?text={{ product_title }}&url={{ product_url }}" target="_blank" rel="noopener">
+        <span class="social-icon">
+          {% render 'icons', icon:'twitter' %}
+        </span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_facebook_link %}
+    <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ product_url }}" target="_blank" rel="noopener">
+        <span class="social-icon">
+          {% render 'icons', icon:'facebook' %}
+        </span>
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.social_gmail_link %}
+    <li>
+        <a href="mailto:?subject={{ product_title | escape }}&body=Check out this product: {{ product_url }}" target="_blank" rel="noopener">
+        <span class="social-icon">
+          {% render 'icons', icon:'mail-icon' %}
+        </span>
+      </a>
+    </li>
+  {% endif %}
+</ul>
+
+      

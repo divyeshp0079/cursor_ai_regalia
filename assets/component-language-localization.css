@@ -1,0 +1,33 @@
+/* language selector */
+.localization-country {
+  display: flex;
+  align-items: center;
+  gap: 33px;
+}
+
+.defaultlanguage {
+  border: 0px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.language-country-footer {
+  position: relative;
+}
+.header--middle-left .defaultlanguage{
+  width:35px;
+}
+.header--middle-left .desktop-localization-wrapper{
+  width:90px;
+}
+@media (min-width:768px) and (max-width:989px){
+  .language-content-data {
+    display: none;
+  }
+}
+@media (max-width:767px){
+  .header--top-center .language-location-content{
+    max-width: 100%;
+    width: 100%;
+  }
+}

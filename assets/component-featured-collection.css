@@ -1,0 +1,264 @@
+.featured-collection-section .collections-wrapper {
+  background-color: var(--bg-color);
+  border-radius: 6px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.featured-collection-section .collections-wrapper.headingspc{
+  margin-top: -100px;
+}
+.collections-wrapper .coll-bg-image.top-left {
+  position: absolute;
+  left: 0;
+  top: 4%;
+  z-index: 0;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.collections-wrapper .coll-bg-image.bottom-right {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  z-index: 0;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    /* Initial position */
+  }
+
+  50% {
+    transform: translateY(-10px);
+    /* Float upward */
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Back to the initial position */
+  }
+}
+
+.collections-list-wrapper {
+  padding: 50px 14%;
+}
+
+.collections-list-wrapper .tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.collections-list-wrapper .tab-button {
+  padding: 10px 20px;
+  color: var(--tab-color);
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+}
+
+.collections-list-wrapper .tab-button.active {
+  color: var(--active-tab-color);
+}
+
+.collections-list-wrapper .tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='69' height='6' viewBox='0 0 69 6' fill='none'%3E%3Cpath d='M1.4613 4.15647L2.40597 3.21181C4.17981 1.43797 7.05577 1.43798 8.82961 3.21182C10.6034 4.98565 13.4794 4.98566 15.2532 3.21182C17.0271 1.43798 19.903 1.43798 21.6769 3.21182C23.4507 4.98566 26.3267 4.98566 28.1005 3.21182C29.8744 1.43798 32.7503 1.43798 34.5242 3.21182C36.298 4.98565 39.174 4.98566 40.9478 3.21182C42.7216 1.43798 45.5976 1.43798 47.3714 3.21182C49.1453 4.98566 52.0212 4.98566 53.7951 3.21182C55.5689 1.43798 58.4449 1.43798 60.2187 3.21182C61.9925 4.98566 64.8685 4.98566 66.6423 3.21183L67.5387 2.31552' stroke='%23082A32' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: auto 6px;
+  padding-bottom: 6px;
+}
+
+.featured-collection-section .animated-text-wrapper {
+  font-size: calc(var(--heading-size) * 3.5);
+  font-family: var(--heading-font-family);
+  font-weight: var(--weight-bold);
+  color: var(--heading-color);
+  opacity: var(--heading-opacity);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: fit-content;
+}
+
+.featured-collection-section .animated-text {
+  display: inline-block;
+  width: auto;
+  white-space: nowrap;
+}
+
+.featured-collection-section .animated-text.animated-letters {
+  display: inline-block;
+  width: 0%;
+  animation: typewriter 5s 1s infinite alternate;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.animated-text-wrap {
+  margin: 0 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.featured-collection-section .product-card-swatches{
+  display:none;
+}
+.featured-collection-section .show_swatches .product-card-swatches{
+  display:block;
+}
+.featured-collection-section .product-inner-content{
+  text-align: var( --product-card-alignment);
+}
+.featured-collection-section .center .product-price.compare--price-grt .price__sale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.featured-collection-section .left .product-price.compare--price-grt .price__sale {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.featured-collection-section .right .product-price.compare--price-grt .price__sale {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.featured-collection-section .product-price {
+  padding-bottom: 10px;
+}
+
+.featured-collection-section .product-price .compared-at-price {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1440px) {
+  .animated-text-wrap {
+    margin: 0 5%;
+  }
+
+  .featured-collection-section .animated-text-wrapper {
+    font-size: calc(var(--heading-size) * 3.5);
+  }
+}
+
+@media (max-width: 1024px) {
+  .featured-collection-section .animated-text-wrapper {
+    font-size: calc(var(--heading-size) * 2.8);
+  }
+
+  .featured-collection-section .collections-wrapper {
+    margin-top: -80px;
+  }
+
+  .collections-list-wrapper {
+    padding: 4% 10%;
+  }
+
+  .collections-list-wrapper .tab-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .featured-collection-section .animated-text-wrapper {
+    font-size: calc(var(--heading-size) * 1.7);
+  }
+
+  .featured-collection-section .collections-wrapper.headingspc {
+    margin-top: -70px;
+  }
+
+  .collections-list-wrapper {
+    padding: 4% 0%;
+  }
+
+  .collections-list-wrapper .tab-button {
+    padding: 10px 10px;
+    margin: 0;
+    font-size: calc(var(--bs-size) + 6px);
+  }
+
+  .collections-list-wrapper .tab-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collections-list-wrapper .tabs {
+    gap: 10px;
+  }
+
+  .product-item .countdown-wrapper {
+    padding: 5px;
+  }
+
+  .collections-list-wrapper .tab-content {
+    column-gap: 12px;
+  }
+  .collections-wrapper .coll-bg-image.top-left{
+    top:14%;
+  }
+  .collections-wrapper .coll-bg-image.bottom-right{
+    top:18%;
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-collection-section .animated-text-wrapper {
+    font-size: calc(var(--heading-size) * 1.4);
+  }
+
+  .featured-collection-section .collections-wrapper.headingspc {
+    margin-top: -60px;
+  }
+
+  .collections-list-wrapper {
+    padding: 4% 0%;
+  }
+
+  .collections-list-wrapper .tab-button {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 375px) {
+  .featured-collection-section .animated-text-wrapper {
+    font-size: calc(var(--heading-size) * 1);
+  }
+
+  .featured-collection-section .collections-wrapper.headingspc {
+    margin-top: -50px;
+  }
+}

@@ -1,0 +1,17 @@
+.four_zero_four_bg {
+  text-align: center;
+}
+
+.four_zero_four_bg .contant_box_404 .link_404 {
+  margin-top: 2rem;
+}
+
+.four_zero_four_bg .img-404 {
+  margin: 1rem auto;
+}
+
+@media (max-width: 768px) {
+  .four_zero_four_bg .contant_box_404 .link_404 {
+    margin-top: 1rem;
+  }
+}

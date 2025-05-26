@@ -1,0 +1,90 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_k6878x": {
+          "type": "announcement",
+          "settings": {
+            "text": "<p>Mid-Season Sale Up to 70% OFF. <strong>Shop Now</strong></p>",
+            "text_mobile": "<p>Mid-Season Sale Up to 70% OFF. <strong>Shop Now</strong></p>",
+            "link": "shopify://collections",
+            "new_tab": true
+          }
+        },
+        "announcement_HGRbeL": {
+          "type": "announcement",
+          "settings": {
+            "text": "<p>Summer sale: Up to 70% off selected items</p>",
+            "text_mobile": "<p>Summer sale: Up to 70% off selected items</p>",
+            "link": "shopify://collections/best-seller",
+            "new_tab": true
+          }
+        }
+      },
+      "block_order": [
+        "announcement_k6878x",
+        "announcement_HGRbeL"
+      ],
+      "settings": {
+        "only_homepage": false,
+        "enable_container": true,
+        "enable_autoscroll": true,
+        "speed_delay": 1000,
+        "autoscroll_speed": 3000,
+        "bg_color": "#153d47",
+        "text_color": "#ffffff",
+        "link_color": "#ffffff"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "megamenu_DMdzBV": {
+          "type": "megamenu",
+          "settings": {
+            "menu_title": "collections",
+            "image_1": "shopify://shop_images/image_9_271d0d0d-bb63-4e20-83f4-cdf965f894f6.png",
+            "image_1_heading": "Diamond bracelets",
+            "image_1_text": "Shop now",
+            "image_1_link": "shopify://collections/diamond-bracelet-for-women",
+            "image_2": "shopify://shop_images/image_13_23d70262-0f8b-4a83-bd82-5ca103ea3297.png",
+            "image_2_heading": "Rings",
+            "image_2_text": "Shop now",
+            "image_2_link": "shopify://collections/rings"
+          }
+        }
+      },
+      "block_order": [
+        "megamenu_DMdzBV"
+      ],
+      "settings": {
+        "logo_position": "top-center",
+        "menu": "main-menu",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "sticky_header": true,
+        "inline_search": false,
+        "inline_search_color": "#000000",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}

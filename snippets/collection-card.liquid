@@ -1,0 +1,63 @@
+{%- liquid
+  assign ratio = blank
+  assign url = collection.url
+  assign image = blank
+  assign title = collection.title
+
+  if placeholder_image != blank
+    assign image = placeholder_image
+  elsif collection.image != blank
+    assign image = collection.image
+  endif
+
+  case media_ratio
+    when 'portrait'
+      assign ratio = '150%'
+    when 'square'
+      assign ratio = '100%'
+    when 'landscape'
+      assign ratio = '66.66%'
+    when 'full-screen'
+      assign ratio = '75%'
+    when 'wide-screen'
+      assign ratio = '56.25%'
+  endcase
+-%}
+<div class="collection-card" ms-aos data-ms-delay="{{ index | times: 10 }}">
+  {%- if image != blank and url != blank -%}
+    <a href="{{ url }}" class="collection-card-box" tabindex="-1">
+      <lazy-image
+        class="img-wrapper {% if hover_text != blank and url != blank %}hover-text{% endif %} {% if media_fill %} media-fill{%- endif -%}"
+        style="--media-ratio: {%- if ratio != blank -%}{{ ratio }}{%- else -%}{{ 1 | divided_by: image.aspect_ratio | times: 100 | append: '%' }}{%- endif -%};"
+      >
+        <img
+          src="{{ image | image_url: width: 200 }}"
+          alt="{{ collection.title | escape }}"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+          loading="lazy"
+          style="--object-position: {{ image.presentation.focal_point }}"
+        >
+      </lazy-image>
+    </a>
+  {%- else -%}
+    <div
+      class="img-wrapper {% if media_fill %} media-fill{%- endif -%}"
+      style="--media-ratio: {%- if ratio != blank -%}{{ ratio }}{%- else -%}100%{%- endif -%};"
+    >
+      {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    </div>
+  {%- endif -%}
+  {%- if title != blank and url != blank -%}
+    <a href="{{ url }}" class="collection-card-action" style="display: block;">
+      <span class="h5 collection-title">{{ hover_text | default: title | escape }}</span>
+    </a>
+  {%- endif -%}
+  <span class="collection-product-count">
+    {% assign products = 'collection.general.products' | t %}
+    {{ collection.all_products_count | append: products | upcase }}
+  </span>
+  <div class="collection-button">
+    <a href="{{ collection.url }}" class="btn btn-secondary">{{ 'collection.general.view_more' | t }}</a>
+  </div>
+</div>

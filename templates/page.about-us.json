@@ -1,0 +1,214 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {}
+    },
+    "about-us-banner": {
+      "type": "about-us-banner",
+      "settings": {
+        "full_width": false,
+        "container_max_width": 1180,
+        "inner_max_width": 1180,
+        "main_heading": "The World of Regalia",
+        "heading_align_desk": "left",
+        "heading_align_mob": "center",
+        "main_heading_color": "#082a32",
+        "background_image": "shopify://shop_images/a828d31c84ef553353719f9d7e0c0277.jpg",
+        "background_height": 570,
+        "sub_heading": "A Legacy of Elegance",
+        "sub_heading_color": "#ffffff",
+        "description": "At Regalia, we believe jewelry is more than a beautiful accessory - it’s a symbol of personal power, timeless elegance, and unforgettable moments. Each piece in our collection is designed to reflect sophistication, confidence, and grace.",
+        "description_color": "#ffffff",
+        "text_position_desk": "bottom left",
+        "text_position_mob": "bottom left",
+        "subheading_size": "h3",
+        "desc_size": "h5",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "about-us-text": {
+      "type": "about-us-text",
+      "settings": {
+        "full_width": false,
+        "container_max_width": 1210,
+        "inner_max_width": 1180,
+        "bg_color": "#ffffff",
+        "heading_first": true,
+        "heading": "Our Story",
+        "description": "Founded in 2020, Regalia began with a vision: to create jewelry that honors tradition while embracing modern luxury. What started as a small design studio has grown into a globally admired brand known for refined craftsmanship and timeless beauty.<br><br>From dainty everyday pieces to show-stopping statements, every design is created with care to elevate the everyday and celebrate life’s defining moments.",
+        "heading_color": "#082a32",
+        "description_color": "#797979",
+        "heading_font_size": 34,
+        "description_size": 16,
+        "heading_align_desk": "flex-end",
+        "heading_align_mob": "center",
+        "desc_align_desk": "left",
+        "desc_align_mob": "center",
+        "heading_column_width": 30,
+        "description_column_width": 70,
+        "show_separator_desk": true,
+        "show_separator_mob": true,
+        "separator_color": "#fbf5f0",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "duo-image": {
+      "type": "duo-image",
+      "settings": {
+        "full_width": false,
+        "section_max_width": 1180,
+        "heading": "",
+        "heading_font_size": 28,
+        "heading_color": "#000000",
+        "heading_align_desk": "left",
+        "heading_align_mob": "center",
+        "image_1": "shopify://shop_images/934e4f5afcdb56225fa34658ddb8cb9d_1_5ac4b99e-7261-4ce8-8620-da47e25aec4c.jpg",
+        "image_2": "shopify://shop_images/b5bedeff2226d87a75c7d8228576e9c6_1.jpg",
+        "image_width": 50,
+        "image_height": 450,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "about_us_text_4Wbmei": {
+      "type": "about-us-text",
+      "settings": {
+        "full_width": false,
+        "container_max_width": 1210,
+        "inner_max_width": 1180,
+        "bg_color": "#ffffff",
+        "heading_first": false,
+        "heading": "Craftsmanship & Values",
+        "description": "Quality is at the heart of Regalia. Our artisans bring decades of experience to every piece, working with ethically sourced materials like recycled gold, natural gemstones, and conflict-free diamonds.<br><br>We blend meticulous craftsmanship with modern design, creating jewelry meant to last and be loved for generations.",
+        "heading_color": "#082a32",
+        "description_color": "#797979",
+        "heading_font_size": 34,
+        "description_size": 16,
+        "heading_align_desk": "flex-end",
+        "heading_align_mob": "center",
+        "desc_align_desk": "left",
+        "desc_align_mob": "center",
+        "heading_column_width": 49,
+        "description_column_width": 51,
+        "show_separator_desk": true,
+        "show_separator_mob": true,
+        "separator_color": "#fbf5f0",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "team-showcase": {
+      "type": "team-showcase",
+      "blocks": {
+        "member_FDEWVM": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/db6829f8e8160642dc4025d6a5d989a9.jpg",
+            "name": "Isabelle Hartley",
+            "position": "Founder & Creative Director"
+          }
+        },
+        "member_ckKMAE": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/90ccfde05c6c767452fc1a4d10091d46.jpg",
+            "name": "Daniel Rios",
+            "position": "Lead Artisan"
+          }
+        },
+        "member_VTrzFL": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/7f28abfc7fb8e0da88f028e32cfebb6c.jpg",
+            "name": "Sofia Chen",
+            "position": "Design Director"
+          }
+        },
+        "member_CifDMj": {
+          "type": "member",
+          "settings": {
+            "image": "shopify://shop_images/8ce7d564005db5d4382b6c5abca414cc.jpg",
+            "name": "Mila Evans",
+            "position": "Customer Experience Lead"
+          }
+        }
+      },
+      "block_order": [
+        "member_FDEWVM",
+        "member_ckKMAE",
+        "member_VTrzFL",
+        "member_CifDMj"
+      ],
+      "settings": {
+        "full_width": false,
+        "max_width": 1180,
+        "bg_color": "#f5f5f580",
+        "bg_opacity": 50,
+        "heading": "The People Behind Regalia",
+        "heading_color": "#082a32",
+        "heading_size": "h2",
+        "text_align_desk": "left",
+        "text_align_mob": "left",
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "footer_text": "Our team is united by one goal: to bring you jewelry that inspires and empowers.",
+        "footer_text_color": "#000000",
+        "image_ratio": "portrait",
+        "enable_slider_if_many": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "social-promo": {
+      "type": "social-promo",
+      "settings": {
+        "full_width": false,
+        "max_width": 1180,
+        "bg_color": "#ffffff",
+        "image_overlay_opacity": 0,
+        "text_width": 45,
+        "image_width": 50,
+        "heading": "Follow Our Journey",
+        "heading_color": "#082a32",
+        "heading_size": 28,
+        "description": "Discover the artistry behind our collections, explore styling inspiration, and connect with us on social media.",
+        "description_color": "#797979",
+        "description_size": 16,
+        "text_align_desk": "left",
+        "text_align_mob": "center",
+        "social_icon": "shopify://shop_images/instagram.png",
+        "social_text": "Follow us on Instagram",
+        "social_handle": "@regaliajewels",
+        "social_link": "",
+        "social_color": "#000000",
+        "social_size": 14,
+        "social_handle_color": "#2081d0",
+        "image": "shopify://shop_images/4d2c174a4331a26010534613597bc78a.jpg",
+        "image_radius": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "about-us-banner",
+    "about-us-text",
+    "duo-image",
+    "about_us_text_4Wbmei",
+    "team-showcase",
+    "social-promo"
+  ]
+}

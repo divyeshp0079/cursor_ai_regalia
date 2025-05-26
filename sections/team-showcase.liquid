@@ -1,0 +1,351 @@
+{% assign opacity_float = section.settings.bg_opacity | times: 0.01 %}
+
+{%- style -%}
+  #section-{{ section.id }} .team-container {
+    padding: 30px 15px;
+    background-color: {{ section.settings.bg_color | color_modify: 'alpha', opacity_float }};
+  }
+  #section-{{ section.id }} .team-container.custom-width {
+    width: 100%;
+    margin: 0 auto;
+    max-width: {{ section.settings.max_width }}px;
+  }
+  #section-{{ section.id }} .team-heading {
+    text-align: {{ section.settings.text_align_desk }};
+    color: {{ section.settings.heading_color }};
+    margin-bottom: 30px;
+  }
+  #section-{{ section.id }} .team-members.no-swiper {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+  }
+  #section-{{ section.id }} .member-name {
+    font-weight: 600;
+    margin-top: 1rem;
+    color: {{ section.settings.name_color }};
+  }
+  #section-{{ section.id }} .member-position {
+    color: {{ section.settings.position_color }};
+    font-size: calc(var(--bs-size) + 2px);
+  }
+  #section-{{ section.id }} .team-footer {
+    margin-top: 2rem;
+    text-align: {{ section.settings.text_align_desk }};
+    color: {{ section.settings.footer_text_color }};
+  }
+  .member-name h3{
+    margin-bottom:10px;
+  }
+  @media screen and (min-width: 768px) {
+      #section-{{ section.id }} {
+       padding-top: {{ section.settings.padding_top }}px;
+       padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+  }
+  @media screen and (max-width: 767px) {
+    #section-{{ section.id }} .team-members.no-swiper {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+    }
+    #section-{{ section.id }} .team-heading {
+      text-align: {{ section.settings.text_align_mob }};
+    }
+    #section-{{ section.id }} .team-footer {
+      text-align: {{ section.settings.text_align_desk }};
+    }
+    #section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: 0;
+    }
+  }
+{%- endstyle -%}
+
+{% assign use_slider = false %}
+{% if section.settings.enable_slider_if_many and section.blocks.size > 4 %}
+  {% assign use_slider = true %}
+{% endif %}
+
+<section id="section-{{ section.id }}" class="team-showcase">
+  <div class="team-container {% if section.settings.full_width %}full-width{% else %}custom-width{% endif %}">
+    <{{ section.settings.heading_size }} class="team-heading">
+      {{- section.settings.heading -}}
+    </{{ section.settings.heading_size }}>
+    <div class="team-members-wrapper {% if use_slider %}swiper{% endif %}">
+      <div class="team-members {% if use_slider %}swiper-wrapper{% else %}no-swiper{% endif %}">
+        {% for block in section.blocks %}
+          <div class="team-member{% if use_slider %}swiper-slide{% endif %} image-{{ section.settings.image_ratio }}">
+            <div class="image-wrapper">
+              {% if block.settings.image != blank %}
+                <img src=" {% if section.settings.image_ratio == 'square' %}
+                      {{ block.settings.image | image_url: width: 600, height: 600, crop: 'center' }}
+                  {% elsif section.settings.image_ratio == 'portrait' %}
+                      {{ block.settings.image | image_url: width: 400, height: 600, crop: 'center' }}
+                  {% else %}
+                      {{ block.settings.image | image_url }}
+                  {% endif %}
+                  " alt="{{ block.settings.name }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}">
+              {% else %}
+                {{ 'image' | placeholder_svg_tag }}
+              {% endif %}
+            </div>
+            <div class="member-name">
+          <h3>{{ block.settings.name }}</h3></div>
+            <div class="member-position">{{ block.settings.position }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% if section.settings.footer_text != blank %}
+      <div class="team-footer">{{ section.settings.footer_text }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.team_showcase.name",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "t:sections.general.container_max_width.label",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "default": 1180
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label",
+      "default": "#F5F5F580"
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "t:sections.team_showcase.settings.bg_opacity.label",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.general.heading.label",
+      "default": "The People Behind Regalia"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.general.font_size.content",
+      "default": "h2",
+      "options": [
+        { "value": "h4", "label": "t:sections.general.font_size.small_size.label" },
+        { "value": "h3", "label": "t:sections.general.font_size.medium_size.label" },
+        { "value": "h2", "label": "t:sections.general.font_size.large_size.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_align_desk",
+      "label": "t:sections.team_showcase.settings.text_alignment.desktop.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_align_mob",
+      "label": "t:sections.team_showcase.settings.text_alignment.mobile.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "t:sections.team_showcase.settings.columns_desktop.label",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "t:sections.team_showcase.settings.columns_mobile.label",
+      "default": "2",
+      "options": [
+        { "value": "1", "label": "t:sections.team_showcase.settings.columns_mobile.options.one_column" },
+        { "value": "2", "label": "t:sections.team_showcase.settings.columns_mobile.options.two_column" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "t:sections.team_showcase.settings.footer.text.label",
+      "default": "Our team is united by one goal: to bring you jewelry that inspires and empowers."
+    },
+    {
+      "type": "color",
+      "id": "footer_text_color",
+      "label": "t:sections.team_showcase.settings.footer.color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.team_showcase.settings.image_ratio.options.adapt"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.team_showcase.settings.image_ratio.options.potrait"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.team_showcase.settings.image_ratio.options.square"
+        }
+      ],
+      "default": "portrait",
+      "label": "t:sections.team_showcase.settings.image_ratio.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_if_many",
+      "label": "t:sections.team_showcase.settings.enable_slider.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "t:sections.team_showcase.blocks.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.team_showcase.blocks.settings.member.image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.team_showcase.blocks.settings.member.name",
+          "default": "Member Name"
+        },
+        {
+          "type": "text",
+          "id": "position",
+          "label": "t:sections.team_showcase.blocks.settings.member.position",
+          "default": "Member Position"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.team_showcase.presets.name",
+      "blocks": [
+        {
+          "type": "member",
+          "settings": {
+            "name": "Member name",
+            "position": "Member position"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Member name",
+            "position": "Member position"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Member name",
+            "position": "Member position"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Member name",
+            "position": "Member position"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% if use_slider %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Swiper('#section-{{ section.id }} .swiper', {
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        breakpoints: {
+          750: {
+            slidesPerView: {{ section.settings.columns_desktop | minus: 1.5 }},
+          },
+          1024: {
+            slidesPerView: {{ section.settings.columns_desktop | minus: 0.5 }},
+          }
+        }
+      });
+    });
+  </script>
+{% endif %}

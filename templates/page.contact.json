@@ -1,0 +1,81 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "contact-details",
+      "blocks": {
+        "column_LrXHqg": {
+          "type": "column",
+          "settings": {
+            "multicolumn_svg_icon": "shopify://shop_images/fi_11057324.svg",
+            "multicolumn_title": "Office location",
+            "multicolumn_text": "<p><a href=\"https://maps.app.goo.gl/HYuLUf4TFj17hS5UA\" target=\"_blank\" title=\"https://maps.app.goo.gl/HYuLUf4TFj17hS5UA\">1309 Coffeen Ave, Sheridan, WY 82801, USA</a></p>"
+          }
+        },
+        "column_znhwCB": {
+          "type": "column",
+          "settings": {
+            "multicolumn_svg_icon": "shopify://shop_images/fi_8300130_1.svg",
+            "multicolumn_title": "Call us directly",
+            "multicolumn_text": "<p>Phone: <a href=\"tel:+1 (201) 203-5839\" target=\"_blank\" title=\"tel:+1 (201) 203-5839\">+1 (201) 203-5839</a></p>"
+          }
+        },
+        "column_BPnWeT": {
+          "type": "column",
+          "settings": {
+            "multicolumn_svg_icon": "shopify://shop_images/fi_3884256_1.svg",
+            "multicolumn_title": "Send a message",
+            "multicolumn_text": "<p><a href=\"mailto:support@metizsoft.zohodesk.com\" target=\"_blank\" title=\"mailto:support@metizsoft.zohodesk.com\">support@metizsoft.zohodesk.com</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_LrXHqg",
+        "column_znhwCB",
+        "column_BPnWeT"
+      ],
+      "settings": {
+        "banner_bg_color": "",
+        "banner_heading": "Contact us",
+        "content_align": "center",
+        "heading_color": "#082a32",
+        "text": "<p>We will take care of any problem and help you.</p>",
+        "text_color": "#5d4848",
+        "form_layout": "container",
+        "form_bg_color": "",
+        "form_image": "shopify://shop_images/61b08b5161062e9ae47300a1dd9a341d.png",
+        "form_heading": "Let's talk to us!",
+        "form_heading_color": "#082a32",
+        "button_text": "Send message",
+        "btn_text_color": "#797979",
+        "btn_bg_color": "#ffffff",
+        "btn_border_color": "#797979",
+        "vector_top_right": "shopify://shop_images/Group_563.svg",
+        "vector_bottom_left": "shopify://shop_images/Star_9.svg",
+        "multicolumn_layout": "container",
+        "multicolumn_heading": "We’re here to help you!",
+        "api_key": "AIzaSyDUmjLxl_qEb35uInhGq4ncy_a5pz2YYxA",
+        "address": "<p>1309 Coffeen Ave, Sheridan, WY 82801, USA</p>",
+        "map_style": "default",
+        "multicolumn_bg_color": "",
+        "multicolumn_heading_color": "#082a32",
+        "col_title_color": "#082a32",
+        "col_text_color": "#797979",
+        "col_bg_color": "#fbf5f0",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

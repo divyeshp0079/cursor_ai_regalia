@@ -1,0 +1,167 @@
+.quotes-section {
+  padding: 50px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.quotes-bg-image.top-left {
+  position: absolute;
+  bottom: 180px;
+}
+
+.quotes-bg-image.bottom-right {
+  position: absolute;
+  right: 70px;
+  bottom: 0;
+}
+
+.quote-container {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 130px;
+}
+
+.quote-container .quotes-title {
+  font-family: var(--bs-font-family);
+  font-weight: var(--weight-regular);
+  line-height: 21px;
+  color: var(--heading_color);
+  position: relative;
+  padding-bottom: 8px;
+  margin-bottom: 1.8rem;
+  display: block;
+}
+
+.quote-container .quotes-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  border-bottom: 1px dashed #D86F6F;
+}
+
+.quotes-section .quotes-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 70px;
+  max-width: 1100px;
+}
+
+.quotes-section .quote-content-wrapper {
+  height: 130px;
+}
+
+.quote-container .quote-content {
+  display: none;
+  color: var(--color-text);
+  width: 700px;
+}
+
+.quotes-section .quote-content.active {
+  display: block;
+}
+
+.quotes-section .quote-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  gap: 110px;
+  flex-wrap: wrap;
+}
+
+.quotes-section .quote-logo {
+  display: inline-block;
+  margin: 0 10px;
+  cursor: pointer;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.quotes-section .quote-logo {
+  height: auto;
+}
+
+.quotes-section .quote-logo.active {
+  filter: grayscale(0%) brightness(0%);
+}
+
+.quotes-section .quote-logo:hover {
+  filter: grayscale(0%) brightness(0%);
+  transform: scale(1.1);
+}
+.quotes-title.h6{
+  display:inline-block;
+}
+@media (max-width:1024px){
+  .quotes-section{
+    padding-top:15px;
+  }
+  .quote-container{
+    padding-top:0px;
+  }
+}
+@media (max-width: 767px) {
+  .quotes-section .quote-logo-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 55px;
+    justify-content: center;
+  }
+
+  .quotes-section .quotes-wrapper {
+    gap: 35px;
+  }
+
+  .quotes-section .quote-content-wrapper {
+    height: 100%;
+  }
+
+  .quote-container .quotes-title {
+    margin-bottom: 12px;
+  }
+
+  .quote-container .quote-content {
+    width: fit-content;
+  }
+
+  .quotes-section {
+    padding: 0px 0px 20px 0px;
+  }
+
+  .quote-content h2 {
+    margin-bottom: 0px;
+  }
+
+  .quote-container {
+    padding: 20px 0 50px;
+  }
+
+  .quotes-bg-image.bottom-right {
+    right: 35px;
+  }
+
+  .quotes-bg-image.top-left {
+    bottom: 90px;
+  }
+
+  .quotes-bg-image {
+    width: 100px;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-container {
+    padding: 0;
+  }
+
+  .quotes-bg-image {
+    width: 54px;
+    height: auto;
+  }
+}

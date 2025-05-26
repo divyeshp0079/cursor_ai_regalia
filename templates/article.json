@@ -1,0 +1,56 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "container": 1440,
+        "blog_show_author": false,
+        "blog_show_date": true,
+        "blog_show_comment": true,
+        "date_formats_patterns": "%b %d, %Y",
+        "social_icons": true,
+        "show_content_box": true,
+        "box_content": "<p>Jewelry is a reflection of your style and personality. Wear it to shine your brightest.</p>",
+        "box_content_align": "center",
+        "show_related_articles": true,
+        "related_article_title": "Related Articles",
+        "related_articles_per_page": 3,
+        "columns_desktop": 3,
+        "show_category": true,
+        "category_heading": "Categories",
+        "show_post_article": true,
+        "post_article_heading": "Post Article",
+        "show_tags": true,
+        "tags_heading": "Related Tags",
+        "background_color": "",
+        "title_color": "#153d47",
+        "text_color": "#797979",
+        "date_bg_color": "#efefef",
+        "block_text_color": "#000000",
+        "content_box_color": "#153d47",
+        "content_box_bg_color": "#fbf5f0",
+        "related_bg": "#f0f0f0",
+        "related_heading": "#153d47",
+        "related_title": "#153d47",
+        "related_date": "#797979",
+        "vector_top": "shopify://shop_images/Vector_2.svg",
+        "vector_left": "shopify://shop_images/Vector_1.svg",
+        "vector_right": "shopify://shop_images/Vector.svg",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

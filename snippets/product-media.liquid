@@ -1,0 +1,51 @@
+<div class="product-media swiper-wrapper gallery"  {%  if section.settings.image_zoom %} id="gallery" {% endif %} >
+  {% for media in product.media %}
+    <div class="media-item swiper-slide {% if forloop.first %}active{% endif %}" data-media-id="{{ media.id }}">
+      <div class="slider__image">
+        {% case media.media_type %}
+          {% when 'image' %}
+            {% assign image_group = media.alt | split: 'group-' | last %}
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+              <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+              
+              <a
+              {% if section.settings.image_zoom %}href="{{ media | image_url:width: media.width }}"{% endif %}
+                data-caption="Sea side, south shore<br><em class='text-muted'>© Dominik Schröder</em>"
+                data-width="{{ media.width }}"
+                data-height="{{ media.height }}"
+                itemprop="contentUrl"
+              >
+                <!-- Thumbnail -->
+                <img
+                  class="variant-image"
+                  src="{{ media | image_url:width: media.width }}"
+                  alt="{{ image_group | escape }}"
+                  loading="lazy"
+                  width="{{ media.width }}"
+                  height="{{ media.height }}"
+                  data-variant="{{ image_group | default: 'all' }}"
+                >
+              </a>
+            </figure>
+          {% when 'video' %}
+            <div class="product-video">
+              {{ media | video_tag: controls: true, loop: true, muted: true, aria-label: 'Product video'}}
+            </div>
+          {% when 'external_video' %}
+            <div class="product-external-video">
+              {{ media | external_video_tag }}
+            </div>
+          {% when 'model' %}
+            <product-model class="product-3D-model swiper-no-swiping">
+              {{ media | model_viewer_tag }}
+            </product-model>
+          {% else %}
+            <div class="unsupported-media">
+              {{ 'product.unsupported_media' | t }}
+              {{ media.media_type }}
+            </div>
+        {% endcase %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

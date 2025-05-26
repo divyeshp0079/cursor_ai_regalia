@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+    <meta itemprop="url" content="{{ shop.url }}">
+    <meta itemprop="name" content="{{ shop.name }}">
+    {%- assign formatted_balance = gift_card.balance | money_without_trailing_zeros | strip_html -%}
+    <title>{{ 'gift_cards.issued.title' | t: value: formatted_balance, shop: shop.name }}</title>
+   
+    {{ content_for_header }} 
+    {%- render 'css-variables' -%}
+    
+    {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'template-giftcard.css' | asset_url | stylesheet_tag: preload: true }}
+  
+  </head>
+  <body>
+    
+    {{ content_for_layout }}
+  
+  </body>
+  </html>

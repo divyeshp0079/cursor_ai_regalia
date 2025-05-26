@@ -1,0 +1,95 @@
+{% assign discount = product.compare_at_price | minus: product.price %}
+{% assign discount_percentage = discount | times: 100 | divided_by: product.compare_at_price %}
+
+{%- liquid
+  assign show_badge = true
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+  assign available = target.available | default: false
+  assign money_price = price | money
+  if settings.currency_code_enabled
+    assign money_price = price | money_with_currency
+  endif
+
+  if target == product and product.price_varies
+    assign money_price = 'product.price.from_price_html' | t: price: money_price
+  endif
+-%}
+
+<div class="product-price {{ classes }} {%- if compare_at_price < price %} compare--price-less {%- else-%} compare--price-grt {% endif -%}">
+  <div class="price__regular visuallyhidden">
+    <p class="main-price">
+      <span class="visuallyhidden">{{ 'product.regular_price' | t }}</span>
+      <span data-price>{{ money_price }}</span>
+    </p>
+  </div>
+  <div class="price__sale">
+    {%- unless product.price_varies == false and product.compare_at_price_varies %}
+      {%- if product.selected_or_first_available_variant.compare_at_price != blank -%}
+        <p class="compared-at-price">
+          <span class="visuallyhidden">{{ 'product.sale_price' | t }}</span>
+          <s data-compare-at-price>
+            {% if settings.currency_code_enabled %}
+              {{ compare_at_price | money_with_currency }}
+            {% else %}
+              {{ compare_at_price | money }}
+            {% endif %}
+          </s>
+        </p>
+      {%- endif -%}
+    {%- endunless -%}
+    <p class="main-price">
+      <span class="visuallyhidden">{{ 'product.regular_price' | t }}</span>
+      <span data-price>{{ money_price }}</span>
+    </p>
+    {%- if show_badge -%}
+      {%- if product.selected_or_first_available_variant.compare_at_price != blank -%}
+        <span
+          {% unless product.selected_or_first_available_variant.compare_at_price
+              > product.selected_or_first_available_variant.price
+            and available
+          %}
+            style="display:none;"
+          {%- endunless -%}
+          class="{%- if show_percentage -%}featured-percentage{% else %}price-badge sale{%  endif %}"
+          data-sale-percent
+        >
+          {%- if show_percentage -%}
+            <p class="discount-percentage" {{ discount_percentage }}>
+              {{ 'product.save' | t -}}
+              {{- discount_percentage | round }}%
+            </p>
+          {%- else -%}
+            {{ 'product.sale' | t }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  <span
+    class="price-unit-price"
+    {% if product.selected_or_first_available_variant.unit_price_measurement == null %}
+      style="display:none;"
+    {% endif %}
+  >
+    {%- capture unit_price_separator -%}
+      <span aria-hidden="true">/</span><span class="visually-hidden">{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+      {%- endcapture -%}
+    {%- capture unit_price_base_unit -%}
+      {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+      {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+      {%- endif -%}
+      {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+      {%- endcapture -%}
+    <span data-unit-price>{{ product.selected_or_first_available_variant.unit_price | money }}</span>
+    {{- unit_price_separator -}}
+    <span data-unit-base>{{- unit_price_base_unit -}}</span>
+  </span>
+</div>

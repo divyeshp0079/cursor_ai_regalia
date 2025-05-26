@@ -1,0 +1,369 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  {% comment %} For contact us page linear gradient background {% endcomment %}
+    .contact-details {
+      position:relative;
+      overflow: hidden;
+      background-image: linear-gradient(
+        {{ settings.top_color }} {{ settings.top_percentage }}%,
+        {{ settings.bottom_color }} {{ settings.bottom_percentage }}%
+      );
+    }
+{%- endstyle -%}
+
+{{ 'component-contact.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="contact-details section-{{ section.id }}-padding">
+  <div class="image-background">
+    <picture>
+      {% if settings.top_bg_image %}
+        <source srcset="{{ settings.top_bg_image | image_url: width: 90 }}" media="(max-width: 768px)">
+        <source srcset="{{ settings.top_bg_image | image_url: width: 175 }}" media="(max-width: 1600px)">  
+        <img src="{{ settings.top_bg_image | image_url: width: 256 }}" alt="{{ settings.top_bg_image.alt | default: 'Top background image' }}" class="top-bg"
+        loading="lazy"
+        width="auto"
+        height="auto"
+        style="--object-postion:{{ settings.top_bg_image.presentation.focal_point }}">
+      {% endif %}
+    </picture>
+    <picture>
+      {% if settings.left_bg_image %}
+        <source srcset="{{ settings.left_bg_image | image_url: width: 26 }}" media="(max-width: 768px)">
+        <source srcset="{{ settings.left_bg_image | image_url: width: 50 }}" media="(max-width: 1600px)">  
+        <img src="{{ settings.left_bg_image | image_url: width: 130 }}" alt="{{ settings.left_bg_image.alt | default: 'Left background image' }}"class="left-bg"
+        loading="lazy"
+        width="auto"
+        height="auto"
+        style="--object-postion:{{ settings.left_bg_image.presentation.focal_point }}">
+      {% endif %}
+    </picture>
+    <picture>
+      {% if settings.right_bg_image %}
+        <source srcset="{{ settings.right_bg_image | image_url: width: 45 }}" media="(max-width: 768px)">
+        <source srcset="{{ settings.right_bg_image | image_url: width: 70 }}" media="(max-width: 1600px)">  
+        <img src="{{ settings.right_bg_image | image_url: width: 130 }}" alt="{{ settings.right_bg_image.alt | default: 'Right background image' }}"  
+          class="right-bg"
+          loading="lazy"
+          width="auto"
+          height="auto"
+          style="--object-postion:{{ settings.right_bg_image.presentation.focal_point }}">
+      {% endif %}
+    </picture>
+  </div>
+
+  {% render 'contact-banner' %}
+  {% render 'breadcrumbs' %}
+  {% render 'contact-form' %}
+  {% render 'contact-multicolumn' %}
+  {% render 'map' %}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.contact.details.name",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.contact.details.settings.banner_header.content"
+    },
+    {
+      "type": "color",
+      "id": "banner_bg_color",
+      "label": "t:sections.contact.details.settings.banner_background.label"
+    },
+    {
+      "type": "text",
+      "id": "banner_heading",
+      "label": "t:sections.contact.details.settings.banner_heading.label",
+      "default": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.contact.details.settings.banner_content_alignment.label"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#082A32",
+      "label": "t:sections.general.color.heading_color.label"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>Add Text here</p>",
+      "label": "t:sections.contact.details.settings.banner_content.label"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "default": "#5D5348",
+      "label": "t:sections.general.color.text_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact.details.settings.contact_form.content"
+    },
+    {
+      "type": "select",
+      "id": "form_layout",
+      "options": [
+        {
+          "value": "container",
+          "label": "t:sections.contact.details.settings.contact_form.layout.options.container"
+        },
+        {
+          "value": "container-narrow",
+          "label": "t:sections.contact.details.settings.contact_form.layout.options.narrow_container"
+        }
+      ],
+      "default": "container",
+      "label": "t:sections.contact.details.settings.contact_form.layout.label"
+    },
+    {
+      "type": "color",
+      "id": "form_bg_color",
+      "label": "t:sections.contact.details.settings.contact_form.background_color.label"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "form_image",
+      "label": "t:sections.contact.details.settings.contact_form.select_image.label"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "default": "Let's talk to us!",
+      "label": "t:sections.contact.details.settings.contact_form.heading.label"
+    },
+    {
+      "type": "color",
+      "id": "form_heading_color",
+      "default": "#082A32",
+      "label": "t:sections.general.color.heading_color.label"
+    },
+
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "Send message",
+      "label": "t:sections.general.button.button_text.label"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "default": "#797979",
+      "label": "t:sections.general.button.button_text_color.label"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "default": "#FFFFFF",
+      "label": "t:sections.general.button.button_background_color.label"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "default": "#797979",
+      "label": "t:sections.general.button.button_border_color.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "vector_top_right",
+      "label": "t:sections.contact.details.settings.contact_form.vector_images.top_right.label",
+      "info": "t:sections.contact.details.settings.contact_form.vector_images.top_right.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "vector_bottom_left",
+      "label": "t:sections.contact.details.settings.contact_form.vector_images.bottom_left.label",
+      "info": "t:sections.contact.details.settings.contact_form.vector_images.bottom_left.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact.details.settings.contact_form.multicolumn_settings.content"
+    },
+    {
+      "type": "select",
+      "id": "multicolumn_layout",
+      "options": [
+        {
+          "value": "container",
+          "label": "t:sections.contact.details.settings.contact_form.multicolumn_settings.layout.options.container"
+        },
+        {
+          "value": "container-narrow",
+          "label": "t:sections.contact.details.settings.contact_form.multicolumn_settings.layout.options.narrow_container"
+        }
+      ],
+      "default": "container",
+      "label": "t:sections.contact.details.settings.contact_form.multicolumn_settings.layout.label"
+    },
+    {
+      "type": "text",
+      "id": "multicolumn_heading",
+      "default": "Heading",
+      "label": "t:sections.contact.details.settings.contact_form.multicolumn_settings.heading"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.contact.details.settings.map_header.content"
+    },
+    {
+      "type": "text",
+      "id": "api_key",
+      "label": "t:sections.contact.details.settings.map_api.label",
+      "info": "t:sections.contact.details.settings.map_api.info"
+    },
+    {
+      "type": "richtext",
+      "id": "address",
+      "label": "t:sections.contact.details.settings.map_address.label",
+      "info": "t:sections.contact.details.settings.map_address.info",
+      "default": "<p>75 9th Ave, New York, NY 10011-7006</p>"
+    },
+    {
+      "type": "select",
+      "id": "map_style",
+      "label": "t:sections.contact.details.settings.map_style.label",
+      "default": "default",
+      "options": [
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.default_style",
+          "value": "default"
+        },
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.silver_style",
+          "value": "silver"
+        },
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.retro_style",
+          "value": "retro"
+        },
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.dark_style",
+          "value": "dark"
+        },
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.night_style",
+          "value": "night"
+        },
+        {
+          "label": "t:sections.contact.details.settings.map_style.options.aubergine_style",
+          "value": "aubergine"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.color.content"
+    },
+    {
+      "type": "color",
+      "id": "multicolumn_bg_color",
+      "label": "t:sections.general.color.background_color.label"
+    },
+    {
+      "type": "color",
+      "id": "multicolumn_heading_color",
+      "label": "t:sections.general.color.heading_color.label",
+      "default": "#082A32"
+    },
+    {
+      "type": "color",
+      "id": "col_title_color",
+      "label": "t:sections.contact.details.settings.contact_form.multicolumn_settings.title_color",
+      "default": "#082A32"
+    },
+    {
+      "type": "color",
+      "id": "col_text_color",
+      "label": "t:sections.general.color.text_color.label",
+      "default": "#797979"
+    },
+    {
+      "type": "color",
+      "id": "col_bg_color",
+      "label": "t:sections.general.color.multicolumn_bg_color.label",
+      "default": "#FBF5F0"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "t:sections.contact.details.blocks.name",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "multicolumn_svg_icon",
+          "label": "t:sections.contact.details.blocks.settings.multicolumn_icons.label"
+        },
+        {
+          "type": "text",
+          "id": "multicolumn_title",
+          "label": "t:sections.contact.details.blocks.settings.multicolumn_title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "multicolumn_text",
+          "label": "t:sections.contact.details.blocks.settings.multicolumn_text.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

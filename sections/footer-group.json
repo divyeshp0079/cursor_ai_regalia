@@ -1,0 +1,195 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "popup": {
+      "type": "popup",
+      "disabled": true,
+      "settings": {
+        "popup_mode": "testing",
+        "time_to_interact": 10,
+        "pop_image": "shopify://shop_images/277d2eb8cc623ee62d12e877463e1821.png",
+        "heading": "SUBSCRIBE TO OUR NEWSLETTER",
+        "heading_size": "h3",
+        "heading_uppercase": true,
+        "content": "<p>Be the first to know about new arrivals, exclusive offers, and jewelry trends. Sign up now and stay <br/>inspired!</p>",
+        "border_radius": 10,
+        "text_color": "#ffffff",
+        "bg_color": "#153d47",
+        "content_alignment": "center",
+        "btn_text": "Subscribe",
+        "btn_text_color": "#153d47",
+        "btn_bg_color": "#e9cfb4",
+        "btn_hover_color": "#e9cfb4",
+        "bg_hover_color": "#153d47"
+      }
+    },
+    "logo_listing_X8Ggjy": {
+      "type": "logo-listing",
+      "blocks": {
+        "logo_34dwTf": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/fi_3870987.svg",
+            "title": "Free shipping",
+            "subheading": "<p>Standard shipping</p>"
+          }
+        },
+        "logo_mL7FjC": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/fi_4210780.svg",
+            "title": "Special discounts",
+            "subheading": "<p>Guaranteed saving</p>"
+          }
+        },
+        "logo_UaJx3W": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/fi_2438078.svg",
+            "title": "Buyers protection",
+            "subheading": "<p>Secure payment</p>"
+          }
+        },
+        "logo_XnC86n": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/fi_3249904.svg",
+            "title": "Customer service",
+            "subheading": "<p>Give us feedback</p>"
+          }
+        }
+      },
+      "block_order": [
+        "logo_34dwTf",
+        "logo_mL7FjC",
+        "logo_UaJx3W",
+        "logo_XnC86n"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "list_style": "grid",
+        "desktop_row": 4,
+        "list_text_color": "#082a32",
+        "list_subheading_color": "#797979",
+        "bg_color": "rgba(0,0,0,0)",
+        "image_width": 35,
+        "padding_top": 50,
+        "padding_bottom": 10
+      }
+    },
+    "newsletter_WMxafq": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_DWdTkL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails",
+            "heading_size": "h2"
+          }
+        },
+        "paragraph_yhcVNe": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Be the first to know about new collections and exclusive offers.</p>"
+          }
+        },
+        "email_form_4KTX7B": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_DWdTkL",
+        "paragraph_yhcVNe",
+        "email_form_4KTX7B"
+      ],
+      "settings": {
+        "full_width": true,
+        "text_color": "#082a32",
+        "subheading_color": "#797979",
+        "bg_color": "#fbf5f0",
+        "padding_top": 50,
+        "padding_bottom": 0
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "logo_information_JhNENx": {
+          "type": "logo-information",
+          "settings": {
+            "logo": "shopify://shop_images/Regalia_logo_5.svg",
+            "logo_width": 160,
+            "footer_newsletter": false,
+            "text_data": "At Regalia, we create jewelry that combines elegance with timeless appeal. Our pieces are crafted to enhance your style and celebrate your individuality.",
+            "info_logo_1": "location",
+            "info_data_1": "<a href=\"https://maps.app.goo.gl/HYuLUf4TFj17hS5UA\" target=\"_blank\" title=\"https://maps.app.goo.gl/HYuLUf4TFj17hS5UA\">1309 Coffeen Ave, Sheridan, WY 82801, USA</a>",
+            "info_logo_2": "email",
+            "info_data_2": "<a href=\"mailto:support@metizsoft.zohodesk.com\" target=\"_blank\" title=\"mailto:support@metizsoft.zohodesk.com\">support@metizsoft.zohodesk.com</a>",
+            "info_logo_3": "phone",
+            "info_data_3": "<a href=\"tel:+1 (201) 203-5839\" target=\"_blank\" title=\"tel:+1 (201) 203-5839\">+1 (201) 203-5839</a>"
+          }
+        },
+        "navigation_hikyPf": {
+          "type": "navigation",
+          "settings": {
+            "menu_title": "Information",
+            "main_menu": "footer"
+          }
+        },
+        "navigation_iXAqgW": {
+          "type": "navigation",
+          "settings": {
+            "menu_title": "Quick Links",
+            "main_menu": "main-menu"
+          }
+        },
+        "navigation_x3pi6G": {
+          "type": "navigation",
+          "settings": {
+            "menu_title": "Customer Service",
+            "main_menu": "customer-services"
+          }
+        }
+      },
+      "block_order": [
+        "logo_information_JhNENx",
+        "navigation_hikyPf",
+        "navigation_iXAqgW",
+        "navigation_x3pi6G"
+      ],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "bg_color": "#082a32",
+        "menu_color": "#ffffff",
+        "menu_color_opacity": 50,
+        "social_icons": true,
+        "enable_follow_on_shop": true,
+        "policy_text": "© 2025, Lorem Ipsum is simply dummy text",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": false
+      }
+    }
+  },
+  "order": [
+    "popup",
+    "logo_listing_X8Ggjy",
+    "newsletter_WMxafq",
+    "footer"
+  ]
+}

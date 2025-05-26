@@ -1,0 +1,119 @@
+.gallery-section .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.gallery-item-content .content-title {
+  font-family: var(--bs-font-family);
+  font-weight: var(--weight-medium);
+}
+
+.gallery-section .gallery-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-gallery .gallery-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  align-content: center;
+  text-align: center;
+  padding: 30px;
+  border-radius: 6px;
+}
+
+.gallery-section .gallery-items {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 380px;
+}
+
+.gallery-section .gallery-items img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-section .gallery-items:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-section .gallery-items .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-section .gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.gallery-section .gallery-item-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  z-index: 2;
+}
+
+.gallery-section .content-description p {
+  padding-right: 70px;
+}
+
+.gallery-section .gallery-button {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .gallery-section .gallery-items {
+    height: 200px;
+    border-radius: calc(var(--btn-radius) - 3px);
+  }
+
+  .gallery-section .gallery-title {
+    position: relative;
+    grid-column: span 4 / span 4;
+    padding: 0px 18px;
+    font-size: var(--bs-size);
+    margin-bottom: 0px;
+  }
+
+  .gallery-section .gallery-grid {
+    gap: 10px;
+  }
+
+  .gallery-section .content-description p {
+    padding-right: 20px;
+    font-size: calc(var(--bs-size) - 4px);
+  }
+
+  .gallery-section .gallery-wrapper {
+    margin: 0px 15px;
+  }
+
+  .gallery-item-content .content-title {
+    margin-bottom: 5px;
+  }
+
+  .gallery-item-content .content-title {
+    font-family: calc(var(--bs-size) + 2px);
+  }
+
+  .gallery-button {
+    font-size: calc(var(--bs-size) - 4px);
+  }
+}

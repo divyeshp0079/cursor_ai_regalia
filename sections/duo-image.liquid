@@ -1,0 +1,203 @@
+{%- style -%}
+      #section-{{ section.id }} .image-container.custom-width {
+        width: 100%;
+        margin: 0 auto;
+        max-width: {{ section.settings.section_max_width }}px;
+      }
+      #section-{{ section.id }} .two-image-heading {
+        font-size: {{ section.settings.heading_font_size }}px;
+        color: {{ section.settings.heading_color }};
+      }
+      #section-{{ section.id }} .image-block {
+        width: {{ section.settings.image_width }}%;
+      }
+      #section-{{ section.id }} .image-block img {
+        height: {{ section.settings.image_height }}px;
+      }
+      #section-{{ section.id }} {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      }
+      #section-{{ section.id }} .two-image-heading {
+        text-align: {{ section.settings.heading_align_mob }};
+      }
+  @media screen and (min-width: 768px) {
+      #section-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+      #section-{{ section.id }} .two-image-heading {
+       text-align: {{ section.settings.heading_align_desk }};
+     }
+  }
+{%- endstyle -%}
+
+<section id="section-{{ section.id }}" class="two-image-section">
+  <div class="image-container {% if section.settings.full_width %}full-width{% else %}custom-width{% endif %}">
+    {% if section.settings.heading != blank %}
+      <h2 class="two-image-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="image-wrapper">
+      <div class="image-block">
+        {% if section.settings.image_1 %}
+          <img
+            src="{{ section.settings.image_1 | image_url: width: section.settings.image_1.width }}"
+            alt="{{ section.settings.image_1.alt | default: 'image 1' }}"
+            width="{{ section.settings.image_1.width }}"
+            height="{{ section.settings.image_1.height }}"
+            loading="lazy"
+            style="--object-position:{{ section.settings.image_1.presentation.focal_point }}"
+          >
+        {% else %}
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}
+      </div>
+      <div class="image-block">
+        {% if section.settings.image_2 %}
+          <img
+            src="{{ section.settings.image_2 | image_url: width: section.settings.image_2.width }}"
+            alt="{{ section.settings.image_2.alt | default: 'image 2' }}"
+            width="{{ section.settings.image_2.width }}"
+            height="{{ section.settings.image_2.height }}"
+            loading="lazy"
+            style="--object-position:{{ section.settings.image_2.presentation.focal_point }}"
+          >
+        {% else %}
+          {{ 'image' | placeholder_svg_tag }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.duo_image.name",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.duo_image.settings.layout.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "t:sections.duo_image.settings.max_width.label",
+      "min": 600,
+      "max": 1600,
+      "step": 10,
+      "default": 1180
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.general.heading.label",
+      "default": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "t:sections.duo_image.settings.heading_font_size.label",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_align_desk",
+      "label": "t:sections.duo_image.settings.alignment.desktop.label",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_align_mob",
+      "label": "t:sections.duo_image.settings.alignment.mobile.label",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "t:sections.general.alignment.alignment_left.label" },
+        { "value": "center", "label": "t:sections.general.alignment.alignment_center.label" },
+        { "value": "right", "label": "t:sections.general.alignment.alignment_right.label" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:sections.duo_image.settings.image_settings.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "t:sections.duo_image.settings.image_settings.image_1.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "t:sections.duo_image.settings.image_settings.image_2.label"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "t:sections.duo_image.settings.image_settings.image_width.label",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "t:sections.duo_image.settings.image_settings.image_height.label",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "default": 450
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

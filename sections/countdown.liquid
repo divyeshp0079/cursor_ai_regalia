@@ -1,0 +1,187 @@
+{%- style -%}
+    #shopify-section-{{ section.id }} .countdown-image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;  
+      background-color: {{ section.settings.overlay_color | color_modify: 'alpha', section.settings.overlay_opacity }};
+      backdrop-filter: blur(5.9px);
+  }
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  @media(max-width: 768px){
+    #shopify-section-{{ section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-countdown.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="{% if section.settings.enable_full_width %}full-width{% else %}container{% endif %} countdown-section">
+  <div class="countdown-image">
+    {%- if section.settings.background_image -%}
+  <img 
+    src="{{ section.settings.background_image | image_url: width: section.settings.background_image.width }}" 
+    alt="{{ section.settings.background_image.alt }}" 
+    width="{{ section.settings.background_image.width }}" 
+    height="{{ section.settings.background_image.height }}" 
+    style="
+      --object-position:{{ section.settings.background_image.presentation.focal_point }};
+      max-height: 529px;
+      object-fit: cover;
+      width: 100%;
+    " 
+    loading="lazy">
+     <div class="countdown-image-overlay"></div>
+    {%- else -%}
+      {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="countdown-overlay" id="countdown">
+    <div class="countdown-numbers" ms-aos data-ms-delay="100">
+      {%- if section.settings.title -%}
+        <h2 class="countdown-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.description -%}
+        <span class="countdown-description">{{ section.settings.description }}</span>
+      {%- endif -%}
+      <div class="countdown-timer" data-end-time="{{ section.settings.end_date }}">
+        <div class="countdown-item">
+          <span class="countdown-number" id="days">{{ 'general.countdown.default' | t }}</span>
+          <span class="countdown-label">{{ 'general.countdown.days' | t }}</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="hours">{{ 'general.countdown.default' | t }}</span>
+          <span class="countdown-label">{{ 'general.countdown.hours' | t }}</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="minutes">{{ 'general.countdown.default' | t }}</span>
+          <span class="countdown-label">{{ 'general.countdown.minutes' | t }}</span>
+        </div>
+        <span class="countdown-colon">:</span>
+        <div class="countdown-item">
+          <span class="countdown-number" id="seconds">{{ 'general.countdown.default' | t }}</span>
+          <span class="countdown-label">{{ 'general.countdown.seconds' | t }}</span>
+        </div>
+      </div>
+      {%- if section.settings.button_text -%}
+        <a href="{{ section.settings.button_link }}" class="countdown-button btn btn-secondary">{{ section.settings.button_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'component-countdown.js' | asset_url }}" type="text/javascript" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.countdown.name",
+  "class": "section section-countdown",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_full_width",
+      "label": "t:sections.general.full_width",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:sections.countdown.settings.bg_image.label"
+    },
+      {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:sections.general.color.overlay_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "t:sections.countdown.settings.bg_image.overlay_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.4
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.countdown.settings.bg_image.title",
+      "default": "Deal of the week"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.countdown.settings.bg_image.description",
+      "default": "<p>This week only they are all 20% off. While supplies last, planters not be restocked.</p>"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "t:sections.countdown.settings.end_date.label",
+      "default": "2022-12-31"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.button.content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.general.button.button_text.label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.general.button.button_link.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.countdown.presets.name",
+    }
+  ]
+}
+{% endschema %}
+

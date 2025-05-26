@@ -1,0 +1,213 @@
+{%- style -%}
+  #shopify-section-{{section.id }}{
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    --heading_color: {{ section.settings.heading_color }};
+  }
+  {% for block in section.blocks %}
+    .quote-content-{{ block.id }} h2 p{
+      color: {{ block.settings.quote_color }};
+    }
+  {% endfor %}
+  @media(max-width:768px){
+    #shopify-section-{{section.id }}{
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+  }
+{%- endstyle -%}
+
+{{ 'component-quotes.css' | asset_url | stylesheet_tag: preload: true }}
+
+<section class="quotes-section">
+  {%- if section.settings.quote_bg_1 -%}
+    <div class="quotes-bg-image top-left">
+      <img
+        src="{{ section.settings.quote_bg_1 | image_url: width: section.settings.quote_bg_1.width }}"
+        alt="{{ section.settings.quote_bg_1.alt }}"
+        width="{{ section.settings.quote_bg_1.width }}"
+        height="{{ section.settings.quote_bg_1.height }}"
+        loading="lazy"
+        style="--object-position:{{ section.settings.quote_bg_1.presentation.focal_point }}"
+      >
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.quote_bg_2 -%}
+    <div class="quotes-bg-image bottom-right">
+      <img
+        src="{{ section.settings.quote_bg_2 | image_url: width: section.settings.quote_bg_2.width }}"
+        alt="{{ section.settings.quote_bg_2.alt }}"
+        width="{{ section.settings.quote_bg_2.width }}"
+        height="{{ section.settings.quote_bg_2.height }}"
+        loading="lazy"
+        style="--object-position:{{ section.settings.quote_bg_2.presentation.focal_point }}"
+      >
+    </div>
+  {%- endif -%}
+  <div class="quote-container">
+    <div class="container text-{{ section.settings.heading_alignment }}">
+      {%- if section.settings.title -%}
+        <span class="quotes-title h6">
+          {{- section.settings.title -}}
+        </span>
+      {%- endif -%}
+      <div class="quotes-wrapper container-narrow">
+        <div class="quote-content-wrapper">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.quote -%}
+              <div class="quote-content quote-content-{{ block.id }} {% if forloop.first %}active{% endif %}">
+                <h2>{{ block.settings.quote }}</h2>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="quote-logo-wrapper">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.logo -%}
+              <div class="quote-logo {% if forloop.first %}active{% endif %}">
+                <img
+                  src="{{ block.settings.logo | image_url: width: block.settings.logo.width }}"
+                  alt="{{ block.settings.logo.alt }}"
+                  width="{{ block.settings.logo.width }}"
+                  height="{{ block.settings.logo.height }}"
+                  loading="lazy"
+                  style="--object-position:{{ block.settings.logo.presentation.focal_point }}"
+                >
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'component-quotes.js' | asset_url }}" type="text/javascript" defer></script>
+
+{% schema %}
+{
+  "name": "t:sections.quotes.name",
+  "class": "section-quotes",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.quotes.settings.section_bg_images.content"
+    },
+    {
+      "type": "image_picker",
+      "id": "quote_bg_1",
+      "label": "t:sections.quotes.settings.section_bg_images.bg_images.top_left.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "quote_bg_2",
+      "label": "t:sections.quotes.settings.section_bg_images.bg_images.bottom_right.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.quotes.settings.content.label"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.general.heading.label",
+      "default": "Quotes of the day"
+    },
+        {
+      "type": "header",
+      "content": "t:sections.general.alignment.content"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.general.alignment.content",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.general.alignment.alignment_left.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.general.alignment.alignment_center.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.general.alignment.alignment_right.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "t:sections.general.color.heading_color.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.general.section_vertical_spacing.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.general.section_vertical_spacing.top_padding.label",
+      "max": 50,
+      "min": 0,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.general.section_vertical_spacing.bottom_padding.label",
+      "max": 50,
+      "min": 0,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "t:sections.quotes.blocks.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "t:sections.quotes.blocks.settings.image.label"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "t:sections.quotes.blocks.settings.quote.label",
+          "default": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>"
+        },
+        {
+          "type": "color",
+          "id": "quote_color",
+          "label": "t:sections.general.color.text_color.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.quotes.presets.name",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

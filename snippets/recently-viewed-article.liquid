@@ -1,0 +1,115 @@
+<div class="sidebar-block">
+  {% if section.settings.post_article_heading != blank %}
+    <span class="h5">{{ section.settings.post_article_heading }}</span>
+  {% endif %}
+
+  <div class="post-article-content" id="recent-articles">
+    <div id="recent-article-list"></div>
+  </div>
+
+  <!-- Store the current article handle in a data attribute -->
+  {% if article %}
+    <span id="current-article" data-handle="{{ article.handle }}" style="display: none;"></span>
+  {% endif %}
+</div>
+
+<script>
+  // Function to retrieve a cookie by name
+  function getCookie(name) {
+    return (
+      document.cookie
+        .split('; ')
+        .find((row) => row.startsWith(name + '='))
+        ?.split('=')[1] || null
+    );
+  }
+
+  // Function to fetch article data (title, date, image)
+  function fetchArticleData(articleHandle) {
+    return fetch(`/search/suggest.json?q=${articleHandle}&resources[type]=article`)
+      .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+      .then((data) => {
+        const articles = data.resources.results.articles;
+        if (articles.length > 0) {
+          return {
+            title: articles[0].title,
+            handle: articles[0].handle,
+            published_at: articles[0].published_at,
+            image: articles[0].featured_image,
+          };
+        }
+        return null;
+      })
+      .catch((error) => {
+        console.error('Error fetching article:', articleHandle, error);
+        return null;
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    let recentlyViewedHandles = getCookie('recently-viewed-articles');
+
+    // Get the current article handle from the hidden span
+    const currentArticleHandle = document.getElementById('current-article')?.dataset.handle || '';
+
+    // If no recent articles exist, display message
+    if (!recentlyViewedHandles) {
+      document.getElementById('recent-article-list').innerHTML = '<p>No recently viewed articles.</p>';
+      return;
+    }
+
+    // Convert string to array & remove current article handle
+    recentlyViewedHandles = recentlyViewedHandles.split(',').filter((handle) => handle !== currentArticleHandle);
+
+    // If no articles remain after filtering, show message
+    if (recentlyViewedHandles.length === 0) {
+      document.getElementById('recent-article-list').innerHTML = '<p>No recently viewed articles.</p>';
+      return;
+    }
+
+    const articleListContainer = document.getElementById('recent-article-list');
+
+    const articlePromises = recentlyViewedHandles.map(async (fullHandle) => {
+      const [blogHandle, articleHandle] = fullHandle.split('/'); // Extract blog & article handle
+      if (!blogHandle || !articleHandle) return null;
+
+      const articleData = await fetchArticleData(articleHandle);
+      if (articleData) {
+        const publishedDate = new Date(articleData.published_at).toLocaleDateString();
+
+        return `
+       <div class="article-item">
+          <a href="/blogs/${blogHandle}/${articleData.handle}" class="blog-item">
+            <div class="article-image">  
+              ${
+                articleData.image?.url
+                  ? `
+                <lazy-image>
+                <img src="${articleData.image.url}" 
+                  alt="${articleData.title}" 
+                  width="84" 
+                  height="84" 
+                  style="width: 84px; height: 84px; min-width: 84px; min-height: 84px; object-fit: cover;">
+                <lazy-image>
+                `
+                  : ''
+              } 
+            </div>
+            <div class="article-detail">
+              <div class="blog-title">${articleData.title}</div>
+              <div class="blog-date">Published on: ${publishedDate}</div>
+            </div>
+          </a>
+        </div>
+      `;
+      }
+      return null;
+    });
+
+    const articlesHtml = await Promise.all(articlePromises);
+    const validArticles = articlesHtml.filter(Boolean);
+
+    articleListContainer.innerHTML =
+      validArticles.length > 0 ? validArticles.join('') : '<p>No recently viewed articles.</p>';
+  });
+</script>

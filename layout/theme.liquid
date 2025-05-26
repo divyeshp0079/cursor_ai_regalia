@@ -1,0 +1,37 @@
+<!doctype html>
+  <html lang="{{ request.locale.iso_code }}">
+    <head>
+      <title>
+        {{ page_title -}}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      </title>
+      {%- render 'social-meta-tags' -%}
+      {%- render 'meta-tags' -%}
+      {%- render 'style-tags' -%}
+     
+
+      {{ content_for_header }}
+    </head>
+    <body class="no-js {% if template.name == 'collection' %}main-image-slider{% endif %} template-{{ template | split: '.' | first }}  {% if template.directory == 'customers' %}is-account-page {% endif %}{% if template.suffix %} template-suffix-{{ template.suffix }}{% endif %}">
+        {%- sections 'header-group' -%}
+  
+      <main id="content" role="main" class="main site-wrapper">
+        {{ content_for_layout }}
+      </main>
+    {% section 'cart-drawer' %}
+      {%- sections 'footer-group' -%}
+      
+      {%- render 'script-tags' -%}
+      <script>
+        window.shopUrl = '{{ request.origin }}';
+        window.accessibilityStrings = {
+          recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
+          recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
+        };
+      </script>
+   {% render 'pswp-code' %}
+    </body>
+  </html>
+  

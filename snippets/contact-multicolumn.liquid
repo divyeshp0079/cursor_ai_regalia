@@ -1,0 +1,44 @@
+<div class="multicolumn">
+  <div class="multi-column-wrapper" style="background-color: {{ section.settings.multicolumn_bg_color }};">
+    <div class="{% if section.settings.multicolumn_layout == 'container' %}container {% elsif section.settings.multicolumn_layout == 'container-narrow' %}container-narrow {% endif %}multicolumn-wrap">
+      <div class="multi-column-wrap">
+        {% if section.settings.multicolumn_heading != blank %}
+          <h2 style="color:{{ section.settings.multicolumn_heading_color }}">
+            {{ section.settings.multicolumn_heading }}
+          </h2>
+        {% endif %}
+
+        <div class="multi-columns">
+          {% for block in section.blocks %}
+            <div class="multi-column" style="background-color: {{ section.settings.col_bg_color }};">
+              {% if block.settings.multicolumn_svg_icon != blank %}
+                <div class="column-icon">
+                  <img
+                    src="{{ block.settings.multicolumn_svg_icon | image_url: width: block.settings.multicolumn_svg_icon.width }}"
+                    alt="{{ block.settings.multicolumn_svg_icon.alt }}"
+                    width="{{ block.settings.multicolumn_svg_icon.width }}"
+                    height="{{ block.settings.multicolumn_svg_icon.height }}"
+                    loading="lazy"
+                    style="--object-position:{{ block.settings.multicolumn_svg_icon.presentation.focal_point }}"
+                  >
+                </div>
+              {% endif %}
+
+              {% if block.settings.multicolumn_title != blank %}
+                <div class="column-title" style="color:{{ section.settings.col_title_color }}">
+                  <span class="h5">{{ block.settings.multicolumn_title }}</span>
+                </div>
+              {% endif %}
+
+              {% if block.settings.multicolumn_text != blank %}
+                <div class="column-text text-center" style="color:{{ section.settings.col_text_color }}">
+                  {{ block.settings.multicolumn_text }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

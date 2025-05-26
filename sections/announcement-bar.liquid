@@ -1,0 +1,196 @@
+{%- liquid
+  assign show_only_homepage = section.settings.only_homepage
+  assign show_section = false
+  if show_only_homepage == true and template.name == 'index'
+    assign show_section = true
+  elsif show_only_homepage == false
+    assign show_section = true
+  else
+    assign show_section = false
+  endif
+-%}
+
+{%- if show_section == true -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} {
+      --bg-color: {{ section.settings.bg_color }};
+      --txt-color: {{ section.settings.text_color }};
+      --link-color: {{ section.settings.link_color }};
+    }
+  {%- endstyle -%}
+  {{ 'component-announcement-bar.css' | asset_url | stylesheet_tag: preload: true }}
+
+  <div class="{% if section.settings.enable_container %}container{% endif %}">
+    <div
+      class="announcebar-wrapper swiper"
+      role="region"
+      aria-label="Announcement Bar"
+
+      data-slider-options='
+        { "slidesPerView": 1, "direction": "vertical",  "grabCursor": true, "centeredSlides": true, "speed": {{ section.settings.speed_delay }}, "navigation": {"nextEl": "#shopify-section-{{ section.id }} .swiper-button-next", "prevEl": "#shopify-section-{{ section.id }} .swiper-button-prev"}{% if section.blocks.size > 1 %},
+        "loop": true {% endif %} {% if section.settings.enable_autoscroll %} , "autoplay": { "delay": {{ section.settings.autoscroll_speed }}, "disableOnInteraction": false} {% endif %} }
+      '>
+      <div class="swiper-wrapper {% if section.blocks.size <= 1 %} disable__loop {% else %} swiper__enable {% endif %}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign desk_text = block.settings.text
+            assign mobile_text = block.settings.text_mobile
+            assign announce_link = block.settings.link
+            if desk_text == blank and mobile_text != blank
+              assign desk_text = mobile_text
+            endif
+            if mobile_text == blank and desk_text != blank
+              assign mobile_text = desk_text
+            endif
+          -%}
+          {%- if block.settings.text != blank or block.settings.text_mobile != blank -%}
+            <div
+              class="announcement swiper-slide {% if section.settings.enable_autoscroll %}width-auto{% endif %}"
+              {{ block.shopify_attributes }}
+              role="group"
+            >
+           {%- if announce_link != blank -%}
+               <div class="desktop-announce"> 
+                <a
+                  href="{{ announce_link }}"            
+                  {% if block.settings.new_tab %}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  {% endif %}
+                  aria-label="Announcement: {{- desk_text | strip_html -}}">
+                  {{- desk_text | replace: '<p>', '<span>' | replace: '</p>', '</span>' -}}
+                </a>
+               </div>
+              <div class="mobile-announce">
+                <a
+                  href="{{ announce_link }}"
+                  {% if block.settings.new_tab %}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  {% endif %}
+                  aria-label="Announcement: {{ mobile_text | strip_html }}"
+                >
+                  {{- mobile_text | replace: '<p>', '<div>' | replace: '</p>', '</div>' -}}
+                </a>
+              </div>
+              {% else %}
+                <div class="desktop-announce">{{ desk_text }}</div>
+                <div class="mobile-announce">{{ mobile_text }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {% if section.settings.enable_navigation %}
+      <div class="swiper-navigations">
+        <button type="button" class="swiper-button-prev" aria-label="Previous slide"></button>
+        <button type="button" class="swiper-button-next" aria-label="Next slide"></button>
+      </div>
+  {% endif %}
+  </div>
+
+  <script src="{{ 'component-announcement-bar.js' | asset_url }}" type="text/javascript" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.announcement_bar.name",
+  "class": "section-announcement-bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type":"checkbox",
+      "id": "only_homepage",
+      "label": "t:sections.announcement_bar.settings.show_in_homepage.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement_bar.settings.customization.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_container",
+      "label": "t:sections.announcement_bar.settings.customization.enable_container.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoscroll",
+      "label": "t:sections.announcement_bar.settings.customization.enable_auto_scroll.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed_delay",
+      "label": "t:sections.announcement_bar.settings.customization.speed_delay.label",
+      "min": 1000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "s",
+      "default": 9000
+    },
+    {
+      "type": "range",
+      "id": "autoscroll_speed",
+      "label": "t:sections.announcement_bar.settings.customization.autoscroll_speed.label",
+      "min": 1000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "s",
+      "default": 9000
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.general.color.background_color.label",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.announcement_bar.settings.customization.text_color.label",
+      "default": "#FFF"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "t:sections.announcement_bar.settings.customization.link_color.label",
+      "default": "#FFF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement_bar.blocks.name",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.announcement_bar.blocks.settings.text.desktop",
+          "default": "<p>Announce something here</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "text_mobile",
+          "label": "t:sections.announcement_bar.blocks.settings.text.mobile",
+          "default": "<p>Announce something here</p>"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement_bar.blocks.settings.link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "new_tab",
+          "label": "t:sections.announcement_bar.blocks.settings.open_in_new_tab.label",
+          "default": false,
+          "info": "t:sections.announcement_bar.blocks.settings.open_in_new_tab.info"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+{{ 'predictive-search.css' | asset_url | stylesheet_tag: preload: true }}
+
+<div class="predictive-search-wrapper" id="predictiveSearchModal">
+  <div class="container">
+    <button type="submit" class="close-search" id="closeSearchModal">
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </button>
+    <h2 class="search-title">{{ 'general.search.mainsearch' | t }}</h2>
+    <predictive-search>
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <div class="form-fields">
+          <div class="search-field">
+            <label class="visuallyhidden" for="predictive-{{ 'general.search.search' | t }}">
+              {{ 'general.search.search' | t }}
+            </label>
+            <input
+              id="predictive-{{ 'general.search.search' | t }}"
+              type="search"
+              name="q"
+              value="{{ search.terms | escape }}"
+              role="combobox"
+              placeholder="{{ 'general.search.placeholder' | t }}"
+              required
+            >
+            <button type="submit">{%- render 'icons', icon: 'search' -%}</button>
+          </div>
+        </div>
+        <input name="option[prefix]" type="hidden" value="last">
+
+        <div id="predictive-search" tabindex="-1"></div>
+      </form>
+    </predictive-search>
+  </div>
+</div>
+

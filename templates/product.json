@@ -1,0 +1,201 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor_4TUQW4": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title_qd7xyi": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2",
+            "heading_color": "#153d47"
+          }
+        },
+        "sku_DbQrjy": {
+          "type": "sku",
+          "settings": {}
+        },
+        "price_BMUnDc": {
+          "type": "price",
+          "settings": {
+            "show_percentage": true
+          }
+        },
+        "info_text_UDyDYQ": {
+          "type": "info_text",
+          "disabled": true,
+          "settings": {
+            "info_text": "At vero eos et accusamus et iusto dignissimos ducimus blanditiis praesentium voluptatum deleniti atque Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+          }
+        },
+        "product_sold_QPwaLm": {
+          "type": "product_sold",
+          "settings": {}
+        },
+        "product_stock_7tewJq": {
+          "type": "product_stock",
+          "settings": {}
+        },
+        "variants_jXmwyC": {
+          "type": "variants",
+          "settings": {}
+        },
+        "buy_button_z8Nrx9": {
+          "type": "buy_button",
+          "settings": {
+            "show_qnt_picker": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "estimated_delivery_xnKpbz": {
+          "type": "estimated_delivery",
+          "settings": {
+            "estimated_text": "Estimated delivery:",
+            "start_delivery": 3,
+            "end_delivery": 5
+          }
+        },
+        "return_text_rhzW6J": {
+          "type": "return_text",
+          "settings": {
+            "return_text": "Free return within <strong>30 days</strong> of purchase."
+          }
+        },
+        "store_payment_9aem3L": {
+          "type": "store_payment",
+          "settings": {}
+        },
+        "free_shipping_WPRaEh": {
+          "type": "free_shipping",
+          "settings": {
+            "shipping_logo_1": "truck-icon",
+            "shipping_data_1": "Free shipping",
+            "shipping_logo_2": "support",
+            "shipping_data_2": "Reliable support",
+            "shipping_logo_3": "",
+            "shipping_data_3": ""
+          }
+        },
+        "sticky_cart_khqGiU": {
+          "type": "sticky_cart",
+          "settings": {}
+        },
+        "local_pickup_wg4zCH": {
+          "type": "local_pickup",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vendor_4TUQW4",
+        "title_qd7xyi",
+        "sku_DbQrjy",
+        "price_BMUnDc",
+        "info_text_UDyDYQ",
+        "product_sold_QPwaLm",
+        "product_stock_7tewJq",
+        "variants_jXmwyC",
+        "buy_button_z8Nrx9",
+        "estimated_delivery_xnKpbz",
+        "return_text_rhzW6J",
+        "store_payment_9aem3L",
+        "free_shipping_WPRaEh",
+        "sticky_cart_khqGiU",
+        "local_pickup_wg4zCH"
+      ],
+      "settings": {
+        "block_spc": 20,
+        "media_ratio": "original",
+        "show_thumbs": true,
+        "image_zoom": true
+      }
+    },
+    "product_tabular_JQCrT3": {
+      "type": "product-tabular",
+      "blocks": {
+        "product_description_G483TL": {
+          "type": "product_description",
+          "settings": {
+            "tab_title": "Product description"
+          }
+        },
+        "page_content_H4cbQh": {
+          "type": "page_content",
+          "settings": {
+            "tab_title": "Shipping & return",
+            "page_spacing": 30,
+            "page_one": "shipping-policy",
+            "page_two": "return-policy"
+          }
+        },
+        "rich_text_Dcxx4M": {
+          "type": "rich_text",
+          "settings": {
+            "tab_title": "Product reviews",
+            "rich_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_description_G483TL",
+        "page_content_H4cbQh",
+        "rich_text_Dcxx4M"
+      ],
+      "settings": {
+        "section_bg_color": "#ffffff"
+      }
+    },
+    "video_48YL7K": {
+      "type": "video",
+      "name": "t:sections.video.presets.name",
+      "settings": {
+        "enable_full_width": false,
+        "thumbnail_heading": "",
+        "thumbnail_subheading": "",
+        "heading_size": "h4",
+        "heading_alignment": "center",
+        "heading_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.4,
+        "video_type": "video",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video": "shopify://files/videos/regalia-video.mp4",
+        "video_autoplay": true,
+        "video_mute": true,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "related_products_gfMwi7": {
+      "type": "related-products",
+      "settings": {
+        "title": "Shop the Style You Admire!",
+        "heading_size": "h3",
+        "heading_alignment": "center",
+        "content_position": "center",
+        "products_limit": 4,
+        "product_per_row": 4,
+        "spacing": 26,
+        "padding_top": 50,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product_tabular_JQCrT3",
+    "video_48YL7K",
+    "related_products_gfMwi7"
+  ]
+}

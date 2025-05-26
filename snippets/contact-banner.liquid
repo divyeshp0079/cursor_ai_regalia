@@ -1,0 +1,20 @@
+<div class="contact-banner">
+  <div class="contact-wrapper" style="background-color: {{ section.settings.banner_bg_color }};">
+    <div class="container contact-wrap align-{{ section.settings.content_align }}">    
+      <div class="contact-heading" style="color:{{ section.settings.heading_color }}">
+        {% if section.settings.banner_heading != blank  %}
+          <h2>{{ section.settings.banner_heading }}</h2>
+        {% else %}
+          <h1>{{ page.title }}</h1>
+        {% endif %}
+      </div>
+      <div class="contact-text" style="color:{{ section.settings.text_color }}">
+        {% if section.settings.text != blank %}
+           <span class="h5">{{ section.settings.text }}</span>
+        {% endif %}
+      </div>    
+    </div>
+  </div>
+</div>
+
+

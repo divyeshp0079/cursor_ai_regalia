@@ -1,0 +1,112 @@
+.section-store-locator .locator-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.section-store-locator .heading-title {
+  color: var(--heading-color);
+  line-height: 100%;
+  font-weight: var(--weight-regular);
+}
+
+.section-store-locator .locator-wrapper.position--left {
+  flex-direction: row-reverse;
+}
+
+.locator-wrapper .store-address-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.locator-wrapper .store-address {
+  border: 1px solid var(--active_location_color);
+  border-radius: 6px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.locator-wrapper .store-address.active {
+  background-color: var(--active_location_color);
+}
+
+.store-address .address-title {
+  font-size: calc(var(--bs-size) + 4px);
+  color: var(--location-title-color);
+  font-weight: var(--weight-medium);
+  line-height: 24px;
+  padding-bottom: 10px;
+}
+
+.store-address .address {
+  color: var(--location-address-color);
+  font-size: var(--bs-size);
+  line-height: 24px;
+  font-weight: var(--weight-regular);
+  padding-bottom: 20px;
+}
+
+.store-address .address-button {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  font-size: var(--bs-size);
+  font-weight: var(--weight-medium);
+  line-height: 19px;
+}
+
+.store-address .address-button a{
+  color: var(--btn_text);
+}
+
+.map-section__map .placeholder-image svg {
+  width: 100%;
+  height: 100%;
+}
+
+.section-store-locator .map-container {
+  flex: 0 73%;
+  overflow: hidden;
+}
+
+.map-section__map .img-wrapper img,
+.map-section__map .map-section__map-container,
+.map-section__map .placeholder-image svg {
+  height: 650px;
+  border: none;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.header-wrapper.main-title {
+  box-shadow: unset;
+}
+
+/* Responsive css */
+
+@media (max-width: 767px) {
+  .section-store-locator .locator-wrapper.position--right ,
+  .section-store-locator .locator-wrapper.position--left{
+    flex-direction: column;
+  }
+  .store-locator-section .container{
+    padding:0px;
+  }
+  .store-locator-section .heading-title{
+    font-size:48px;
+    line-height:58px;
+    text-align: center;
+    margin-bottom:20px;
+  }
+  .locator-wrapper .store-address-container{
+    padding:20px 15px;
+  }
+}

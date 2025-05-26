@@ -1,0 +1,17 @@
+{{ 'back-to-top.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- if settings.button_style == 'icon' -%}
+  <button class="back-to-top-btn btn btn-icon btn-secondary hidden">
+    <span class="visuallyhidden">{{ 'general.back_to_top' | t }}</span>
+    {% render 'icons'. icon: 'chevron-up' %}
+  </button>
+{%- elsif settings.button_style == 'text' -%}
+  <button class="back-to-top-btn btn btn-secondary btn-text hidden">
+    {{ settings.back_to_top_text }}
+  </button>
+{%- else -%}
+  <button class="back-to-top-btn btn btn-secondary btn-text-icon hidden">
+    {{ settings.back_to_top_text -}}
+    {%- render 'icons'. icon: 'chevron-up' %}
+  </button>
+{%- endif -%}

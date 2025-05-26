@@ -1,0 +1,218 @@
+<div class="hidden combination_id {{ quick_variant_type }}">
+  {%- for variant in product.variants -%}
+    <option
+      data-variant-name="{{ variant.title }}"
+      value="{{ variant.id }}"
+      data-variant-left="{{ variant.inventory_quantity }}"
+      data-variant-sku="{{ variant.sku }}"
+    >
+      {% render 'variant-price', product: variant, show_percentage:show_percentage %}
+    </option>
+  {%- endfor -%}
+  <noscript>
+    <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+      <label class="form__label" for="Variants-{{ section.id }}">
+        {{ 'product.regular_price' | t }}
+      </label>
+      <div class="select">
+        <select name="id" id="Variants-{{ section.id }}" class="select__select" form="product-form">
+          {%- for variant in product.variants -%}
+            {% assign discount = variant.compare_at_price | minus: variant.price %}
+            {% assign discount_percentage = discount | times: 100 | divided_by: variant.compare_at_price %}
+            <option
+              {% if variant == product.selected_or_first_available_variant %}
+                selected="selected"
+              {% endif %}
+              {% if variant.available == false %}
+                disabled
+              {% endif %}
+              value="{{ variant.id }}"
+            >
+              {{ variant.title }}
+              {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
+              - {{ variant.price | money | strip_html }}
+              {{ variant.compare_at_price | money | strip_html }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+  </noscript>
+</div>
+{%- unless product.has_only_default_variant -%}
+  <div class="product-options-content">
+    {%- if settings.tiles_swatches -%}
+      {%- assign color_count = 0 -%}
+      {%- for option in product.options_with_values -%}
+        {% comment %}
+      {% assign quick_variant_type = settings.variant_type %}
+        {% endcomment %}
+        {%- liquid
+          assign option_name = option.name | downcase
+          assign is_color = false
+          if option_name contains 'color'
+            assign is_color = true
+          endif
+        -%}
+
+        <fieldset class="js product-form__input">
+          <legend class="product-option">
+            {{ option.name }}:
+            {% if is_color %}
+              <span class="select-color-variant">{{- option.selected_value -}}</span>
+            {% else %}
+              <span tabindex="0" aria-label="{{- option.selected_value -}}" class="select-variant">{{- option.selected_value -}}</span>
+            {% endif %}
+          </legend>
+
+          {%- assign option_index = forloop.index0 -%}
+          {%- assign values = '' -%}
+
+          {% if quick_variant_type == 'dropdown' %}
+             {%- if is_color -%}
+            <div  class="product-card-swatches dropdown-variant card-swatches--{{ product.id }}">
+              <div class="variant-options">
+                {% if is_color %}
+                <span class="select-color-variant dropdownList">{{- option.selected_value -}}</span>
+                {% else %}
+                <span tabindex="0" aria-label="{{- option.selected_value -}}" class="select-variant dropdownList">{{- option.selected_value -}}</span>
+                {% endif %}
+              <div class="dropdownlistcontent"> 
+              {%- for variant in product.variants -%}
+                {%- assign value = variant.options[option_index] -%}
+                {%- unless values contains value -%}
+                  {%- liquid
+                    assign values = values | join: ',' | append: ',' | append: value | split: ','
+                    assign color_file_name = value | handle | append: '.png'
+                    assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                    assign color_swatch_fallback = value | split: ' ' | last | handle
+                    assign color_count = color_count | plus: 1
+                  -%}
+                  <option
+                    tabindex="0"
+                    aria-label="{{ value }}"
+                    class="color-variant dropdown-swatch {% if option.selected_value == value %}checked{% endif %}"
+                    data-variant-name="{{ value }}"
+                    data-variant-id="{{ variant.id }}"
+                  >
+                    <input type="radio" class="color-variant-radio dropdown-radio" name="option[Color]" value="{{ value }}">
+                    <label
+                      class="color-swatch dropdown-color-swatch variant-option color-swatch--gold {% if variant.inventory_quantity <= 0 %}soldout{% endif %}"
+                      aria-label="{{ product.title }} - {{ value }}"
+                      style="background-image: url({{ color_image }}); border: 1px solid {{ color_swatch_fallback }};"
+                    >
+                      <span class="visually-hidden">{{ value }}</span>
+                    </label>
+                  </option>
+                {%- endunless -%}
+              {%- endfor -%}
+              </div>
+              </div>
+               <div class="dropdownIcon">{% render 'icons', icon:'chevron-down' %}</div>
+            </div>
+          {%- else -%}
+           <div class="dropdown-variant">    
+             <div class="variant-options">   
+                  {% if is_color %}
+                <span class="select-color-variant dropdownList">{{- option.selected_value -}}</span>
+                {% else %}
+                <span class="select-variant dropdownList">{{- option.selected_value -}}</span>
+                {% endif %}
+            <div class="dropdownlistcontent">
+              {%- for variant in product.variants -%}
+                {%- assign value = variant.options[option_index] -%}
+                {%- unless values contains value -%}
+                  {%- liquid
+                    assign values = values | join: ',' | append: ',' | append: value | split: ','
+                  -%}
+                  <div 
+                    class="dropdown-swatch variant-option multiple-option-variant {% if option.selected_value == value %}checked{% endif %} {% if variant.inventory_quantity <= 0 %}soldout{% endif %}"
+                    data-multiple-variant="{{ value }}"
+                  >
+                    <input
+                      type="radio"
+                      hidden
+                      name="option[{{ option.name }}]"
+                      value="{{ value }}"
+                      data-variant-name="{{ value }}"
+                    >
+                    <label>{{ value }}</label>
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+             </div>
+                 <div class="dropdownIcon">{% render 'icons', icon:'chevron-down' %}</div>
+           </div>
+          {%- endif -%}
+          {% elsif quick_variant_type == 'buttons' %}
+             {%- if is_color -%}
+            <div {{ variant_type }}-type  class="product-card-swatches card-swatches--{{ product.id }}">
+              {%- for variant in product.variants -%}
+                {%- assign value = variant.options[option_index] -%}
+                {%- unless values contains value -%}
+                  {%- liquid
+                    assign values = values | join: ',' | append: ',' | append: value | split: ','
+                    assign color_file_name = value | handle | append: '.png'
+                    assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                    assign color_swatch_fallback = value | split: ' ' | last | handle
+                    assign color_count = color_count | plus: 1
+                  -%}
+                  <div
+                    class="color-variant variant-option {% if option.selected_value == value %}checked{% endif %}"
+                    value="{{ value | downcase }}"
+                    data-variant-name="{{ value }}"
+                    data-color="{{ value | downcase }}"
+                    data-variant-id="{{ variant.id }}"
+                  >
+                    <input type="radio" class="color-variant-radio" name="option[Color]" value="{{ value }}">
+                    <label
+                      tabindex="0"
+                      class="color-swatch  color-swatch--gold {% if variant.inventory_quantity <= 0 %}soldout{% endif %}"
+                      aria-label="{{ product.title }} - {{ value }}"
+                      style="background-image: url({{ color_image }}); border: 1px solid {{ color_swatch_fallback }};"
+                    >
+                      <span class="visually-hidden">{{ value }}</span>
+                    </label>
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+        
+          {%- else -%}
+            <div {{ variant_type }}-type class="product-options">
+              {%- for variant in product.variants -%}
+                {%- assign value = variant.options[option_index] -%}
+                {%- unless values contains value -%}
+                  {%- liquid
+                    assign values = values | join: ',' | append: ',' | append: value | split: ','
+                  -%}
+                  <div
+                    class="variant-option multiple-option-variant {% if option.selected_value == value %}checked{% endif %} {% if variant.inventory_quantity <= 0 %}soldout{% endif %}"
+                    data-multiple-variant="{{ value }}"
+                  >
+                    <input
+                      type="radio"
+                      hidden
+                      name="option[{{ option.name }}]"
+                      value="{{ value }}"
+                      data-variant-name="{{ value }}"
+                    >
+                    <label  tabindex="0"  aria-label="{{ product.title }} - {{ value }}">{{ value }}</label>
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {% endif %}  
+        </fieldset>
+      {%- endfor -%}
+
+      {%- if color_count < 2 -%}
+        <style>
+          .card-swatches--{{ product.id }} { display: none; }
+        </style>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- endunless -%}

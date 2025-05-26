@@ -1,0 +1,120 @@
+.tabs-content {
+  padding: 15px;
+  margin-top: 40px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tabs-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #b7b7b7;
+  justify-content: center;
+}
+
+.tab-item {
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+  color: var(--color-base);
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+span.tab-title {
+  font-family: var(--bs-font-family);
+  font-weight: var(--bs-font-weight);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-base);
+}
+
+.tab-item.active .tab-title {
+  color: var(--black);
+}
+
+.tab-page-data {
+  padding: 30px 30px 58px 30px;
+  background-color: #efefef;
+}
+
+.tab-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 1px;
+  background-color: var(--black);
+}
+
+.tab-page-description {
+  max-width: 500px;
+}
+
+/* Accordion for Mobile */
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-header {
+  color: var(--black);
+  padding: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.accordion-content {
+  display: none;
+  padding: 15px;
+  padding-top: 0px;
+}
+
+.accordion-header.active+.accordion-content {
+  display: block;
+}
+
+.accordion-header.active .accordin-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-header.active .accordion-title {
+  color: var(--black);
+}
+
+.accordion-title {
+  color: var(--color-base);
+  font-size: calc(var(--bs-size) + 2px);
+}
+
+.accordin-icon svg path {
+  fill: var(--black);
+}
+
+@media (max-width:768px) {
+  .tab-page-content{
+    flex-direction: column;
+  }
+  .tab-page-data{
+    width: 100%;
+    padding: 20px;
+  }
+}

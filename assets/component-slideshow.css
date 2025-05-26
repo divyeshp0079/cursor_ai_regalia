@@ -1,0 +1,143 @@
+.sliderimg img {
+  width: 100%;
+}
+
+.slidercontent .swiper-button-next,
+.slidercontent .swiper-button-prev {
+  color: #000;
+}
+
+.slidercontent .swiper-button-next::after,
+.slidercontent .swiper-button-prev::after {
+  font-size: 20px;
+}
+
+.overlacontent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px 38px;
+  color: #fff;
+  z-index: 9;
+}
+
+.overlacontent h2 {
+  margin-bottom: 10px;
+}
+
+.btn-spc {
+  margin-top: 50px;
+}
+
+.btn-spc p {
+  background-color: #fff;
+  color: #000;
+}
+
+.btn.slidebtn {
+  font-size: 16px;
+  list-height: 24px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-slideshow .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 46px;
+  height: 46px;
+  background: #fff;
+  padding: 4px;
+}
+
+.section-slideshow .swiper-pagination .swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.imgundercontent {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6.8px);
+}
+
+@media (min-width: 767px) {
+  .imgundercontent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .imgundercontent.content-left {
+    left: 0;
+    transform: translate(0%, 0px);
+  }
+
+  .imgundercontent.content-center {
+    left: 50%;
+    transform: translate(-50%, 0px);
+  }
+
+  .imgundercontent.content-right {
+    right: 0;
+    transform: translate(0%, 0px);
+  }
+
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+  .section-slideshow .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    padding: 2px;
+  }
+
+  .section-slideshow .swiper-pagination .swiper-pagination-bullet {
+    width: 16px;
+    height: 16px;
+  }
+
+  .overlacontent .btn-effect {
+    max-width: 300px;
+  }
+
+  .section-slideshow .swiper-pagination {
+    bottom: 5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .slidercontent .imgundercontent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .section-slideshow .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+  }
+
+  .section-slideshow .swiper-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+  }
+
+  .overlacontent {
+    padding: 20px 15px;
+    padding-bottom: 50px;
+  }
+}
