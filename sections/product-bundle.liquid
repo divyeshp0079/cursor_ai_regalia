@@ -1,0 +1,234 @@
+<section class="product-bundle">
+  <div class="product-list">
+    {% for product in collections[section.settings.featured_collection].products %}
+      <div class="product-item" data-variant-id="{{ product.variants.first.id }}" data-price="{{ product.price | divided_by:100.00 }}">
+        <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" width="300" height="300">
+        <h3>{{ product.title }}</h3>
+        <p>Color: {{ product.options[0] }}</p>
+        <p class="productprice">{{ product.price | money }}</p>
+        <button class="add-to-bundle">Add to bundle</button>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="bundle-summary">
+    <h3>Your Bundle</h3>
+    <p>Add at least 3 products to proceed and save 30%</p>
+    <div class="bundle-items"></div>
+    <div class="bundle-total">
+      <p>Total: <span class="total-price">{{ 0 | money_with_currency }}</span></p>
+      <button class="add-to-cart" style="display: none;">Add to cart</button>
+    </div>
+  </div>
+</section>
+
+<style>
+.product-bundle {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .product-list {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .product-item {
+    width: calc(33.333% - 20px);
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .bundle-summary {
+    width: 30%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bundle-items {
+    margin-bottom: 20px;
+  }
+  
+  .bundle-total {
+    font-weight: bold;
+  }
+  
+  .add-to-cart {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  .bundle-summary .product-item {
+    width: 100%; /* Make each product-item in the bundle-summary take up full width */
+    margin-bottom: 10px; /* Adjust spacing between items */
+    border: none; /* Remove border if desired */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for emphasis */
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Check if Shopify object is available
+  if (typeof Shopify !== 'undefined' && Shopify.money_format) {
+    console.log('Shopify money format:', Shopify.money_format);
+  } else {
+    console.error('Shopify money format is not available.');
+  }
+
+    const bundleItems = [];
+    const maxBundleItems = 3;
+    const bundleSpace = document.querySelector('.bundle-items');
+    const addToCartButton = document.querySelector('.add-to-cart');
+    const totalPriceElement = document.querySelector('.total-price');
+    let currencySymbol = '₹'; // Default symbol, update this with the fetched symbol
+
+    // Fetch currency information
+    fetch('/meta.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Currency data:', data); // Debugging line
+        currencySymbol = data.currency.symbol || currencySymbol;
+        console.log('Updated currency symbol:', currencySymbol); // Debugging line
+      })
+      .catch(error => {
+        console.error('Error fetching currency information:', error);
+      });
+
+    document.querySelectorAll('.add-to-bundle').forEach(button => {
+      button.addEventListener('click', function() {
+        const productItem = this.closest('.product-item');
+        const variantId = productItem.getAttribute('data-variant-id');
+        const productPrice = parseFloat(productItem.getAttribute('data-price'));
+
+        if (bundleItems.length < maxBundleItems) {
+          bundleItems.push({ id: variantId, price: productPrice });
+          const clone = productItem.cloneNode(true);
+          clone.querySelector('.add-to-bundle').remove();
+
+          // Create and append a close button
+          const closeButton = document.createElement('button');
+          closeButton.textContent = 'Remove';
+          closeButton.className = 'remove-from-bundle';
+          closeButton.addEventListener('click', function() {
+            // Remove the product from the bundle
+            bundleSpace.removeChild(clone);
+            const index = bundleItems.findIndex(item => item.id === variantId);
+            if (index !== -1) {
+              bundleItems.splice(index, 1);
+              updateTotalPrice();
+              if (bundleItems.length < maxBundleItems) {
+                addToCartButton.style.display = 'none';
+              }
+            }
+          });
+
+          clone.appendChild(closeButton);
+          bundleSpace.appendChild(clone);
+
+          updateTotalPrice();
+
+          if (bundleItems.length === maxBundleItems) {
+            addToCartButton.style.display = 'block';
+          }
+        }
+      });
+    });
+
+    function formatMoney(cents, currencySymbol) {
+      if (typeof cents === 'string') {
+        cents = cents.replace('.', '');
+      }
+      var value = '';
+      
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        thousands = thousands || ',';
+        decimal = decimal || '.';
+
+        if (isNaN(number) || number === null) {
+          return 0;
+        }
+
+        number = (number / 100.0).toFixed(precision);
+
+        var parts = number.split('.');
+        var dollarsAmount = parts[0].replace(
+          /(\d)(?=(\d\d\d)+(?!\d))/g,
+          '$1' + thousands
+        );
+        var centsAmount = parts[1] ? decimal + parts[1] : '';
+
+        return dollarsAmount + centsAmount;
+      }
+
+      value = formatWithDelimiters(cents, 2);
+      return currencySymbol + ' ' + value;
+    }
+
+    function updateTotalPrice() {
+      const total = bundleItems.reduce((sum, item) => sum + item.price, 0);
+      totalPriceElement.textContent = formatMoney(total * 100, currencySymbol);
+    }
+
+    addToCartButton.addEventListener('click', function() {
+      const items = bundleItems.map(item => ({ id: item.id, quantity: 1 }));
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ items: items })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'bad_request') {
+          console.error('Error adding bundle to cart:', data.message);
+        } else {
+          console.log('Bundle added to cart:', data);
+          window.location.href = '/cart';
+        }
+      })
+      .catch(error => {
+        console.error('Error adding bundle to cart:', error);
+      });
+    });
+  });
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Product Bundle",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "bundle_title",
+      "label": "Bundle Title",
+      "default": "Create Your Bundle"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default"
+    }
+  ]
+}
+{% endschema %}
