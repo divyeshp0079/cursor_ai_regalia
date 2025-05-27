@@ -19,7 +19,11 @@
 <section class="video-section">
   <video-hero class="{% if section.settings.enable_full_width %} full-width {% else %} container{% endif %}">
     <div class="custom-video-wrapper {% if section.settings.video_type == 'link' and section.settings.video_url != blank %}has-iframe{% endif %}" ms-aos data-ms-delay="100">
-      {%- if section.settings.video_type == 'link' and section.settings.video_url != blank -%}
+      {%- if section.settings.video_type == 'video' and section.settings.video != blank -%}
+        {{ 
+          section.settings.video | media_tag: muted: section.settings.video_mute, controls: false, autoplay: section.settings.video_autoplay, loop: true, class: 'custom-video', data-autoplay: section.settings.video_autoplay | replace: '<img src','<img alt="video-image" src'
+        }}
+      {%- elsif section.settings.video_type == 'link' and section.settings.video_url != blank -%}
         {%- if section.settings.video_url.type == 'youtube' -%}
           <div class="youtube-video-player"
             data-youtubeid="{{ section.settings.video_url.id }}"
@@ -39,12 +43,17 @@
             <div class="player-container"></div>
           </div>
         {%- endif -%}
-      {%- elsif section.settings.video_type == 'video' and section.settings.video != blank -%}
-        {{ 
-          section.settings.video | media_tag: muted: section.settings.video_mute, controls: false, autoplay: section.settings.video_autoplay, loop: true, class: 'custom-video', data-autoplay: section.settings.video_autoplay | replace: '<img src','<img alt="video-image" src'
-         }}
       {%- else -%}
-        {{ 'hero-apparel-3' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- assign default_youtube_id = 'JMKYPDem8o8' -%}
+        <div class="youtube-video-player"
+          data-youtubeid="{{ default_youtube_id }}"
+          data-youtubeautoplay="0"
+          data-youtubemuted="1"
+        >
+          <div class="video-container">
+            <div id="player"></div>
+          </div>
+        </div>
       {%- endif -%}
       {%- if section.settings.video_autoplay != true -%}
         <div class="thumbnail-wrapper thumbnail-wrapper-id">
