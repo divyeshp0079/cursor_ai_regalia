@@ -32,23 +32,11 @@
         "full_width": true,
         "heading_color": "#ffffff",
         "text_color": "#ffffff",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0.4,
         "padding_top": 0,
         "padding_bottom": 40,
         "gradient_color": "#fff7ee",
         "start_gradient_opacity": 0,
-        "end_gradient_opacity": 1,
-        "heading_text": "",
-        "heading_size": "h2",
-        "content_text": "",
-        "content_alignment": "center",
-        "btn1": "",
-        "primary_url": "",
-        "new_tab_primary": false,
-        "btn2": "",
-        "secondary_url": "",
-        "new_tab_secondary": false
+        "end_gradient_opacity": 1
       }
     }
   },

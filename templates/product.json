@@ -56,7 +56,8 @@
           "type": "buy_button",
           "settings": {
             "show_qnt_picker": true,
-            "show_gift_card_recipient": true
+            "show_gift_card_recipient": true,
+            "buy_btn_hide": true
           }
         },
         "estimated_delivery_xnKpbz": {
@@ -121,6 +122,26 @@
         "image_zoom": true
       }
     },
+    "video_hV7eXR": {
+      "type": "video",
+      "name": "t:sections.video.presets.name",
+      "settings": {
+        "enable_full_width": false,
+        "thumbnail_heading": "Movement",
+        "thumbnail_subheading": "Lorem ipsum",
+        "heading_size": "h4",
+        "heading_alignment": "center",
+        "heading_color": "#fff",
+        "overlay_color": "#000",
+        "overlay_opacity": 0.4,
+        "video_type": "link",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "video_autoplay": false,
+        "video_mute": true,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "product_tabular_JQCrT3": {
       "type": "product-tabular",
       "blocks": {
@@ -173,6 +194,7 @@
   },
   "order": [
     "main",
+    "video_hV7eXR",
     "product_tabular_JQCrT3",
     "related_products_gfMwi7"
   ]
