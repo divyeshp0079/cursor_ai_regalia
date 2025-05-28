@@ -10,11 +10,11 @@
 {
   "sections": {
     "main": {
-      "type": "product-cupcake"
+      "type": "product-cupcake",
+      "settings": {}
     }
   },
   "order": [
     "main"
   ]
 }
-  
