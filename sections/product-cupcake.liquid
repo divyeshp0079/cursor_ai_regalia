@@ -1,0 +1,55 @@
+{% assign metafield_values = product.metafields.custom.product_handles %}  
+{{ metafield_values | join: ',' }}  
+<style>
+  .product-container {
+    display: flex;
+  }
+  .product-media {
+    flex: 60%;
+  }
+  .product-list {
+    flex: 40%;
+  }
+  .media-item img, .product-item img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+  }
+</style>
+
+<div class="product-container">
+  <div class="product-media">
+    {% for media in product.media %}
+      <div class="media-item">
+        {% if media.media_type == 'image' %}
+          <img src="{{ media.preview_image | img_url: 'medium' }}" alt="{{ media.alt | escape }}" width="100" height="100">
+        {% elsif media.media_type == 'video' %}
+          <video controls width="100%">
+            <source src="{{ media.sources[0].src }}" type="{{ media.sources[0].type }}">
+            Your browser does not support the video tag.
+          </video>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="product-list">
+    <h3>Related Products:</h3>
+    <ul>
+        {{ metafield_values }}---metafield_values
+      {% for handle in metafield_values %}
+        {% assign matched_product = all_products[handle] %}
+        {% if matched_product %}
+          <li>
+            <h4>{{ matched_product.title }}</h4>
+            <img src="{{ matched_product.featured_image | img_url: 'medium' }}" alt="{{ matched_product.title }}" width="100" height="100">
+            <p>Price: {{ matched_product.price | money }}</p>
+          </li>
+        {% else %}
+          <li>
+            <h4>Product with handle "{{ handle }}" not found.</h4>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>

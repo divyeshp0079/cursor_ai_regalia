@@ -3,7 +3,7 @@
     {% for product in collections[section.settings.featured_collection].products %}
       <div class="product-item" data-variant-id="{{ product.variants.first.id }}" data-price="{{ product.price | divided_by:100.00 }}">
         <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" width="300" height="300">
-        <h3>{{ product.title }}</h3>
+        <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
         <p>Color: {{ product.options[0] }}</p>
         <p class="productprice">{{ product.price | money }}</p>
         <button class="add-to-bundle">Add to bundle</button>
@@ -20,6 +20,34 @@
     </div>
   </div>
 </section>
+
+<div id="my-cart-drawer" class="my-cart-drawer">
+  <div class="cart-drawer-title">
+    <span>Your Cart <span class="cartcountnum">(0)</span></span>
+    <span id="drawer-close-icon" class="cartdrawer-icon">[Icon]</span>
+  </div>
+  <div class="cart-drawer-content">
+    <table class="cart-items">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody class="cart-content">
+        <!-- Cart items will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+  <div class="drawer-footer">
+    <div class="totals">
+      <div>Total: <span class="totals__total-value">${{ 0 | money }}</span></div>
+    </div>
+    <a href="/cart" class="btn btn-primary" aria-label="Checkout">View Cart</a>
+  </div>
+</div>
 
 <style>
 .product-bundle {
@@ -71,57 +99,106 @@
     border: none; /* Remove border if desired */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for emphasis */
   }
+
+.my-cart-drawer {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  right: -400px; /* Start off-screen */
+  width: 40%; /* Adjust width as needed */
+  height: 100%;
+  background-color: white; /* Background color of the drawer */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  z-index: 1000; /* Ensure it appears above other content */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  transition: transform 0.3s ease, right 0.3s ease; /* Smooth transition for sliding effect */
+}
+
+.my-cart-drawer.open {
+  display: block; /* Show when open */
+  right: 0; /* Slide in to visible position */
+  transform: translateX(0); /* Reset transform */
+}
+
+.my-cart-drawer:not(.open) {
+  transform: translateX(100%); /* Move off-screen */
+}
+
+.cart-drawer-title {
+  padding: 10px; /* Padding for title */
+  background-color: #f5f5f5; /* Background color for title */
+  border-bottom: 1px solid #ddd; /* Bottom border for separation */
+}
+
+.cart-items {
+  width: 100%; /* Full width for the table */
+  border-collapse: collapse; /* Collapse borders */
+}
+
+.cart-items th, .cart-items td {
+  padding: 10px; /* Padding for table cells */
+  text-align: left; /* Align text to the left */
+}
+
+.drawer-footer {
+  padding: 24px; /* Padding for footer */
+  border-top: 1px solid #ddd; /* Top border for separation */
+}
 </style>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // Check if Shopify object is available
-  if (typeof Shopify !== 'undefined' && Shopify.money_format) {
-    console.log('Shopify money format:', Shopify.money_format);
-  } else {
-    console.error('Shopify money format is not available.');
-  }
-
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initialize currency-related variables
+    let currencySymbol = '₹'; // Default symbol
+    let moneyFormat = '{{amount}}'; // Default format
+  
+    // Try getting currency symbol and format from Shopify
+    if (typeof Shopify !== 'undefined') {
+      if (Shopify.money_format) {
+        moneyFormat = Shopify.money_format;
+        console.log('Shopify money format:', moneyFormat);
+      }
+  
+      if (Shopify.currency && Shopify.currency.active) {
+        const activeCurrency = Shopify.currency.active;
+  
+        const currencySymbols = {
+          USD: '$',
+          EUR: '€',
+          GBP: '£',
+          INR: '₹',
+          CAD: 'CA$',
+          AUD: 'A$',
+          JPY: '¥'
+          // Add more currencies if needed
+        };
+  
+        currencySymbol = currencySymbols[activeCurrency] || activeCurrency;
+      }
+    } else {
+      console.error('Shopify money format is not available.');
+    }
+  
     const bundleItems = [];
     const maxBundleItems = 3;
     const bundleSpace = document.querySelector('.bundle-items');
     const addToCartButton = document.querySelector('.add-to-cart');
     const totalPriceElement = document.querySelector('.total-price');
-    let currencySymbol = '₹'; // Default symbol, update this with the fetched symbol
-
-    // Fetch currency information
-    fetch('/meta.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Currency data:', data); // Debugging line
-        currencySymbol = data.currency.symbol || currencySymbol;
-        console.log('Updated currency symbol:', currencySymbol); // Debugging line
-      })
-      .catch(error => {
-        console.error('Error fetching currency information:', error);
-      });
-
+  
     document.querySelectorAll('.add-to-bundle').forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const productItem = this.closest('.product-item');
         const variantId = productItem.getAttribute('data-variant-id');
         const productPrice = parseFloat(productItem.getAttribute('data-price'));
-
+  
         if (bundleItems.length < maxBundleItems) {
           bundleItems.push({ id: variantId, price: productPrice });
           const clone = productItem.cloneNode(true);
           clone.querySelector('.add-to-bundle').remove();
-
-          // Create and append a close button
+  
           const closeButton = document.createElement('button');
           closeButton.textContent = 'Remove';
           closeButton.className = 'remove-from-bundle';
-          closeButton.addEventListener('click', function() {
-            // Remove the product from the bundle
+          closeButton.addEventListener('click', function () {
             bundleSpace.removeChild(clone);
             const index = bundleItems.findIndex(item => item.id === variantId);
             if (index !== -1) {
@@ -132,57 +209,54 @@
               }
             }
           });
-
+  
           clone.appendChild(closeButton);
           bundleSpace.appendChild(clone);
-
+  
           updateTotalPrice();
-
+  
           if (bundleItems.length === maxBundleItems) {
             addToCartButton.style.display = 'block';
           }
         }
       });
     });
-
-    function formatMoney(cents, currencySymbol) {
+  
+    function formatMoney(cents) {
       if (typeof cents === 'string') {
         cents = cents.replace('.', '');
       }
-      var value = '';
-      
-      function formatWithDelimiters(number, precision, thousands, decimal) {
-        thousands = thousands || ',';
-        decimal = decimal || '.';
-
-        if (isNaN(number) || number === null) {
-          return 0;
-        }
-
-        number = (number / 100.0).toFixed(precision);
-
-        var parts = number.split('.');
-        var dollarsAmount = parts[0].replace(
-          /(\d)(?=(\d\d\d)+(?!\d))/g,
-          '$1' + thousands
-        );
-        var centsAmount = parts[1] ? decimal + parts[1] : '';
-
-        return dollarsAmount + centsAmount;
+  
+      function formatWithDelimiters(number, precision = 2, thousands = ',', decimal = '.') {
+        if (isNaN(number) || number === null) return '0';
+  
+        number = (number / 100).toFixed(precision);
+  
+        const parts = number.split('.');
+        const dollars = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
+        const centsPart = parts[1] ? decimal + parts[1] : '';
+  
+        return dollars + centsPart;
       }
-
-      value = formatWithDelimiters(cents, 2);
-      return currencySymbol + ' ' + value;
+  
+      const formatted = formatWithDelimiters(cents, 2);
+  
+      if (moneyFormat.includes('{{amount}}')) {
+        return moneyFormat.replace('{{amount}}', formatted);
+      }
+  
+      // Fallback with symbol if format not usable
+      return `${currencySymbol} ${formatted}`;
     }
-
+  
     function updateTotalPrice() {
       const total = bundleItems.reduce((sum, item) => sum + item.price, 0);
-      totalPriceElement.textContent = formatMoney(total * 100, currencySymbol);
+      totalPriceElement.textContent = formatMoney(total * 100);
     }
-
-    addToCartButton.addEventListener('click', function() {
+  
+    addToCartButton.addEventListener('click', function () {
       const items = bundleItems.map(item => ({ id: item.id, quantity: 1 }));
-
+  
       fetch('/cart/add.js', {
         method: 'POST',
         headers: {
@@ -191,20 +265,97 @@
         },
         body: JSON.stringify({ items: items })
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'bad_request') {
-          console.error('Error adding bundle to cart:', data.message);
-        } else {
-          console.log('Bundle added to cart:', data);
-          window.location.href = '/cart';
-        }
-      })
-      .catch(error => {
-        console.error('Error adding bundle to cart:', error);
-      });
+        .then(response => {
+          if (!response.ok) {
+            return response.json().then(err => {
+              console.error('Error adding bundle to cart:', err);
+              throw new Error(err.message);
+            });
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.status === 'bad_request') {
+            console.error('Error adding bundle to cart:', data.message);
+          } else {
+            console.log('Bundle added to cart:', data);
+            updateCartDrawer();
+            openCartDrawer();
+          }
+        })
+        .catch(error => {
+          console.error('Error adding bundle to cart:', error);
+        });
     });
+  
+    function openCartDrawer() {
+      const cartDrawer = document.getElementById('my-cart-drawer');
+      if (cartDrawer) {
+        cartDrawer.style.display = 'block';
+        setTimeout(() => {
+          cartDrawer.classList.add('open');
+        }, 10);
+      }
+    }
+  
+    document.getElementById('drawer-close-icon').addEventListener('click', closeCartDrawer);
+
+    function closeCartDrawer() {
+      const mainDrawer = document.getElementById('my-cart-drawer');
+      if (mainDrawer) {
+        mainDrawer.classList.remove('open'); // Remove the open class
+        setTimeout(() => {
+          mainDrawer.style.display = 'none'; // Hide after animation
+        }, 300); // Match this duration with the CSS transition duration
+      }
+    }
+  
+    document.addEventListener('click', function (event) {
+      const cartDrawer = document.getElementById('my-cart-drawer');
+      if (cartDrawer && !cartDrawer.contains(event.target) && cartDrawer.classList.contains('open')) {
+        closeCartDrawer();
+      }
+    });
+  
+    function updateCartDrawer() {
+      fetch('/cart.js')
+        .then(response => response.json())
+        .then(cart => {
+          const cartItemsListElement = document.querySelector('.cart-content');
+          const cartItemCountElement = document.querySelector('.cartcountnum');
+          const cartTotalPriceElement = document.querySelector('.totals__total-value');
+  
+          cartItemCountElement.textContent = `(${cart.item_count})`;
+          cartTotalPriceElement.textContent = formatMoney(cart.total_price);
+  
+          cartItemsListElement.innerHTML = '';
+  
+          cart.items.forEach(item => {
+            const cartItemElement = document.createElement('tr');
+            cartItemElement.innerHTML = `
+              <td>
+                <div class="product-details">
+                  <a href="${item.url}" class="img-wrapepr" aria-label="Product link">
+                    <img src="${item.image}" alt="${item.product_title}" width="120" height="120">
+                  </a>
+                  <div class="content-wrapper">
+                    <a href="${item.url}" class="title" aria-label="${item.product_title} Link">${item.product_title}</a>
+                  </div>
+                </div>
+              </td>
+              <td>${item.price ? formatMoney(item.price) : 'N/A'}</td>
+              <td>${item.quantity}</td>
+              <td>${item.price && item.quantity ? formatMoney(item.price * item.quantity) : 'N/A'}</td>
+            `;
+            cartItemsListElement.appendChild(cartItemElement);
+          });
+        })
+        .catch(error => {
+          console.error('Error updating cart:', error);
+        });
+    }
   });
+  
 </script>
 
 
@@ -223,11 +374,27 @@
       "id": "bundle_title",
       "label": "Bundle Title",
       "default": "Create Your Bundle"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ajax_cart",
+      "label": "Enable Ajax Cart Drawer",
+      "default": true,
+      "info": "Show cart drawer after adding products"
+    },
+    {
+      "type": "text",
+      "id": "cart_drawer_title",
+      "label": "Cart Drawer Title",
+      "default": "Your Cart"
     }
   ],
   "presets": [
     {
-      "name": "Default"
+      "name": "Default",
+      "settings": {
+        "enable_ajax_cart": true
+      }
     }
   ]
 }
