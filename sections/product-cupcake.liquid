@@ -5,6 +5,21 @@
   }
   .product-media {
     flex: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px; /* Adjust width as needed */
+  }
+  .media-item {
+    width: calc(33.33% - 10px); /* Three items per row */
+    margin: 5px;
+    position: relative;
+    border: 1px solid #ccc; /* Optional border */
+    height: 100px; /* Fixed height for boxes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px; /* Adjust font size for numbers */
+    color: red; /* Color for numbers */
   }
   .product-list {
     flex: 50%;
@@ -30,10 +45,6 @@
   }
   .product-item img {
     transition: transform 0.3s;
-  }
-  .media-item {
-    max-width: 450px;
-    margin: 0 auto;
   }
   .product-item:hover img {
     transform: scale(1.05); /* Zoom effect on hover */
@@ -65,35 +76,19 @@
     border-radius: 5px;
     text-align: center;
   }
-  .selected-product {
-    width: 30%; /* Adjust width for selected products */
-    margin: 5px;
-    position: relative;
+  .disabled {
+    background: #ccc; /* Disabled button color */
+    cursor: not-allowed; /* Change cursor to indicate disabled */
   }
 </style>
 
 <div class="product-container container">
-  <div class="product-media">
-    {% for media in product.media %}
-      <div class="media-item">
-        {% if media.media_type == 'image' %}
-          <img src="{{ media.preview_image | img_url: 'master' }}" alt="{{ media.alt | escape }}" width="100" height="100">
-        {% elsif media.media_type == 'video' %}
-          <video controls width="100%">
-            <source src="{{ media.sources[0].src }}" type="{{ media.sources[0].type }}">
-            Your browser does not support the video tag.
-          </video>
-        {% endif %}
-      </div>
-    {% endfor %}
-  </div>
-
   <div class="product-list">
     <ul>
       {% for handle in metafield_values %}
         {% assign matched_product = all_products[handle] %}
         {% if matched_product %}
-          <li class="product-item">
+          <li class="product-item" data-product-id="{{ matched_product.first_available_variant.id }}" data-product-handle="{{ handle }}">
             <img src="{{ matched_product.featured_image | img_url: 'medium' }}" alt="{{ matched_product.title }}" width="200" height="200">
             <div class="overlay">
               <div>
@@ -110,9 +105,28 @@
         {% endif %}
       {% endfor %}
     </ul>
+    <form method="post" action="/cart/add">
+      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+    <button type="submit" id="addToCartButton" class="button disabled">Add to Cart</button>
+    </form>
+    <div class="product-properties hidden"></div>
   </div>
 
-  
+  <div class="product-media" id="productMedia">
+    <!-- Boxes for selected products -->
+    <div class="media-item" id="box1"></div>
+    <div class="media-item" id="box2"></div>
+    <div class="media-item" id="box3"></div>
+    <div class="media-item" id="box4"></div>
+    <div class="media-item" id="box5"></div>
+    <div class="media-item" id="box6"></div>
+    <div class="media-item" id="box7"></div>
+    <div class="media-item" id="box8"></div>
+    <div class="media-item" id="box9"></div>
+    <div class="media-item" id="box10"></div>
+    <div class="media-item" id="box11"></div>
+    <div class="media-item" id="box12"></div>
+  </div>
 </div>
 
 <script>
@@ -122,20 +136,21 @@
     if (selectedProducts.length < 12) {
       selectedProducts.push({ handle, imageUrl });
       updateSelectedProducts();
-      alert('Added ' + handle + ' to cart!');
+      localStorage.setItem('cart', JSON.stringify(selectedProducts)); // Store in local storage
     } else {
       alert('You can only add up to 12 products.');
     }
+    updateAddToCartButton();
   }
 
   function updateSelectedProducts() {
-    const container = document.getElementById('productMedia');
-    const boxes = container.getElementsByClassName('media-item');
+    const boxes = document.querySelectorAll('.media-item');
+    const productProperties = document.querySelector('.product-properties');
     
     // Clear existing boxes
-    for (let i = 0; i < boxes.length; i++) {
-      boxes[i].innerHTML = ''; // Clear previous images
-    }
+    boxes.forEach(box => {
+      box.innerHTML = ''; // Clear previous images
+    });
 
     // Fill boxes with selected product images
     selectedProducts.forEach((product, index) => {
@@ -143,6 +158,39 @@
         boxes[index].innerHTML = `<img src="${product.imageUrl}" alt="${product.handle}" width="100" height="100">`;
       }
     });
+    // Add properties for all selected products
+    productProperties.innerHTML = ''; // Clear previous properties
+    selectedProducts.forEach((product, index) => {
+      productProperties.innerHTML += `
+        <div data-value="" class="productwrapper${index + 1}">
+          <img src="${product.imageUrl}" alt="${product.handle}">
+          <input class="addtopro" type="text" name="properties[${index + 1}]" value="${product.handle}">
+        </div>
+      `;
+    });
+  }
+
+  document.getElementById('cartForm').addEventListener('submit', function(event) {
+    const productProperties = document.querySelector('.product-properties');
+    const propertiesInputs = productProperties.querySelectorAll('.addtopro');
+
+    // Loop through each input and add it to the form
+    propertiesInputs.forEach(input => {
+        const clonedInput = input.cloneNode(true); // Clone the input
+        this.appendChild(clonedInput); // Append it to the form
+    });
+});
+
+
+  function updateAddToCartButton() {
+    const button = document.getElementById('addToCartButton');
+    if (selectedProducts.length < 12) {
+      button.classList.add('disabled');
+      button.disabled = true; // Disable the button
+    } else {
+      button.classList.remove('disabled');
+      button.disabled = false; // Enable the button
+    }
   }
 
   function viewDetails(handle) {

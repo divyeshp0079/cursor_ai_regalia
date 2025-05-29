@@ -17,7 +17,7 @@
       "settings": {
         "popup_mode": "testing",
         "time_to_interact": 10,
-        "pop_image": "shopify://shop_images/277d2eb8cc623ee62d12e877463e1821.png",
+        "tiles_fill_media_zoom": true,
         "heading": "SUBSCRIBE TO OUR NEWSLETTER",
         "heading_size": "h3",
         "heading_uppercase": true,
@@ -39,7 +39,6 @@
         "logo_34dwTf": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fi_3870987.svg",
             "title": "Free shipping",
             "subheading": "<p>Standard shipping</p>"
           }
@@ -47,7 +46,6 @@
         "logo_mL7FjC": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fi_4210780.svg",
             "title": "Special discounts",
             "subheading": "<p>Guaranteed saving</p>"
           }
@@ -55,7 +53,6 @@
         "logo_UaJx3W": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fi_2438078.svg",
             "title": "Buyers protection",
             "subheading": "<p>Secure payment</p>"
           }
@@ -63,7 +60,6 @@
         "logo_XnC86n": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fi_3249904.svg",
             "title": "Customer service",
             "subheading": "<p>Give us feedback</p>"
           }
@@ -75,6 +71,7 @@
         "logo_UaJx3W",
         "logo_XnC86n"
       ],
+      "disabled": true,
       "settings": {
         "heading": "",
         "heading_size": "h2",
@@ -130,7 +127,6 @@
         "logo_information_JhNENx": {
           "type": "logo-information",
           "settings": {
-            "logo": "shopify://shop_images/Regalia_logo_5.svg",
             "logo_width": 160,
             "footer_newsletter": false,
             "text_data": "At Regalia, we create jewelry that combines elegance with timeless appeal. Our pieces are crafted to enhance your style and celebrate your individuality.",
@@ -160,7 +156,7 @@
           "type": "navigation",
           "settings": {
             "menu_title": "Customer Service",
-            "main_menu": "customer-services"
+            "main_menu": ""
           }
         }
       },
