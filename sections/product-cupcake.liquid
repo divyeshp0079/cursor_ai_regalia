@@ -1,27 +1,83 @@
-{% assign metafield_values = product.metafields.custom.product_handles %}  
-{{ metafield_values | join: ',' }}  
+{% assign metafield_values = product.metafields.custom.product_handles | replace: '[', '' | replace: ']', '' | replace: '"', '' | split: ',' %}  
 <style>
   .product-container {
     display: flex;
   }
   .product-media {
-    flex: 60%;
+    flex: 50%;
   }
   .product-list {
-    flex: 40%;
+    flex: 50%;
+  }
+  .product-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
   }
   .media-item img, .product-item img {
     width: 100%;
     height: auto; /* Maintain aspect ratio */
   }
+  .product-item {
+    position: relative;
+    margin: 10px;
+    width: calc(26% - 20px); /* Adjust width for three columns */
+    box-sizing: border-box; /* Include padding and border in width */
+    text-align: center;
+  }
+  .product-item img {
+    transition: transform 0.3s;
+  }
+  .media-item {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  .product-item:hover img {
+    transform: scale(1.05); /* Zoom effect on hover */
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .product-item:hover .overlay {
+    opacity: 1; /* Show overlay on hover */
+  }
+  .button {
+    background: #ff4081; /* Button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .selected-product {
+    width: 30%; /* Adjust width for selected products */
+    margin: 5px;
+    position: relative;
+  }
 </style>
 
-<div class="product-container">
+<div class="product-container container">
   <div class="product-media">
     {% for media in product.media %}
       <div class="media-item">
         {% if media.media_type == 'image' %}
-          <img src="{{ media.preview_image | img_url: 'medium' }}" alt="{{ media.alt | escape }}" width="100" height="100">
+          <img src="{{ media.preview_image | img_url: 'master' }}" alt="{{ media.alt | escape }}" width="100" height="100">
         {% elsif media.media_type == 'video' %}
           <video controls width="100%">
             <source src="{{ media.sources[0].src }}" type="{{ media.sources[0].type }}">
@@ -33,23 +89,64 @@
   </div>
 
   <div class="product-list">
-    <h3>Related Products:</h3>
     <ul>
-        {{ metafield_values }}---metafield_values
       {% for handle in metafield_values %}
         {% assign matched_product = all_products[handle] %}
         {% if matched_product %}
-          <li>
-            <h4>{{ matched_product.title }}</h4>
-            <img src="{{ matched_product.featured_image | img_url: 'medium' }}" alt="{{ matched_product.title }}" width="100" height="100">
-            <p>Price: {{ matched_product.price | money }}</p>
+          <li class="product-item">
+            <img src="{{ matched_product.featured_image | img_url: 'medium' }}" alt="{{ matched_product.title }}" width="200" height="200">
+            <div class="overlay">
+              <div>
+                <button class="button" onclick="addToCart('{{ handle }}', '{{ matched_product.featured_image | img_url: 'medium' }}')">Add to Cart</button>
+                <button class="button" onclick="viewDetails('{{ handle }}')">View Details</button>
+              </div>
+            </div>
+            <h6>{{ matched_product.title }}</h6>
           </li>
         {% else %}
           <li>
-            <h4>Product with handle "{{ handle }}" not found.</h4>
+            <h6>Product with handle "{{ handle }}" not found.</h6>
           </li>
         {% endif %}
       {% endfor %}
     </ul>
   </div>
+
+  
 </div>
+
+<script>
+  const selectedProducts = [];
+
+  function addToCart(handle, imageUrl) {
+    if (selectedProducts.length < 12) {
+      selectedProducts.push({ handle, imageUrl });
+      updateSelectedProducts();
+      alert('Added ' + handle + ' to cart!');
+    } else {
+      alert('You can only add up to 12 products.');
+    }
+  }
+
+  function updateSelectedProducts() {
+    const container = document.getElementById('productMedia');
+    const boxes = container.getElementsByClassName('media-item');
+    
+    // Clear existing boxes
+    for (let i = 0; i < boxes.length; i++) {
+      boxes[i].innerHTML = ''; // Clear previous images
+    }
+
+    // Fill boxes with selected product images
+    selectedProducts.forEach((product, index) => {
+      if (index < boxes.length) {
+        boxes[index].innerHTML = `<img src="${product.imageUrl}" alt="${product.handle}" width="100" height="100">`;
+      }
+    });
+  }
+
+  function viewDetails(handle) {
+    // Redirect to product details page
+    window.location.href = '/products/' + handle;
+  }
+</script>
