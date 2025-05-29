@@ -18,12 +18,14 @@
             "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
             "mobile_image": "shopify://shop_images/d4b48f7215310496e98225d855fba018.jpg",
             "content_alignment": "right",
+            "overlay_bg": false,
             "maintitle": "Timeless Elegance Redefined",
             "sub_title": "<p>Find timeless jewelry that defines sophistication and style.</p>",
             "button_label": "DISCOVER NOW",
             "btn_link": "#",
             "btn_alignment": "center",
             "heading_size": "h1",
+            "whole_overlay_bg": "linear-gradient(#ffffff, #000000)",
             "new_tab": true
           }
         },
@@ -31,15 +33,15 @@
           "type": "slide",
           "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/pexels-ari-roberts-101154701-9393224_1.png",
-            "mobile_image": "shopify://shop_images/young-indian-woman-wearing-sari_1.png",
             "content_alignment": "center",
+            "overlay_bg": false,
             "maintitle": "Luxury in Every Detail",
             "sub_title": "<p>Handcrafted pieces designed to make every moment shine.</p>",
             "button_label": "EXPLORE COLLECTION",
             "btn_link": "#",
             "btn_alignment": "center",
             "heading_size": "h2",
+            "whole_overlay_bg": "linear-gradient(#ffffff, #000000)",
             "new_tab": false
           }
         },
@@ -48,14 +50,15 @@
           "disabled": true,
           "settings": {
             "image": "shopify://shop_images/pexels-zvolskiy-1721937_1.png",
-            "mobile_image": "shopify://shop_images/image_14.png",
             "content_alignment": "right",
+            "overlay_bg": false,
             "maintitle": "Beauty Meets Brilliance",
             "sub_title": "<p>Elevate your style with jewelry that tells your story.</p>",
             "button_label": "SHOP NOW",
             "btn_link": "shopify://collections/all",
             "btn_alignment": "center",
             "heading_size": "h2",
+            "whole_overlay_bg": "linear-gradient(#ffffff, #000000)",
             "new_tab": false
           }
         }
@@ -87,6 +90,16 @@
         "content-align": "start"
       }
     },
+    "product_bundle_Gbxr6P": {
+      "type": "product-bundle",
+      "name": "Default",
+      "settings": {
+        "featured_collection": "regalia",
+        "bundle_title": "Create Your Bundle",
+        "enable_ajax_cart": true,
+        "cart_drawer_title": "Your Cart"
+      }
+    },
     "featured_collection_list_M33eXU": {
       "type": "featured-collection-list",
       "blocks": {
@@ -94,7 +107,6 @@
           "type": "collection",
           "settings": {
             "collection": "best-offer",
-            "collection_image": "shopify://shop_images/1587cb6711a149c26c1e8a162372cd65.png",
             "col_title": "BEST OFFER"
           }
         },
@@ -102,7 +114,6 @@
           "type": "collection",
           "settings": {
             "collection": "14-karat-earrings",
-            "collection_image": "shopify://shop_images/fcl-1.png",
             "col_title": "EAR  HOOKS"
           }
         },
@@ -110,7 +121,6 @@
           "type": "collection",
           "settings": {
             "collection": "womens-ring",
-            "collection_image": "shopify://shop_images/fcl-2.png",
             "col_title": "Ring"
           }
         },
@@ -118,7 +128,6 @@
           "type": "collection",
           "settings": {
             "collection": "necklace",
-            "collection_image": "shopify://shop_images/fcl-3.png",
             "col_title": "Necklace"
           }
         },
@@ -126,7 +135,6 @@
           "type": "collection",
           "settings": {
             "collection": "diamond-bracelet-for-women",
-            "collection_image": "shopify://shop_images/fcl-4.png",
             "col_title": "Bracelets"
           }
         },
@@ -134,7 +142,6 @@
           "type": "collection",
           "settings": {
             "collection": "gold-tennis-bracelets",
-            "collection_image": "shopify://shop_images/1587cb6711a149c26c1e8a162372cd65.png",
             "col_title": "Bangles"
           }
         }
@@ -150,7 +157,6 @@
       "settings": {
         "title": "Gorgeous Collections",
         "preheading": "Attractive jewellery",
-        "bgimgcol": "shopify://shop_images/Isolation_Mode.png",
         "heading_size": "h2",
         "heading_alignment": "center",
         "heading_color": "#082a32",
@@ -203,10 +209,6 @@
         "heading_opacity": 4,
         "card_color": "",
         "alignment": "center",
-        "coll_bg_1": "shopify://shop_images/Vector_4.png",
-        "coll_bg_1_mobile": "shopify://shop_images/Vector_9.png",
-        "coll_bg_2": "shopify://shop_images/Vector_3.png",
-        "coll_bg_2_mobile": "shopify://shop_images/Vector_10.png",
         "bg_color": "#fbf5f0",
         "tab_color": "#a69e8d",
         "active_tab_color": "#082a32",
@@ -252,7 +254,6 @@
       "settings": {
         "speed": 30,
         "reverse": false,
-        "icon_img": "shopify://shop_images/Star_7.png",
         "padding_top": 20,
         "padding_bottom": 20
       }
@@ -329,7 +330,6 @@
         "image_with_text_eYY7Tc": {
           "type": "image-with-text",
           "settings": {
-            "image": "shopify://shop_images/61d4dc25dbd1bd40d38e12c5c08ad66c.jpg",
             "title_size": "h2",
             "title": "Sustainability Report",
             "description_size": "h5",
@@ -347,9 +347,7 @@
         "image_overlay_text_EydJDC": {
           "type": "image-overlay-text",
           "settings": {
-            "bg_image": "shopify://shop_images/image_27.png",
             "bg_blur": 4,
-            "image": "shopify://shop_images/image_18_1.png",
             "title_size": "h2",
             "layout": "image_first",
             "title": "Responsibility Report",
@@ -384,7 +382,6 @@
         "quote_HfjeLA": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/path815.svg",
             "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
             "quote_color": "#082a32"
           }
@@ -392,7 +389,6 @@
         "quote_xzLCVQ": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/g2414.svg",
             "quote": "<p>The only carrots that interest me are the number you get in a diamond.</p>",
             "quote_color": "#082a32"
           }
@@ -400,7 +396,6 @@
         "quote_J6zRbL": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Group_457.svg",
             "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
             "quote_color": ""
           }
@@ -408,7 +403,6 @@
         "quote_7cyHix": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Group_458.svg",
             "quote": "<p> The only carrots that interest me are the number you get in a diamond.</p>",
             "quote_color": "#082a32"
           }
@@ -416,7 +410,6 @@
         "quote_KNb3DT": {
           "type": "quote",
           "settings": {
-            "logo": "shopify://shop_images/Vector_6.svg",
             "quote": "<p>I never worry about diets. The only carrots that interest me are the number you get in a diamond.</p>",
             "quote_color": "#082a32"
           }
@@ -430,8 +423,6 @@
         "quote_KNb3DT"
       ],
       "settings": {
-        "quote_bg_1": "shopify://shop_images/Graphic_Elemnts.png",
-        "quote_bg_2": "shopify://shop_images/Graphic_Elements.png",
         "title": "QUOTE OF THE WEEK",
         "heading_alignment": "center",
         "heading_color": "#797979",
@@ -444,27 +435,19 @@
       "blocks": {
         "instagram_ahLWyw": {
           "type": "instagram",
-          "settings": {
-            "image": "shopify://shop_images/3da253439e718d4a63c5581067f6a14c.png"
-          }
+          "settings": {}
         },
         "instagram_tjiVcY": {
           "type": "instagram",
-          "settings": {
-            "image": "shopify://shop_images/56d1e9f1edf7f1d65c34de1e547fe4d2.png"
-          }
+          "settings": {}
         },
         "instagram_9jU7Ah": {
           "type": "instagram",
-          "settings": {
-            "image": "shopify://shop_images/a94ab351ddf62333fd94ffc3f689e6d4.png"
-          }
+          "settings": {}
         },
         "instagram_GD8AGM": {
           "type": "instagram",
-          "settings": {
-            "image": "shopify://shop_images/af9a6e4771070fe0ff117d00d287c699.png"
-          }
+          "settings": {}
         }
       },
       "block_order": [
@@ -481,9 +464,6 @@
         "heading_color": "#082a32",
         "description_color": "#797979",
         "background_color": "#efefef",
-        "insta_bg_1": "shopify://shop_images/Vector_1.png",
-        "insta_bg_2": "shopify://shop_images/Group.png",
-        "insta_bg_3": "shopify://shop_images/Group_514.png",
         "padding_top": 20,
         "padding_bottom": 0
       }
@@ -510,7 +490,6 @@
         "faq_7iDt8V": {
           "type": "faq",
           "settings": {
-            "faq_icon": "shopify://shop_images/fi_9812568.svg",
             "question": "How do I place an order with Regalia?",
             "answer": "<p>You can easily place an order through our website. Browse our <br/>collections, select your favorite pieces, add them to your cart, and <br/>follow the checkout process. If you need assistance, don't hesitate to <br/>reach out to us.</p>"
           }
@@ -518,7 +497,6 @@
         "faq_CrkWmC": {
           "type": "faq",
           "settings": {
-            "faq_icon": "shopify://shop_images/fi_9812568.svg",
             "question": "Do you ship internationally?",
             "answer": "<p>Yes, we offer international shipping to many countries. Shipping fees and delivery times vary based on location. </p>"
           }
@@ -526,7 +504,6 @@
         "faq_FwLDnF": {
           "type": "faq",
           "settings": {
-            "faq_icon": "shopify://shop_images/fi_9812568.svg",
             "question": "What is your return policy?",
             "answer": "<p>We offer a 10-day return policy on most items. To initiate a return, please contact us with your order details. </p>"
           }
@@ -534,7 +511,6 @@
         "faq_Ux4rmY": {
           "type": "faq",
           "settings": {
-            "faq_icon": "shopify://shop_images/fi_9812568.svg",
             "question": "What materials are your jewelry pieces made from?",
             "answer": "<p>Our jewelry is crafted using high-quality materials, including sterling silver, gold, and gemstones. Each piece is designed to last.</p>"
           }
@@ -547,7 +523,6 @@
         "faq_Ux4rmY"
       ],
       "settings": {
-        "image": "shopify://shop_images/faq-image.png",
         "image_position": "left",
         "title": "FAQs",
         "heading_size": "h2",
@@ -597,7 +572,6 @@
         "review_kFRpfw"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/testimonial-bg.jpg",
         "enable_autoplay": false,
         "bg_color": "#fff7ee",
         "box_shadow": "#e9c398",
@@ -615,7 +589,6 @@
         "images_Ln8L7j": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-1.png",
             "grid_position": "2/4",
             "mobile_grid_position": "4/4",
             "enable_overlay": false,
@@ -632,7 +605,6 @@
         "images_WMaaPN": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-2.png",
             "grid_position": "1/4",
             "mobile_grid_position": "2/4",
             "enable_overlay": false,
@@ -649,7 +621,6 @@
         "images_KA4gEn": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-3.png",
             "grid_position": "1/4",
             "mobile_grid_position": "2/4",
             "enable_overlay": true,
@@ -666,7 +637,6 @@
         "images_EWQYyL": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-4.png",
             "grid_position": "1/4",
             "mobile_grid_position": "4/4",
             "enable_overlay": true,
@@ -683,7 +653,6 @@
         "images_NKYBPD": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-5.png",
             "grid_position": "1/4",
             "mobile_grid_position": "2/4",
             "enable_overlay": false,
@@ -700,7 +669,6 @@
         "images_Lf7qUP": {
           "type": "images",
           "settings": {
-            "image": "shopify://shop_images/gallery-6.png",
             "grid_position": "2/4",
             "mobile_grid_position": "2/4",
             "enable_overlay": false,
@@ -803,6 +771,7 @@
   "order": [
     "slideshow_iqVJTN",
     "discount_countdown_CLxn3i",
+    "product_bundle_Gbxr6P",
     "featured_collection_list_M33eXU",
     "featured_collection_AfdBwM",
     "marquee_text_9ACkkP",
