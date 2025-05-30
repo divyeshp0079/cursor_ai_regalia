@@ -1,13 +1,21 @@
-{% assign metafield_values = product.metafields.custom.product_handles | replace: '[', '' | replace: ']', '' | replace: '"', '' | split: ',' %}  
+{% assign metafield_values = product.metafields.custom.product_handles
+  | replace: '[', ''
+  | replace: ']', ''
+  | replace: '"', ''
+  | split: ','
+%}
 <style>
   .product-container {
     display: flex;
   }
   .product-media {
-    flex: 50%;
+    flex: 50%;* Adjust width as needed */
+  }
+  .product-media-header{
     display: flex;
     flex-wrap: wrap;
-    max-width: 300px; /* Adjust width as needed */
+    max-width: 300px;
+    margin: 0 auto;
   }
   .media-item {
     width: calc(33.33% - 10px); /* Three items per row */
@@ -80,19 +88,71 @@
     background: #ccc; /* Disabled button color */
     cursor: not-allowed; /* Change cursor to indicate disabled */
   }
+  .product-media-footer{
+    text-align: center;
+  }
+  .close-button {
+    position: absolute; /* Position it absolutely within the media-item */
+    top: 5px; /* Adjust as needed */
+    right: 5px; /* Adjust as needed */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s; /* Smooth transition */
+  }
+  .media-item:hover .close-button {
+    opacity: 1; /* Show on hover */
+  }
 </style>
 
 <div class="product-container container">
+  <div class="product-media" id="productMedia">
+    <div class="product-media-header">
+      <!-- Boxes for selected products -->
+      <div class="media-item" id="box1"></div>
+      <div class="media-item" id="box2"></div>
+      <div class="media-item" id="box3"></div>
+      <div class="media-item" id="box4"></div>
+      <div class="media-item" id="box5"></div>
+      <div class="media-item" id="box6"></div>
+      <div class="media-item" id="box7"></div>
+      <div class="media-item" id="box8"></div>
+      <div class="media-item" id="box9"></div>
+      <div class="media-item" id="box10"></div>
+      <div class="media-item" id="box11"></div>
+      <div class="media-item" id="box12"></div>
+    </div>
+    <div class="product-media-footer">
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit" id="addToCartButton" class="button disabled">Add to Cart</button>
+        <div class="product-properties hidden"></div>
+      </form>
+    </div>
+  </div>
+
   <div class="product-list">
     <ul>
       {% for handle in metafield_values %}
         {% assign matched_product = all_products[handle] %}
         {% if matched_product %}
-          <li class="product-item" data-product-id="{{ matched_product.first_available_variant.id }}" data-product-handle="{{ handle }}">
-            <img src="{{ matched_product.featured_image | img_url: 'medium' }}" alt="{{ matched_product.title }}" width="200" height="200">
+          <li
+            class="product-item"
+            data-product-id="{{ matched_product.first_available_variant.id }}"
+            data-product-handle="{{ handle }}"
+          >
+            <img
+              src="{{ matched_product.featured_image | img_url: 'medium' }}"
+              alt="{{ matched_product.title }}"
+              width="200"
+              height="200"
+            >
             <div class="overlay">
               <div>
-                <button class="button" onclick="addToCart('{{ handle }}', '{{ matched_product.featured_image | img_url: 'medium' }}')">Add to Cart</button>
+                <button
+                  class="button"
+                  onclick="addToCart('{{ handle }}', '{{ matched_product.featured_image | img_url: 'medium' }}')"
+                >
+                  Add to Cart
+                </button>
                 <button class="button" onclick="viewDetails('{{ handle }}')">View Details</button>
               </div>
             </div>
@@ -105,27 +165,6 @@
         {% endif %}
       {% endfor %}
     </ul>
-    <form method="post" action="/cart/add">
-      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-    <button type="submit" id="addToCartButton" class="button disabled">Add to Cart</button>
-    </form>
-    <div class="product-properties hidden"></div>
-  </div>
-
-  <div class="product-media" id="productMedia">
-    <!-- Boxes for selected products -->
-    <div class="media-item" id="box1"></div>
-    <div class="media-item" id="box2"></div>
-    <div class="media-item" id="box3"></div>
-    <div class="media-item" id="box4"></div>
-    <div class="media-item" id="box5"></div>
-    <div class="media-item" id="box6"></div>
-    <div class="media-item" id="box7"></div>
-    <div class="media-item" id="box8"></div>
-    <div class="media-item" id="box9"></div>
-    <div class="media-item" id="box10"></div>
-    <div class="media-item" id="box11"></div>
-    <div class="media-item" id="box12"></div>
   </div>
 </div>
 
@@ -136,7 +175,6 @@
     if (selectedProducts.length < 12) {
       selectedProducts.push({ handle, imageUrl });
       updateSelectedProducts();
-      localStorage.setItem('cart', JSON.stringify(selectedProducts)); // Store in local storage
     } else {
       alert('You can only add up to 12 products.');
     }
@@ -146,16 +184,19 @@
   function updateSelectedProducts() {
     const boxes = document.querySelectorAll('.media-item');
     const productProperties = document.querySelector('.product-properties');
-    
+
     // Clear existing boxes
-    boxes.forEach(box => {
+    boxes.forEach((box) => {
       box.innerHTML = ''; // Clear previous images
     });
 
     // Fill boxes with selected product images
     selectedProducts.forEach((product, index) => {
       if (index < boxes.length) {
-        boxes[index].innerHTML = `<img src="${product.imageUrl}" alt="${product.handle}" width="100" height="100">`;
+        boxes[index].innerHTML = `
+          <img src="${product.imageUrl}" alt="${product.handle}" width="100" height="100">
+          <button class="close-button" onclick="removeProduct(${index})">X</button>
+        `;
       }
     });
     // Add properties for all selected products
@@ -170,17 +211,16 @@
     });
   }
 
-  document.getElementById('cartForm').addEventListener('submit', function(event) {
+  document.getElementById('cartForm').addEventListener('submit', function (event) {
     const productProperties = document.querySelector('.product-properties');
     const propertiesInputs = productProperties.querySelectorAll('.addtopro');
 
     // Loop through each input and add it to the form
-    propertiesInputs.forEach(input => {
-        const clonedInput = input.cloneNode(true); // Clone the input
-        this.appendChild(clonedInput); // Append it to the form
+    propertiesInputs.forEach((input) => {
+      const clonedInput = input.cloneNode(true); // Clone the input
+      this.appendChild(clonedInput); // Append it to the form
     });
-});
-
+  });
 
   function updateAddToCartButton() {
     const button = document.getElementById('addToCartButton');
@@ -196,5 +236,12 @@
   function viewDetails(handle) {
     // Redirect to product details page
     window.location.href = '/products/' + handle;
+  }
+
+  function removeProduct(index) {
+    // Remove the product from the selectedProducts array
+    selectedProducts.splice(index, 1);
+    updateSelectedProducts(); // Update the display
+    updateAddToCartButton(); // Update the button state
   }
 </script>
