@@ -3,7 +3,7 @@
 {%- if settings.button_style == 'icon' -%}
   <button class="back-to-top-btn btn btn-icon btn-secondary hidden">
     <span class="visuallyhidden">{{ 'general.back_to_top' | t }}</span>
-    {% render 'icons'. icon: 'chevron-up' %}
+    {% render 'icons', icon: 'chevron-up' %}
   </button>
 {%- elsif settings.button_style == 'text' -%}
   <button class="back-to-top-btn btn btn-secondary btn-text hidden">
@@ -12,6 +12,19 @@
 {%- else -%}
   <button class="back-to-top-btn btn btn-secondary btn-text-icon hidden">
     {{ settings.back_to_top_text -}}
-    {%- render 'icons'. icon: 'chevron-up' %}
+    {%- render 'icons', icon: 'chevron-up' %}
   </button>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'icons'. icon: 'chevron-up' %}"
+  to: "{% render 'icons', icon: 'chevron-up' %}"
+  position: 262..302
+- from: "{%- render 'icons'. icon: 'chevron-up' %}"
+  to: "{%- render 'icons', icon: 'chevron-up' %}"
+  position: 615..656
+{% endcomment %}

@@ -235,7 +235,7 @@
                 {%- render 'product-variants', product: product, quick_variant_type: quick_variant_type, show_percentage: show_percentage, block:block  -%}
               </div>
 
-            {%- when 'price', product: product -%}
+            {%- when 'price', product -%}
               {% render 'price', product: product, show_percentage: show_percentage %}
 
             {%- when 'stock-counter' -%}
@@ -598,3 +598,13 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- when 'price', product: product -%}"
+  to: "{%- when 'price', product -%}"
+  position: 10207..10236
+{% endcomment %}
