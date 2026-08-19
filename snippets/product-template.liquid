@@ -234,7 +234,7 @@
                   <div class="product-block block-{{ block.type }}" id="{{ form_id }}">
                     {%- render 'product-variants', show_percentage: show_percentage, block:block, quick_variant_type: quick_variant_type  -%}
                   </div>
-                {%- when 'price', product: product -%}
+                {%- when 'price', product -%}
                   {% render 'price', product: product, show_percentage: show_percentage %}
                   {% form 'product', product, id: product_form_id %}
                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -433,3 +433,13 @@
     </script>
   </main-product>
 </section>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- when 'price', product: product -%}"
+  to: "{%- when 'price', product -%}"
+  position: 11547..11576
+{% endcomment %}
